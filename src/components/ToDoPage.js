@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'; // Import required modul
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
 import { PostTodos } from './PostTodos';
+import { SeeTodos } from './SeeTodos';
 
 export const ToDoPage = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export const ToDoPage = () => {
       <button type="button" className="Btn" onClick={onLogoutButtonClick}>Logout</button>
       <p>Hej hej!</p>
       <PostTodos />
+      <SeeTodos />
     </>
   )
 }
