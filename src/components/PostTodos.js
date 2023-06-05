@@ -55,7 +55,7 @@ export const PostTodos = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': accessToken
+        Authorization: accessToken
       },
       body: JSON.stringify(newTodo) // Convert the username and password to JSON string and set as the request body
     };
