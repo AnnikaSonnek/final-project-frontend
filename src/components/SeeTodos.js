@@ -3,7 +3,7 @@
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
@@ -15,7 +15,9 @@ export const SeeTodos = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.user.accessToken)
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
+  const [messageToDelete, setMessageToDelete] = useState(null)
 
+  // //////////////////USE EFFECT FETCH ALL TODOS ///////////////////
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -39,16 +41,73 @@ export const SeeTodos = () => {
       });
   })
 
+  // //////////////////DELETE TODO //////////////////////
+  const DeleteMessage = (deleteID) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken
+      } // There is no need to send a when calling the likes-function
+    }
+
+    fetch(API_URL(`todos/${deleteID}`), options)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setMessageToDelete(data.response._id);
+          // Remove the deleted message from the message list
+          console.log(messageToDelete)
+        } else {
+          console.error(data.message)
+        }
+      })
+      .catch((error) => console.log(error))
+  }
+
+  // /////////// TOGGLE TODO /////////////////////
+  const onToggleTodo = (todoId, completed) => {
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify({
+        completed: !completed
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken
+      }
+    };
+    fetch(API_URL(`todos/${todoId}/completed`), options)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(todos.actions.setError(null));
+          console.log(data.response)
+        } else {
+          dispatch(todos.actions.setError(data.response));
+        }
+      });
+  };
+
   return (
     <>
       {todoList.map((item) => {
         return (
           <div key={item._id}>
+            <input
+              type="checkbox"
+              name={item._id}
+              id={item._id}
+              checked={item.completed}
+              onChange={() => onToggleTodo(item._id, item.completed)} />
+
             <p>{item.description}</p>
             <p>{item.priority}</p>
             <p>{item.category}</p>
             <p>{item.createdAt}</p>
             <p>{item.completed}</p>
+            <button type="button" onClick={() => { DeleteMessage(item._id) }}>Delete</button>
+            <button type="button">Edit</button>
           </div>
         )
       })}
@@ -57,7 +116,6 @@ export const SeeTodos = () => {
 
   )
 }
-
 // //////////////////////////////////////////////////////////////////////// //
 // ///////////////////////////// RETURN JSX /////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //

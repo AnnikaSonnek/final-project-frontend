@@ -28,7 +28,7 @@ export const PostTodos = () => {
   const [deadlineDate, setDeadlineDate] = useState(null);
   // get the Deadline date using the useState hook.
 
-  //NEW TODO-OBJECT USE STATE
+  // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
     description: '',
     deadline: deadlineDate ? deadlineDate.toISOString() : null,
@@ -61,16 +61,15 @@ export const PostTodos = () => {
     };
     fetch(API_URL('todos'), options) // Make a POST request to the API URL based on the current mode
       .then((response) => response.json()) // Convert the response to JSON
-      .then((responsedata) => {     
-      if (responsedata.success) {
+      .then((responsedata) => {
+        if (responsedata.success) {
           console.log(responsedata);
           dispatch(user.actions.setError(null));
-          
         } else {
           dispatch(user.actions.setError(responsedata.response)); // Dispatch an action to set the error message in the store
         }
       })
-      .finally (() =>{
+      .finally(() => {
         setNewTodo({
           description: '',
           deadline: null,
@@ -143,10 +142,9 @@ export const PostTodos = () => {
             type="button"
             onClick={() => handlePriorityChange(3)}
             active={newTodo.priority === 3}>
-            3            
+            3
           </PriorityButton>
         </div>
-
         <DatePicker
           selected={deadlineDate}
           customInput={<CustomInput />}
@@ -155,7 +153,7 @@ export const PostTodos = () => {
             setDeadlineDate(date);
             setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
             console.log(deadlineDate);
-            }} />
+          }} />
         <button type="submit">Submit</button>
       </FormPostTodos>
     </>
