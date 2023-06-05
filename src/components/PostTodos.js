@@ -93,6 +93,7 @@ export const PostTodos = () => {
       <p>skriv din todo här!</p>
       <FormPostTodos onSubmit={onFormSubmit}>
         <input
+          required
           type="text"
           name="description"
           placeholder="Description"
