@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { user } from 'reducers/user';
 import { API_URL } from '../utils/urls';
+import './Login.css';
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// LOGIN ////////////////////////////////// //
@@ -21,7 +22,7 @@ export const Login = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerMail, setRegisterMail] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
-  const [mode, setMode] = useState('login');
+  const [mode] = useState('login');
 
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
@@ -47,7 +48,7 @@ export const Login = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': accessToken
+        Authorization: accessToken
       },
       body: JSON.stringify({ mail: loginMail, password: loginPassword })
     };
@@ -111,94 +112,107 @@ export const Login = () => {
       });
   };
 
-  // Handle login button click
-  const handleLoginButtonClick = () => {
-    setMode('login');
-  };
-
-  // Handle register button click
-  const handleRegisterButtonClick = () => {
-    setMode('register');
-  };
-
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
-    <div className="loginContainer">
-      <div className="main">
-        <input type="checkbox" id="chk" aria-hidden="true" />
-
-        {/* Login form */}
-        <div className="login">
-          <form className="form" onSubmit={onLoginFormSubmit}>
-            <label htmlFor="chk" aria-hidden="true">
-                            Log in
-            </label>
-            <input
-              className="input"
-              type="text"
-              name="mail"
-              placeholder="Mail"
-              autoComplete="off"
-              value={loginMail}
-              onChange={(event) => setLoginMail(event.target.value)}
-              required />
-            <input
-              className="input"
-              type="password"
-              name="password"
-              placeholder="Password"
-              autoComplete="off"
-              value={loginPassword}
-              onChange={(event) => setLoginPassword(event.target.value)}
-              required />
-            <button className="submitBtn" type="submit" value="Sign In" onClick={handleLoginButtonClick}>
-                            Sign In
-            </button>
-          </form>
-        </div>
-
-        {/* Registration form */}
-        <div className="register">
-          <form className="form" onSubmit={onRegisterFormSubmit}>
-            <label htmlFor="chk" aria-hidden="true">
-                            Register
-            </label>
-            <input
-              className="input"
-              type="text"
-              name="mail"
-              placeholder="Mail"
-              autoComplete="off"
-              value={registerMail}
-              onChange={(event) => setRegisterMail(event.target.value)}
-              required />
-            <input
-              className="input"
-              type="text"
-              name="username"
-              placeholder="Username"
-              autoComplete="off"
-              value={registerUsername}//
-              onChange={(event) => setRegisterUsername(event.target.value)}
-              required />
-            <input
-              className="input"
-              type="password"
-              name="password"
-              placeholder="Password"
-              autoComplete="off"
-              value={registerPassword}
-              onChange={(event) => setRegisterPassword(event.target.value)}
-              required />
-            <button className="submitBtn" type="submit" value="Register" onClick={handleRegisterButtonClick}>
-                            Register
-            </button>
-          </form>
+    <div className="wrap">
+      <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
+      <div className="flipcard">
+        <div className="flipcard-inner">
+          <div className="flipcard-front">
+            <form className="login-form" action="" onSubmit={onLoginFormSubmit}>
+              <div className="form-header">
+                <h3>Login Form</h3>
+                <p>Login to access your dashboard</p>
+              </div>
+              <div className="form-group">
+                <input
+                  className="login-input"
+                  type="text"
+                  name="mail"
+                  placeholder="Mail"
+                  autoComplete="off"
+                  value={loginMail}
+                  onChange={(event) => setLoginMail(event.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <input
+                  className="login-input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  autoComplete="off"
+                  value={loginPassword}
+                  onChange={(event) => setLoginPassword(event.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <button
+                  className="form-button"
+                  type="submit">Login
+                </button>
+              </div>
+              <div className="form-footer">
+              Dont have an account? <label className="label-highlight" htmlFor="form_switch"> Sign Up </label>
+              </div>
+            </form>
+          </div>
+          <div className="flipcard-back">
+            <form className="login-form" action="" onSubmit={onRegisterFormSubmit}>
+              <div className="form-header">
+                <h3>Signup Form</h3>
+                <p>Register for a new account</p>
+              </div>
+              <div className="form-group">
+                <input
+                  className="login-input"
+                  type="text"
+                  name="mail"
+                  placeholder="Mail"
+                  autoComplete="off"
+                  value={registerMail}
+                  onChange={(event) => setRegisterMail(event.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <input
+                  className="login-input"
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  autoComplete="off"
+                  value={registerUsername}//
+                  onChange={(event) => setRegisterUsername(event.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <input
+                  className="login-input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  autoComplete="off"
+                  value={registerPassword}
+                  onChange={(event) => setRegisterPassword(event.target.value)}
+                  required />
+              </div>
+              <div className="form-group">
+                <button
+                  className="form-button form-button-register"
+                  type="submit">Signup
+                </button>
+              </div>
+              <div className="form-footer">
+              Already have an account? <label className="label-highlight" htmlFor="form_switch"> Login</label>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  );
+
+  )
 };
