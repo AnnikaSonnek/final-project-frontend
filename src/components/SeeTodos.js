@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
-import { GlobalStyle, Wrapper, DisplayedTodo, FormInput, FormGroup, FormButton, FormHeader, FormFooter, FlipCard, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
+import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // ///////////////////////////// SEE TODOS //////////////////////////////// //
@@ -26,7 +26,8 @@ export const SeeTodos = () => {
   const [messageToDelete, setMessageToDelete] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null)
 
-  // //////////////////USE EFFECT FETCH ALL TODOS ///////////////////
+  // ////////////////// USE EFFECT FETCH ALL TODOS ///////////////////
+
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -101,6 +102,8 @@ export const SeeTodos = () => {
       });
   };
 
+  // /////////// EDIT TODO /////////////////////
+
   const editTodo = (todoId) => {
     // Find the selected todo by its ID
     const selected = todoList.find((todo) => todo._id === todoId);
@@ -119,16 +122,16 @@ export const SeeTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
-    <Wrapper>
-      {todoList.map((item) => (
-        <div key={item._id} className="todo-container">
-          <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
-          <div className="flipcard">
-            <div className={`flipcard-inner${selectedTodo === item._id ? ' flipped' : ''}`}>
-              <div className="flipcard-front">
-                <DisplayedTodo>
-                  <FormGroup>
-                    <div className="cards">
+    <GlobalStyle>
+      <Wrapper>
+        {todoList.map((item) => (
+          <TodoContainer key={item._id}>
+            <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
+            <FlipCard>
+              <FlipCardInner className={`flipcard-inner${selectedTodo === item._id ? ' flipped' : ''}`}>
+                <FlipCardFront>
+                  <DisplayedTodo>
+                    <FormGroup>
                       <input
                         type="checkbox"
                         name={item._id}
@@ -144,32 +147,32 @@ export const SeeTodos = () => {
                       <FormFooter>
                       Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id)}>EDIT</label>
                       </FormFooter>
-                    </div>
-                  </FormGroup>
-                </DisplayedTodo>
-              </div>
-              <div className="flipcard-back">
-                <form className="login-form" action="">
-                  <FormHeader>
-                    <h3>EDIT TODO</h3>
-                  </FormHeader>
-                  <FormGroup>
-                    <input
-                      required
-                      type="text"
-                      name="description"
-                      placeholder="Description" />
-                    <button type="submit">Submit</button>
-                  </FormGroup>
-                  <FormFooter>
-                  See updated todo <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => backtoTodoList()}>CLICK HERE</label>
-                  </FormFooter>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </Wrapper>
+                    </FormGroup>
+                  </DisplayedTodo>
+                </FlipCardFront>
+                <FlipCardBack>
+                  <form className="login-form" action="">
+                    <FormHeader>
+                      <h3>EDIT TODO</h3>
+                    </FormHeader>
+                    <FormGroup>
+                      <FormInput
+                        required
+                        type="text"
+                        name="description"
+                        placeholder="Description" />
+                      <EditSubmitButton type="submit">Submit</EditSubmitButton>
+                    </FormGroup>
+                    <FormFooter>
+                  See updated todo <LabelHighlight htmlFor={`form_switch_${item._id}`} onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                    </FormFooter>
+                  </form>
+                </FlipCardBack>
+              </FlipCardInner>
+            </FlipCard>
+          </TodoContainer>
+        ))}
+      </Wrapper>
+    </GlobalStyle>
   );
 };

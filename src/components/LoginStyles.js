@@ -130,7 +130,3 @@ export const LoginInput = styled.input`
   height: 40px;
   width: 100%;
 `;
-
-export const TodoContainer = styled.div`
-  margin-bottom: 15rem;
-`;
