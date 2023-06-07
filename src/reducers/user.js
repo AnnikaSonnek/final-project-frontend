@@ -15,6 +15,7 @@ export const user = createSlice({
     username: null, // Initialize the username to null
     userId: null, // Initialize the userId to null
     accessToken: null, // Initialize the accessToken to null
+    avatar: null, // Initialize the avatar to null
     error: null // Initialize the error to null
   },
   reducers: {
@@ -26,6 +27,9 @@ export const user = createSlice({
     },
     setAccessToken: (store, action) => { // Define a reducer function named setAccessToken
       store.accessToken = action.payload // Update the accessToken state with the payload value from the action
+    },
+    setAvatar: (store, action) => {
+      store.avatar = action.payload
     },
     setError: (store, action) => { // Define a reducer function named setError
       store.error = action.payload // Update the error state with the payload value from the action

@@ -24,7 +24,6 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 font-size: 1.5rem;
 border: none;
 display: flex;
-flex-direction: row;
 justify-content: center;
 align-items: center;
 padding: 0.5rem;
@@ -38,4 +37,10 @@ width: 80px;
 export const PriorityButton = styled.button`
 width: 80px; 
 `
-
+export const FormWrapper = styled.div`
+display: flex; 
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background-color: lightcoral;
+`
