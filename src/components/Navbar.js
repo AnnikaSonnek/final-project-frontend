@@ -24,8 +24,7 @@ export const Navbar = () => {
       <button
         type="button"
         className="Btn"
-        onClick={onLogoutButtonClick}
-      >
+        onClick={onLogoutButtonClick}>
         Logout
       </button>
     </>
