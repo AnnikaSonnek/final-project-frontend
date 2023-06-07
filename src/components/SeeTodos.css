@@ -14,9 +14,13 @@
      line-height: 1.6;
  }
  .wrap {
-     width: 350px;
-     margin: 50px auto;
-     background: #fafafa;
+  width: 350px;
+  height: 400px; /* Adjust the height as per your requirement */
+  margin: 50px auto;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column; /* Change from row to column */
+  align-items: flex-start; /* Add this line */
 }
 .displayed-todo{
    width: 350px;
@@ -106,4 +110,8 @@ color: blue;
     border-radius: 12px;
     height: 40px;
     width: 100%;
+}
+
+.todo-container {
+  margin-bottom: 15rem; /* Add margin bottom to create space between each todo item */
 }

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -32,7 +34,8 @@ export const SeeTodos = () => {
         'Content-Type': 'application/json',
         Authorization: accessToken // the accessToken is used for getting all the todos and display them for the user
       }
-    }
+    };
+
     fetch(API_URL('todos'), options)
       .then((res) => res.json())
       .then((data) => {
@@ -49,6 +52,7 @@ export const SeeTodos = () => {
   })
 
   // //////////////////DELETE TODO //////////////////////
+
   const DeleteMessage = (deleteID) => {
     const options = {
       method: 'DELETE',
@@ -56,7 +60,7 @@ export const SeeTodos = () => {
         'Content-Type': 'application/json',
         Authorization: accessToken
       } // There is no need to send a when calling the likes-function
-    }
+    };
 
     fetch(API_URL(`todos/${deleteID}`), options)
       .then((response) => response.json())
@@ -70,9 +74,10 @@ export const SeeTodos = () => {
         }
       })
       .catch((error) => console.log(error))
-  }
+  };
 
   // /////////// TOGGLE TODO /////////////////////
+
   const onToggleTodo = (todoId, completed) => {
     const options = {
       method: 'PATCH',
@@ -100,8 +105,7 @@ export const SeeTodos = () => {
     // Find the selected todo by its ID
     const selected = todoList.find((todo) => todo._id === todoId);
     if (selected) {
-      setSelectedTodo(selected);
-      console.log(selected);
+      setSelectedTodo(todoId);
     }
   };
 
@@ -117,13 +121,14 @@ export const SeeTodos = () => {
   return (
     <div className="wrap">
       {todoList.map((item) => (
-        <>
-          <input type="checkbox" id="form_switch" style={{ display: 'none' }} /><div className="flipcard">
-            <div className="flipcard-inner">
+        <div key={item._id} className="todo-container">
+          <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
+          <div className="flipcard">
+            <div className={`flipcard-inner${selectedTodo === item._id ? ' flipped' : ''}`}>
               <div className="flipcard-front">
                 <form className="displayed-todo" action="">
                   <div className="form-group">
-                    <div key={item._id}>
+                    <div className="cards">
                       <input
                         type="checkbox"
                         name={item._id}
@@ -135,16 +140,14 @@ export const SeeTodos = () => {
                       <p>{item.category}</p>
                       <p>{item.createdAt}</p>
                       <p>{item.completed}</p>
-                      <button type="button" onClick={() => { DeleteMessage(item._id); }}>Delete</button>
+                      <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
                       <div className="form-footer">
-                      Do you want to edit this todo?? <label className="label-highlight" htmlFor="form_switch" onClick={() => editTodo(item._id)}> EDIT </label>
+                      Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id)}>EDIT</label>
                       </div>
                     </div>
-
                   </div>
                 </form>
               </div>
-
               <div className="flipcard-back">
                 <form className="login-form" action="">
                   <div className="form-header">
@@ -156,29 +159,17 @@ export const SeeTodos = () => {
                       type="text"
                       name="description"
                       placeholder="Description" />
-                    {/* Category buttons */}
-                    {/* <div>
-        <button
-          type="button" />
-        <button
-          type="button" />
-        <button
-          type="button" />
-
-</div> */}
                     <button type="submit">Submit</button>
                   </div>
                   <div className="form-footer">
-                  See updated todo <label className="label-highlight" htmlFor="form_switch" onClick={() => backtoTodoList()}> CLICK HERE</label>
+                  See updated todo <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => backtoTodoList()}>CLICK HERE</label>
                   </div>
                 </form>
               </div>
             </div>
           </div>
-        </>
-
+        </div>
       ))}
     </div>
-
-  )
+  );
 };
