@@ -22,6 +22,7 @@ export const SeeTodos = () => {
   const accessToken = useSelector((store) => store.user.accessToken)
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
   const [messageToDelete, setMessageToDelete] = useState(null)
+  const [selectedTodo, setSelectedTodo] = useState(null)
 
   // //////////////////USE EFFECT FETCH ALL TODOS ///////////////////
   useEffect(() => {
@@ -95,23 +96,33 @@ export const SeeTodos = () => {
       });
   };
 
+  const editTodo = (todoId) => {
+    // Find the selected todo by its ID
+    const selected = todoList.find((todo) => todo._id === todoId);
+    if (selected) {
+      setSelectedTodo(selected);
+      console.log(selected);
+    }
+  };
+
+  const backtoTodoList = () => {
+    // Find the selected todo by its ID
+    setSelectedTodo(null);
+  };
+
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
     <div className="wrap">
-      <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
-      <div className="flipcard">
-        <div className="flipcard-inner">
-          <div className="flipcard-front">
-            <form className="displayed-todo" action="">
-              <div className="form-header">
-                <h3>POSTED TODO</h3>
-              </div>
-              <div className="form-group">
-                {todoList.map((item) => {
-                  return (
+      {todoList.map((item) => (
+        <>
+          <input type="checkbox" id="form_switch" style={{ display: 'none' }} /><div className="flipcard">
+            <div className="flipcard-inner">
+              <div className="flipcard-front">
+                <form className="displayed-todo" action="">
+                  <div className="form-group">
                     <div key={item._id}>
                       <input
                         type="checkbox"
@@ -124,48 +135,49 @@ export const SeeTodos = () => {
                       <p>{item.category}</p>
                       <p>{item.createdAt}</p>
                       <p>{item.completed}</p>
-                      <button type="button" onClick={() => { DeleteMessage(item._id) }}>Delete</button>
+                      <button type="button" onClick={() => { DeleteMessage(item._id); }}>Delete</button>
+                      <div className="form-footer">
+                      Do you want to edit this todo?? <label className="label-highlight" htmlFor="form_switch" onClick={() => editTodo(item._id)}> EDIT </label>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
-              <div className="form-footer">
-              Do you want to edit this todo?? <label className="label-highlight" htmlFor="form_switch"> EDIT </label>
-              </div>
-            </form>
-          </div>
-          <div className="flipcard-back">
-            <form className="login-form" action="">
-              <div className="form-header">
-                <h3>EDIT TODO</h3>
-              </div>
-              <div className="form-group">
-                <form>
-                  <input
-                    required
-                    type="text"
-                    name="description"
-                    placeholder="Description" />
-                  {/* Category buttons */}
-                  <div>
-                    <button
-                      type="button" />
-                    <button
-                      type="button" />
-                    <button
-                      type="button" />
 
                   </div>
-                  <button type="submit">Submit</button>
                 </form>
               </div>
-              <div className="form-footer">
-              See updated todo <label className="label-highlight" htmlFor="form_switch"> CLICK HERE</label>
+
+              <div className="flipcard-back">
+                <form className="login-form" action="">
+                  <div className="form-header">
+                    <h3>EDIT TODO</h3>
+                  </div>
+                  <div className="form-group">
+                    <input
+                      required
+                      type="text"
+                      name="description"
+                      placeholder="Description" />
+                    {/* Category buttons */}
+                    {/* <div>
+        <button
+          type="button" />
+        <button
+          type="button" />
+        <button
+          type="button" />
+
+</div> */}
+                    <button type="submit">Submit</button>
+                  </div>
+                  <div className="form-footer">
+                  See updated todo <label className="label-highlight" htmlFor="form_switch" onClick={() => backtoTodoList()}> CLICK HERE</label>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+
+      ))}
     </div>
 
   )
