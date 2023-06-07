@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import avatar3 from './public/img/picture3.jpg';
+import avatar1 from './public/img/picture1.jpeg';
+import avatar2 from './public/img/picture2.png';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
@@ -59,7 +62,7 @@ export const Navbar = () => {
             value="avatar1"
             checked={selectedAvatar === 'avatar1'}
             onChange={(event) => setSelectedAvatar(event.target.value)} />
-          <img alt="avatar" src={avatar} />
+          <img alt="avatar" src={avatar1} />
         </label>
         <label>
           <input
@@ -67,7 +70,15 @@ export const Navbar = () => {
             value="avatar2"
             checked={selectedAvatar === 'avatar2'}
             onChange={(event) => setSelectedAvatar(event.target.value)} />
-          Avatar 2
+          <img alt="avatar" src={avatar2} />
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="avatar3"
+            checked={selectedAvatar === 'avatar3'}
+            onChange={(event) => setSelectedAvatar(event.target.value)} />
+          <img alt="avatar" src={avatar3} />
         </label>
         <button type="submit">Submit</button>
       </form>
