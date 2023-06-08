@@ -5,6 +5,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { Login } from 'components/Login';
 import { ToDoPage } from 'components/ToDoPage';
+import { PersonalPage } from 'components/PersonalPage';
 import { user } from './reducers/user';
 import { todos } from './reducers/todos';
 
@@ -22,8 +23,8 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Login />}> </Route>
           <Route path="/todopage" element={<ToDoPage />}> </Route>
-          {/* <Route path="/personalpage" element={<PersonalPage />}> </Route>
-          <Route path="*" element={<NotFound />}> </Route> */}
+          <Route path="/personalpage" element={<PersonalPage />}> </Route>
+          {/* <Route path="*" element={<NotFound />}> </Route> */}
         </Routes>
       </BrowserRouter>
     </Provider>

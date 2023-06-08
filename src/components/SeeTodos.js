@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
 import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
-import { CategoryButton } from './PostTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // ///////////////////////////// SEE TODOS //////////////////////////////// //
@@ -163,28 +162,6 @@ export const SeeTodos = () => {
                         type="text"
                         name="description"
                         placeholder="Description" />
-                      <div>
-                        <CategoryButton
-                          type="button"
-                          style={item.category === 'Job' ? { backgroundColor: 'green' } : ''}>
-                          Job
-                        </CategoryButton>
-                        <CategoryButton
-                          type="button"
-                          style={item.category === 'School' ? { backgroundColor: 'green' } : ''}>
-              School
-                        </CategoryButton>
-                        <CategoryButton
-                          type="button"
-                          style={item.category === 'Family' ? { backgroundColor: 'green' } : ''}>
-              Family
-                        </CategoryButton>
-                        <CategoryButton
-                          type="button"
-                          style={item.category === 'Hobbies' ? { backgroundColor: 'green' } : ''}>
-              Hobbies
-                        </CategoryButton>
-                      </div>
                       {/* <div>
                         <PriorityButton
                           type="button"
