@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
 import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
-import { CategoryButton } from './PostTodosStyles';
+import { CategoryButton, PriorityButton } from './PostTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // ///////////////////////////// SEE TODOS //////////////////////////////// //
@@ -26,6 +26,10 @@ export const SeeTodos = () => {
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
   const [messageToDelete, setMessageToDelete] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null)
+  const [updatedTodo, setUpdatedTodo] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  
 
   // ////////////////// USE EFFECT FETCH ALL TODOS ///////////////////
 
@@ -105,17 +109,79 @@ export const SeeTodos = () => {
 
   // /////////// EDIT TODO /////////////////////
 
-  const editTodo = (todoId) => {
+  const editTodo = (todoId, item) => {
     // Find the selected todo by its ID
+    setSelectedTodo(todoId);
+
     const selected = todoList.find((todo) => todo._id === todoId);
+    
     if (selected) {
-      setSelectedTodo(todoId);
+      console.log("selected todo:", selectedTodo)
+      setSelectedCategory(item.category);
+      setSelectedPriority(item.priority);
+    } else {
+      console.log("no selected todo")
     }
   };
 
   const backtoTodoList = () => {
     // Find the selected todo by its ID
     setSelectedTodo(null);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setUpdatedTodo({
+      ...updatedTodo,
+      description: e.target.value
+    });
+  };
+
+  const handleCategoryChange = (category) => {
+    setUpdatedTodo({
+      ...updatedTodo,
+      category
+    });
+    setSelectedCategory(category)
+  };
+  const handlePriorityChange = (priority) => {
+    setUpdatedTodo({
+      ...updatedTodo,
+      priority
+    });
+    setSelectedPriority(priority);
+  };
+
+  /////SEND EDIT TO BACKEND////////
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    const todoId = selectedTodo;
+    // Handle the submission of updatedTodo object
+    console.log("updated todo:", updatedTodo);
+
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(updatedTodo),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken
+      }
+    };
+    fetch(API_URL(`todos/${todoId}/`), options)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log(JSON.stringify(updatedTodo))
+          dispatch(todos.actions.setError(null));
+          console.log(data.response)
+        } else {
+          dispatch(todos.actions.setError(data.response));
+        }
+        
+      })
+      .finally(() => {
+          setAccordionOpen(!accordionOpen);
+        })
+    // ...
   };
 
   // //////////////////////////////////////////////////////////////////////// //
@@ -146,13 +212,13 @@ export const SeeTodos = () => {
                       <p>{item.completed}</p>
                       <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
                       <FormFooter>
-                      Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id)}>EDIT</label>
+                      Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id, item)}>EDIT</label>
                       </FormFooter>
                     </FormGroup>
                   </DisplayedTodo>
                 </FlipCardFront>
                 <FlipCardBack>
-                  <form className="login-form" action="">
+                <form onSubmit={handleEditSubmit}>
                     <FormHeader>
                       <h3>EDIT TODO</h3>
                     </FormHeader>
@@ -162,52 +228,60 @@ export const SeeTodos = () => {
                         required
                         type="text"
                         name="description"
-                        placeholder="Description" />
+                        placeholder="Description"
+                        onChange={handleDescriptionChange} />
                       <div>
                         <CategoryButton
                           type="button"
-                          style={item.category === 'Job' ? { backgroundColor: 'green' } : ''}>
+                          style={selectedCategory === 'Job' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Job')}>
                           Job
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={item.category === 'School' ? { backgroundColor: 'green' } : ''}>
+                          style={selectedCategory === 'School' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('School')}>
               School
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={item.category === 'Family' ? { backgroundColor: 'green' } : ''}>
+                          style={selectedCategory === 'Family' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Family')}>
               Family
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={item.category === 'Hobbies' ? { backgroundColor: 'green' } : ''}>
+                          style={selectedCategory === 'Hobbies' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Hobbies')}>
               Hobbies
                         </CategoryButton>
                       </div>
-                      {/* <div>
+                      <div>
                         <PriorityButton
                           type="button"
-                          active={newTodo.priority === 1}>
+                          style={selectedPriority === 1 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(1)}>
               1
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          active={newTodo.priority === 2}>
+                          style={selectedPriority === 2 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(2)}>
               2
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          active={newTodo.priority === 3}>
+                          style={selectedPriority === 3 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(3)}>
               3
                         </PriorityButton>
-                      </div> */}
-                      <EditSubmitButton type="submit">Submit</EditSubmitButton>
+                      </div>
+                      <EditSubmitButton onClick={() => backtoTodoList()} htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
                     </FormGroup>
                     <FormFooter>
-                  See updated todo <LabelHighlight htmlFor={`form_switch_${item._id}`} onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                  See updated todo <LabelHighlight  >CLICK HERE</LabelHighlight>
                     </FormFooter>
-                  </form>
+                </form>    
                 </FlipCardBack>
               </FlipCardInner>
             </FlipCard>

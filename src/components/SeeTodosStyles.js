@@ -38,6 +38,12 @@ export const FormGroup = styled.div`
   border-radius: 12px;
 `;
 
+export const EditForm = styled.form`
+  margin-bottom: 1rem;
+  background: lightgreen;
+  border-radius: 12px;
+`;
+
 export const EditSubmitButton = styled.button`
   background: #69d2e7;
   border: 1px solid #ddd;
