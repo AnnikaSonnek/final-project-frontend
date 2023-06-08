@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import avatar3 from './public/img/picture3.jpg';
-import avatar1 from './public/img/picture1.jpeg';
-import avatar2 from './public/img/picture2.png';
+import avatar3 from '../img/picture3.jpg';
+import avatar1 from '../img/picture1.jpeg';
+import avatar2 from '../img/picture2.png';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
