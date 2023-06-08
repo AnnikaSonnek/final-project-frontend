@@ -179,7 +179,7 @@ export const SeeTodos = () => {
         
       })
       .finally(() => {
-          setAccordionOpen(!accordionOpen);
+          setSelectedTodo(null);
         })
     // ...
   };
@@ -276,10 +276,10 @@ export const SeeTodos = () => {
               3
                         </PriorityButton>
                       </div>
-                      <EditSubmitButton onClick={() => backtoTodoList()} htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
+                      <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
                     </FormGroup>
                     <FormFooter>
-                  See updated todo <LabelHighlight  >CLICK HERE</LabelHighlight>
+                  See updated todo <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
                     </FormFooter>
                 </form>    
                 </FlipCardBack>
