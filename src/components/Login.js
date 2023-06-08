@@ -63,6 +63,7 @@ export const Login = () => {
           dispatch(user.actions.setAccessToken(data.response.accessToken));
           dispatch(user.actions.setUsername(data.response.username));
           dispatch(user.actions.setUserId(data.response.id));
+          dispatch(user.actions.setAvatar(data.response.avatar));
           dispatch(user.actions.setError(null));
           navigate('/todopage'); // Redirect to home page
         } else {

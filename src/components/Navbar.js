@@ -2,8 +2,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import bild from '../img/default-avatar.jpg';
+import bild2 from '../img/picture2.png';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
+import './NavBar.css';
 
 export const Navbar = () => {
   const loggedInUser = useSelector((store) => store.user.username);
@@ -23,16 +26,42 @@ export const Navbar = () => {
     navigate('/Personalpage');
   };
 
+  const onTotoPageButtonClick = () => {
+    navigate('/Todopage');
+  };
+
   return (
-    <>
-      <img alt="avatar" src={`../img/${avatar}`} />
-      <h1>Hello {loggedInUser}!</h1>
-      <button type="button" className="Btn" onClick={onLogoutButtonClick}>
+    <section className="top-nav">
+      <div className="logo-picture">
+        {avatar === 1 ? (
+          <img alt="avatar" src={bild} />
+        ) : null}
+        {avatar === 2 ? (
+          <img alt="avatar" src={bild2} />
+        ) : null}
+      </div>
+      <p>Hello {loggedInUser}!</p>
+      <input id="menu-toggle" type="checkbox" />
+      <label className="menu-button-container" htmlFor="menu-toggle">
+        <div className="menu-button" />
+      </label>
+      <ul className="menu">
+        <li>
+          <button type="button" className="Btn" onClick={onLogoutButtonClick}>
         Logout
-      </button>
-      <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
+          </button>
+        </li>
+        <li>
+          <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
         Personal Page
-      </button>
-    </>
+          </button>
+        </li>
+        <li>
+          <button type="button" className="Btn" onClick={onTotoPageButtonClick}>
+        Todopage
+          </button>
+        </li>
+      </ul>
+    </section>
   );
 };
