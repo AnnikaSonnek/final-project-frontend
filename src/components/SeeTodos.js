@@ -11,6 +11,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
 import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
@@ -29,7 +31,7 @@ export const SeeTodos = () => {
   const [updatedTodo, setUpdatedTodo] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
-  
+  const [selectedDeadline, setSelectedDeadline] = useState(null);
 
   // ////////////////// USE EFFECT FETCH ALL TODOS ///////////////////
 
@@ -151,6 +153,14 @@ export const SeeTodos = () => {
     setSelectedPriority(priority);
   };
 
+  const handleDeadlineChange = (deadline) => {
+    console.log("Selected deadline:", deadline);
+    setUpdatedTodo({
+      ...updatedTodo,
+      deadline
+    });
+  };
+
   /////SEND EDIT TO BACKEND////////
   const handleEditSubmit = (e) => {
     e.preventDefault();
@@ -208,8 +218,10 @@ export const SeeTodos = () => {
                       <p>{item.description}</p>
                       <p>{item.priority}</p>
                       <p>{item.category}</p>
-                      <p>{item.createdAt}</p>
+                      <p>Created: {item.createdAt}</p>
+                      <p>Deadline: {item.deadline}</p>
                       <p>{item.completed}</p>
+
                       <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
                       <FormFooter>
                       Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id, item)}>EDIT</label>
@@ -275,6 +287,17 @@ export const SeeTodos = () => {
                           onClick={() => handlePriorityChange(3)}>
               3
                         </PriorityButton>
+                      </div>
+                      <div style={{ position: 'absolute', zIndex: 9999 }}>
+                      <DatePicker
+                        selected={selectedDeadline}
+                        onChange={(date) => {
+                          console.log('Date selected:', date);
+                          setSelectedDeadline(date);
+                          setUpdatedTodo({ ...updatedTodo, deadline: selectedDeadline ? selectedDeadline.toISOString() : null }); // Update the deadline property with the selected date
+                          console.log(selectedDeadline);
+                        }} 
+                      />
                       </div>
                       <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
                     </FormGroup>
