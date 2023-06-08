@@ -1,12 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+// //////////////////////////////////////////////////////////////////////// //
+// /////////////////////////////// IMPORTS //////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import bild from '../img/default-avatar.jpg';
 import bild2 from '../img/picture2.png';
+import bild3 from '../img/picture3.jpg';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
 import './NavBar.css';
+
+// //////////////////////////////////////////////////////////////////////// //
+// //////////////////////////// NAVBAR //////////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
 
 export const Navbar = () => {
   const loggedInUser = useSelector((store) => store.user.username);
@@ -30,6 +39,10 @@ export const Navbar = () => {
     navigate('/Todopage');
   };
 
+  // //////////////////////////////////////////////////////////////////////// //
+  // ///////////////////////////// RETURN JSX /////////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
+
   return (
     <section className="top-nav">
       <div className="logo-picture">
@@ -38,6 +51,9 @@ export const Navbar = () => {
         ) : null}
         {avatar === 2 ? (
           <img alt="avatar" src={bild2} />
+        ) : null}
+        {avatar === 3 ? (
+          <img alt="avatar" src={bild3} />
         ) : null}
       </div>
       <p>Hello {loggedInUser}!</p>
