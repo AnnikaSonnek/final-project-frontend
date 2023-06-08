@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar3 from '../img/picture3.jpg';
-import avatar1 from '../img/picture1.jpeg';
+import avatar1 from '../img/picture1.jpg';
 import avatar2 from '../img/picture2.png';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
