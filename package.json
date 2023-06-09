@@ -13,6 +13,7 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "openai": "^3.2.1",
+    "proptypes": "^1.1.0",
     "react": "^18.2.0",
     "react-date-picker": "^10.2.0",
     "react-datepicker": "^4.12.0",

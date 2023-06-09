@@ -12,6 +12,7 @@ position: relative;
 width: 20px;
 height: 20px;
 
+
 @media (min-width: 668px) {
   width: 30px;
   height: 30px;

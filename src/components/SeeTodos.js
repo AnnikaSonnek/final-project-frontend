@@ -8,26 +8,54 @@
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { BsCalendarDateFill } from 'react-icons/bs';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
-import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
+import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
+import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
+import { ProgressBar } from './ProgressBar';
 
 // //////////////////////////////////////////////////////////////////////// //
-// ///////////////////////////// SEE TODOS //////////////////////////////// //
+// //////////////// CUSTOM INPUT FOR DATEPICKER /////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
 
+
+const CustomInput = forwardRef(({ onClick }, ref) => (
+  <IconButton onClick={onClick} ref={ref} type="button">
+    <BsCalendarDateFill fill="black" />
+  </IconButton>
+));
+
+
+
+// //////////////////////////////////////////////////////////////////////// //
+// //////////////////////// SEE TODOS-COMPONENT /////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
 export const SeeTodos = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.user.accessToken)
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
+ 
+
+// //////////////////////// STATE VARIABLES /////////////////////////// //
   const [messageToDelete, setMessageToDelete] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [selectedDeadline, setSelectedDeadline] = useState(null);
+  const [updatedTodo, setUpdatedTodo] = useState({});
 
-  // ////////////////// USE EFFECT FETCH ALL TODOS ///////////////////
 
+// //////////////////////////////////////////////////////////////////////// //
+// //////////////////////////// FETCH FUNCTIONS /////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
+
+  // /////////////////// USE EFFECT FETCH ALL TODOS ///////////////// //
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -52,8 +80,7 @@ export const SeeTodos = () => {
       });
   })
 
-  // //////////////////DELETE TODO //////////////////////
-
+ // /////////////////// DELETE TODO ///////////////// //
   const DeleteMessage = (deleteID) => {
     const options = {
       method: 'DELETE',
@@ -77,8 +104,8 @@ export const SeeTodos = () => {
       .catch((error) => console.log(error))
   };
 
-  // /////////// TOGGLE TODO /////////////////////
 
+ // /////////////////// TOGGLE TODO ///////////////// //
   const onToggleTodo = (todoId, completed) => {
     const options = {
       method: 'PATCH',
@@ -102,19 +129,80 @@ export const SeeTodos = () => {
       });
   };
 
-  // /////////// EDIT TODO /////////////////////
+ // /////////////////// EDIT TODO ///////////////// //
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    const todoId = selectedTodo;
+    // Handle the submission of updatedTodo object
+    console.log("updated todo:", updatedTodo);
 
-  const editTodo = (todoId) => {
-    // Find the selected todo by its ID
-    const selected = todoList.find((todo) => todo._id === todoId);
-    if (selected) {
-      setSelectedTodo(todoId);
-    }
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(updatedTodo),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken
+      }
+    };
+    fetch(API_URL(`todos/${todoId}/`), options)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log(JSON.stringify(updatedTodo))
+          dispatch(todos.actions.setError(null));
+          console.log(data.response)
+        } else {
+          dispatch(todos.actions.setError(data.response));
+        }
+        
+      })
+      .finally(() => {
+          setSelectedTodo(null);
+        })
+    // ...
   };
 
+// //////////////////////////////////////////////////////////////////////// //
+// ///////////////////////// HANDLE INPUT-FUNCTIONS /////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
+ // ////////////////// FIND TODO TO EDIT //////////////// //
+const editTodo = (todoId, item) => {
+    // Find the selected todo by its ID
+    setSelectedTodo(todoId);
+
+    const selected = todoList.find((todo) => todo._id === todoId);
+    
+    if (selected) {
+      console.log("selected todo:", selectedTodo)
+      setSelectedCategory(item.category);
+      setSelectedPriority(item.priority);
+    } else {
+      console.log("no selected todo")
+    }
+  };
+ // ////////////////// FLIP CARD BACK TO LIST //////////////// //
   const backtoTodoList = () => {
     // Find the selected todo by its ID
     setSelectedTodo(null);
+  };
+
+ // ////////////////// HANDLE DESCRIPTION //////////////// //
+  const handleDescriptionChange = (e) => {
+    setUpdatedTodo({...updatedTodo, description: e.target.value
+    });
+  };
+
+   // ////////////////// CATEGORY //////////////// //
+  const handleCategoryChange = (category) => {
+    setUpdatedTodo({...updatedTodo, category});
+    setSelectedCategory(category)
+  };
+
+   // ////////////////// HANDLE PRIORITY //////////////// //
+  const handlePriorityChange = (priority) => {
+    setUpdatedTodo({...updatedTodo, priority});
+    setSelectedPriority(priority);
   };
 
   // //////////////////////////////////////////////////////////////////////// //
@@ -122,6 +210,8 @@ export const SeeTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
+    <>
+    <ProgressBar />
     <GlobalStyle>
       <Wrapper>
         {todoList.map((item) => (
@@ -141,17 +231,19 @@ export const SeeTodos = () => {
                       <p>{item.description}</p>
                       <p>{item.priority}</p>
                       <p>{item.category}</p>
-                      <p>{item.createdAt}</p>
+                      <p>Created: {new Date (item.createdAt).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
+                      <p>Deadline: {new Date(item.deadline).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
                       <p>{item.completed}</p>
+
                       <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
                       <FormFooter>
-                      Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id)}>EDIT</label>
+                      Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id, item)}>EDIT</label>
                       </FormFooter>
                     </FormGroup>
                   </DisplayedTodo>
                 </FlipCardFront>
                 <FlipCardBack>
-                  <form className="login-form" action="">
+                <form onSubmit={handleEditSubmit}>
                     <FormHeader>
                       <h3>EDIT TODO</h3>
                     </FormHeader>
@@ -161,30 +253,89 @@ export const SeeTodos = () => {
                         required
                         type="text"
                         name="description"
-                        placeholder="Description" />
-                      {/* <div>
+                        placeholder="Description"
+                        onChange={handleDescriptionChange} />
+                      <div>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'Job' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Job')}>
+                          Job
+                        </CategoryButton>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'School' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('School')}>
+              School
+                        </CategoryButton>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'Family' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Family')}>
+              Family
+                        </CategoryButton>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'Hobbies' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Hobbies')}>
+              Hobbies
+                        </CategoryButton>
+                      </div>
+                      <div>
                         <PriorityButton
                           type="button"
-                          active={newTodo.priority === 1}>
+                          style={selectedPriority === 1 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(1)}>
               1
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          active={newTodo.priority === 2}>
+                          style={selectedPriority === 2 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(2)}>
               2
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          active={newTodo.priority === 3}>
+                          style={selectedPriority === 3 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(3)}>
               3
                         </PriorityButton>
-                      </div> */}
-                      <EditSubmitButton type="submit">Submit</EditSubmitButton>
+                        <PriorityButton
+                          type="button"
+                          style={selectedPriority === null ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(null)}>
+              No priority
+                        </PriorityButton>
+                      </div>
+                      <CalendarContainer>
+                        <DatePicker
+                          customInput={<CustomInput />}
+                          selected={selectedDeadline}
+                          popperPlacement="top-start" // Add this line to adjust the position of the calendar
+                          popperModifiers={{
+                            preventOverflow: {
+                              enabled: true,
+                              escapeWithReference: false, // Add this line to prevent the calendar from escaping the reference element
+                              boundariesElement: 'viewport' // Add this line to set the viewport as the boundary for the calendar
+                          }}}
+                          onChange={(date) => {
+                            console.log('Date selected:', date);
+                            setSelectedDeadline(date);
+                            const adjustedDate = new Date(date.setHours(0, 0, 0));
+                            setUpdatedTodo({
+                              ...updatedTodo,
+                              deadline: adjustedDate ? adjustedDate.toISOString() : null,
+                            });
+                            console.log('Selected deadline:', selectedDeadline);
+                        }}
+                        />
+                    </CalendarContainer>
+                      <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
                     </FormGroup>
                     <FormFooter>
-                  See updated todo <LabelHighlight htmlFor={`form_switch_${item._id}`} onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                  See updated todo <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
                     </FormFooter>
-                  </form>
+                </form>    
                 </FlipCardBack>
               </FlipCardInner>
             </FlipCard>
@@ -192,5 +343,6 @@ export const SeeTodos = () => {
         ))}
       </Wrapper>
     </GlobalStyle>
+    </>
   );
 };
