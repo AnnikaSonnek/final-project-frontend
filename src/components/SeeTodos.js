@@ -17,6 +17,12 @@ import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
 import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
+import { ProgressBar } from './ProgressBar';
+
+// //////////////////////////////////////////////////////////////////////// //
+// //////////////// CUSTOM INPUT FOR DATEPICKER /////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
 
 const CustomInput = forwardRef(({ onClick }, ref) => (
   <IconButton onClick={onClick} ref={ref} type="button">
@@ -27,23 +33,29 @@ const CustomInput = forwardRef(({ onClick }, ref) => (
 
 
 // //////////////////////////////////////////////////////////////////////// //
-// ///////////////////////////// SEE TODOS //////////////////////////////// //
+// //////////////////////// SEE TODOS-COMPONENT /////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-
 export const SeeTodos = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.user.accessToken)
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
+ 
+
+// //////////////////////// STATE VARIABLES /////////////////////////// //
   const [messageToDelete, setMessageToDelete] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null)
-  
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedDeadline, setSelectedDeadline] = useState(null);
   const [updatedTodo, setUpdatedTodo] = useState({});
 
-  // ////////////////// USE EFFECT FETCH ALL TODOS ///////////////////
 
+// //////////////////////////////////////////////////////////////////////// //
+// //////////////////////////// FETCH FUNCTIONS /////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
+
+  // /////////////////// USE EFFECT FETCH ALL TODOS ///////////////// //
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -68,8 +80,7 @@ export const SeeTodos = () => {
       });
   })
 
-  // //////////////////DELETE TODO //////////////////////
-
+ // /////////////////// DELETE TODO ///////////////// //
   const DeleteMessage = (deleteID) => {
     const options = {
       method: 'DELETE',
@@ -93,8 +104,8 @@ export const SeeTodos = () => {
       .catch((error) => console.log(error))
   };
 
-  // /////////// TOGGLE TODO /////////////////////
 
+ // /////////////////// TOGGLE TODO ///////////////// //
   const onToggleTodo = (todoId, completed) => {
     const options = {
       method: 'PATCH',
@@ -118,43 +129,7 @@ export const SeeTodos = () => {
       });
   };
 
-  // /////////// EDIT TODO /////////////////////
-
-  const editTodo = (todoId, item) => {
-    // Find the selected todo by its ID
-    setSelectedTodo(todoId);
-
-    const selected = todoList.find((todo) => todo._id === todoId);
-    
-    if (selected) {
-      console.log("selected todo:", selectedTodo)
-      setSelectedCategory(item.category);
-      setSelectedPriority(item.priority);
-    } else {
-      console.log("no selected todo")
-    }
-  };
-
-  const backtoTodoList = () => {
-    // Find the selected todo by its ID
-    setSelectedTodo(null);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setUpdatedTodo({...updatedTodo, description: e.target.value
-    });
-  };
-
-  const handleCategoryChange = (category) => {
-    setUpdatedTodo({...updatedTodo, category});
-    setSelectedCategory(category)
-  };
-  const handlePriorityChange = (priority) => {
-    setUpdatedTodo({...updatedTodo, priority});
-    setSelectedPriority(priority);
-  };
-
-  /////SEND EDIT TO BACKEND////////
+ // /////////////////// EDIT TODO ///////////////// //
   const handleEditSubmit = (e) => {
     e.preventDefault();
     const todoId = selectedTodo;
@@ -187,11 +162,61 @@ export const SeeTodos = () => {
     // ...
   };
 
+// //////////////////////////////////////////////////////////////////////// //
+// ///////////////////////// HANDLE INPUT-FUNCTIONS /////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
+ // ////////////////// FIND TODO TO EDIT //////////////// //
+const editTodo = (todoId, item) => {
+    // Find the selected todo by its ID
+    setSelectedTodo(todoId);
+
+    const selected = todoList.find((todo) => todo._id === todoId);
+    
+    if (selected) {
+      console.log("selected todo:", selectedTodo)
+      setSelectedCategory(item.category);
+      setSelectedPriority(item.priority);
+    } else {
+      console.log("no selected todo")
+    }
+  };
+ // ////////////////// FLIP CARD BACK TO LIST //////////////// //
+  const backtoTodoList = () => {
+    // Find the selected todo by its ID
+    setSelectedTodo(null);
+  };
+
+ // ////////////////// HANDLE DESCRIPTION //////////////// //
+  const handleDescriptionChange = (e) => {
+    setUpdatedTodo({...updatedTodo, description: e.target.value
+    });
+  };
+
+   // ////////////////// CATEGORY //////////////// //
+  const handleCategoryChange = (category) => {
+    setUpdatedTodo({...updatedTodo, category});
+    setSelectedCategory(category)
+  };
+
+   // ////////////////// HANDLE PRIORITY //////////////// //
+  const handlePriorityChange = (priority) => {
+    setUpdatedTodo({...updatedTodo, priority});
+    setSelectedPriority(priority);
+  };
+
+
+
+
+
+
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
+    <>
+    <ProgressBar />
     <GlobalStyle>
       <Wrapper>
         {todoList.map((item) => (
@@ -280,6 +305,12 @@ export const SeeTodos = () => {
                           onClick={() => handlePriorityChange(3)}>
               3
                         </PriorityButton>
+                        <PriorityButton
+                          type="button"
+                          style={selectedPriority === null ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(null)}>
+              No priority
+                        </PriorityButton>
                       </div>
                       <CalendarContainer>
                         <DatePicker
@@ -317,5 +348,6 @@ export const SeeTodos = () => {
         ))}
       </Wrapper>
     </GlobalStyle>
+    </>
   );
 };
