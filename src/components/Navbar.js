@@ -1,45 +1,27 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+// //////////////////////////////////////////////////////////////////////// //
+// /////////////////////////////// IMPORTS //////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import avatar3 from '../img/picture3.jpg';
-import avatar1 from '../img/picture1.jpeg';
-import avatar2 from '../img/picture2.png';
+import { useNavigate } from 'react-router-dom';
+import bild from '../img/default-avatar.jpg';
+import bild2 from '../img/picture2.png';
+import bild3 from '../img/picture3.jpg';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
-import { API_URL } from '../utils/urls';
+import './NavBar.css';
+
+// //////////////////////////////////////////////////////////////////////// //
+// //////////////////////////// NAVBAR //////////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
 
 export const Navbar = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState('');
-  const accessToken = useSelector((store) => store.user.accessToken);
-
+  const loggedInUser = useSelector((store) => store.user.username);
+  const avatar = useSelector((store) => store.user.avatar);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onSelectAvatarSubmit = (event) => {
-    event.preventDefault();
-
-    const options = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: accessToken
-      },
-      body: JSON.stringify({ avatar: selectedAvatar })
-    };
-
-    fetch(API_URL('users/:id/avatar'), options)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.response);
-        if (data.success) {
-          console.log(data.response.avatar);
-          dispatch(user.actions.setSelectedAvatar(data.response.avatar));
-          dispatch(user.actions.setError(null));
-        } else {
-          console.log(data.response);
-          dispatch(user.actions.setError(data.response));
-        }
-      });
-  };
 
   const onLogoutButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));
@@ -49,44 +31,53 @@ export const Navbar = () => {
     dispatch(todos.actions.setItems([]));
   };
 
-  const loggedInUser = useSelector((store) => store.user.username);
-  const avatar = useSelector((store) => store.user.avatar);
-  console.log(avatar);
+  const onPersonalPageButtonClick = () => {
+    navigate('/Personalpage');
+  };
+
+  const onTotoPageButtonClick = () => {
+    navigate('/Todopage');
+  };
+
+  // //////////////////////////////////////////////////////////////////////// //
+  // ///////////////////////////// RETURN JSX /////////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
 
   return (
-    <>
-      <form onSubmit={onSelectAvatarSubmit}>
-        <label>
-          <input
-            type="radio"
-            value="avatar1"
-            checked={selectedAvatar === 'avatar1'}
-            onChange={(event) => setSelectedAvatar(event.target.value)} />
-          <img alt="avatar" src={avatar1} />
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="avatar2"
-            checked={selectedAvatar === 'avatar2'}
-            onChange={(event) => setSelectedAvatar(event.target.value)} />
-          <img alt="avatar" src={avatar2} />
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="avatar3"
-            checked={selectedAvatar === 'avatar3'}
-            onChange={(event) => setSelectedAvatar(event.target.value)} />
-          <img alt="avatar" src={avatar3} />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-      <img alt="avatar" src={avatar} />
-      <h1>Hello {loggedInUser}!</h1>
-      <button type="button" className="Btn" onClick={onLogoutButtonClick}>
+    <section className="top-nav">
+      <div className="logo-picture">
+        {avatar === 1 ? (
+          <img alt="avatar" src={bild} />
+        ) : null}
+        {avatar === 2 ? (
+          <img alt="avatar" src={bild2} />
+        ) : null}
+        {avatar === 3 ? (
+          <img alt="avatar" src={bild3} />
+        ) : null}
+      </div>
+      <p>Hello {loggedInUser}!</p>
+      <input id="menu-toggle" type="checkbox" />
+      <label className="menu-button-container" htmlFor="menu-toggle">
+        <div className="menu-button" />
+      </label>
+      <ul className="menu">
+        <li>
+          <button type="button" className="Btn" onClick={onLogoutButtonClick}>
         Logout
-      </button>
-    </>
+          </button>
+        </li>
+        <li>
+          <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
+        Personal Page
+          </button>
+        </li>
+        <li>
+          <button type="button" className="Btn" onClick={onTotoPageButtonClick}>
+        Todopage
+          </button>
+        </li>
+      </ul>
+    </section>
   );
 };
