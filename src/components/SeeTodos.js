@@ -8,15 +8,23 @@
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { BsCalendarDateFill } from 'react-icons/bs';
 import { todos } from '../reducers/todos';
 import { API_URL } from '../utils/urls';
-import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
-import { CategoryButton, PriorityButton } from './PostTodosStyles';
+import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
+import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
+
+const CustomInput = forwardRef(({ onClick }, ref) => (
+  <IconButton onClick={onClick} ref={ref} type="button">
+    <BsCalendarDateFill fill="black" />
+  </IconButton>
+));
+
+
 
 // //////////////////////////////////////////////////////////////////////// //
 // ///////////////////////////// SEE TODOS //////////////////////////////// //
@@ -28,10 +36,11 @@ export const SeeTodos = () => {
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
   const [messageToDelete, setMessageToDelete] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null)
-  const [updatedTodo, setUpdatedTodo] = useState({});
+  
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedDeadline, setSelectedDeadline] = useState(null);
+  const [updatedTodo, setUpdatedTodo] = useState({});
 
   // ////////////////// USE EFFECT FETCH ALL TODOS ///////////////////
 
@@ -132,33 +141,17 @@ export const SeeTodos = () => {
   };
 
   const handleDescriptionChange = (e) => {
-    setUpdatedTodo({
-      ...updatedTodo,
-      description: e.target.value
+    setUpdatedTodo({...updatedTodo, description: e.target.value
     });
   };
 
   const handleCategoryChange = (category) => {
-    setUpdatedTodo({
-      ...updatedTodo,
-      category
-    });
+    setUpdatedTodo({...updatedTodo, category});
     setSelectedCategory(category)
   };
   const handlePriorityChange = (priority) => {
-    setUpdatedTodo({
-      ...updatedTodo,
-      priority
-    });
+    setUpdatedTodo({...updatedTodo, priority});
     setSelectedPriority(priority);
-  };
-
-  const handleDeadlineChange = (deadline) => {
-    console.log("Selected deadline:", deadline);
-    setUpdatedTodo({
-      ...updatedTodo,
-      deadline
-    });
   };
 
   /////SEND EDIT TO BACKEND////////
@@ -218,8 +211,8 @@ export const SeeTodos = () => {
                       <p>{item.description}</p>
                       <p>{item.priority}</p>
                       <p>{item.category}</p>
-                      <p>Created: {item.createdAt}</p>
-                      <p>Deadline: {item.deadline}</p>
+                      <p>Created: {new Date (item.createdAt).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
+                      <p>Deadline: {new Date(item.deadline).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
                       <p>{item.completed}</p>
 
                       <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
@@ -288,17 +281,29 @@ export const SeeTodos = () => {
               3
                         </PriorityButton>
                       </div>
-                      <div style={{ position: 'absolute', zIndex: 9999 }}>
-                      <DatePicker
-                        selected={selectedDeadline}
-                        onChange={(date) => {
-                          console.log('Date selected:', date);
-                          setSelectedDeadline(date);
-                          setUpdatedTodo({ ...updatedTodo, deadline: selectedDeadline ? selectedDeadline.toISOString() : null }); // Update the deadline property with the selected date
-                          console.log(selectedDeadline);
-                        }} 
-                      />
-                      </div>
+                      <CalendarContainer>
+                        <DatePicker
+                          customInput={<CustomInput />}
+                          selected={selectedDeadline}
+                          popperPlacement="top-start" // Add this line to adjust the position of the calendar
+                          popperModifiers={{
+                            preventOverflow: {
+                              enabled: true,
+                              escapeWithReference: false, // Add this line to prevent the calendar from escaping the reference element
+                              boundariesElement: 'viewport' // Add this line to set the viewport as the boundary for the calendar
+                          }}}
+                          onChange={(date) => {
+                            console.log('Date selected:', date);
+                            setSelectedDeadline(date);
+                            const adjustedDate = new Date(date.setHours(0, 0, 0));
+                            setUpdatedTodo({
+                              ...updatedTodo,
+                              deadline: adjustedDate ? adjustedDate.toISOString() : null,
+                            });
+                            console.log('Selected deadline:', selectedDeadline);
+                        }}
+                        />
+                    </CalendarContainer>
                       <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
                     </FormGroup>
                     <FormFooter>

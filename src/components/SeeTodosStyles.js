@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export const GlobalStyle = styled.div`
   * {
@@ -36,6 +36,10 @@ export const FormGroup = styled.div`
   margin-bottom: 1rem;
   background: lightgreen;
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const EditForm = styled.form`
@@ -88,6 +92,7 @@ export const FlipCardInner = styled.div`
 
 export const FlipCardFront = styled.div`
   position: absolute;
+  z-index: 1; //ADDED
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
@@ -96,6 +101,7 @@ export const FlipCardFront = styled.div`
 
 export const FlipCardBack = styled.div`
   position: absolute;
+  z-index: 1; //ADDED
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
@@ -140,3 +146,18 @@ export const LoginInput = styled.input`
 export const TodoContainer = styled.div`
   margin-bottom: 15rem;
 `;
+
+export const CalendarContainer = styled.div`
+  position: relative;
+  z-index: 9999;
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+
+@media (min-width: 668px) {
+  width: 30px;
+  height: 30px;
+} `
