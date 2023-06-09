@@ -1,14 +1,17 @@
 /* eslint-disable max-len */
+/* eslint-disable react/no-array-index-key */
+
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-import React, { useState, forwardRef } from 'react'
+
+import React, { useState, useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import { BsCalendarDateFill } from 'react-icons/bs';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
-import { FormPostTodos, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
+import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
@@ -21,6 +24,7 @@ const CustomInput = forwardRef(({ onClick }, ref) => (
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////////////////// POST TODOS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
+
 export const PostTodos = () => {
   const dispatch = useDispatch(); // Here we use the dispatch function to dispatch actions.
   // const maxCharacters = 29; // Max amount of characters allowed in the input field.
@@ -28,6 +32,8 @@ export const PostTodos = () => {
   const [deadlineDate, setDeadlineDate] = useState(null);
   // get the Deadline date using the useState hook.
   const [accordionOpen, setAccordionOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
@@ -85,11 +91,53 @@ export const PostTodos = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewTodo({ ...newTodo, [name]: value });
+    setInputValue(event.target.value)
   };
 
   const toggleAccordion = () => {
     setAccordionOpen(!accordionOpen);
   };
+
+  // //////////////////////////////////////////////////////////////////////// //
+  // ///////////////////////////// AI /////////////////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
+
+  const fetchSuggestions = async () => {
+    try {
+      const response = await fetch('https://api.openai.com/v1/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+          Authorization: 'Bearer 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' },
+        body: JSON.stringify({
+          model: 'text-babbage-001',
+          prompt: inputValue,
+          echo: true,
+          max_tokens: 2,
+          temperature: 0.3
+        })
+      });
+
+      const data = await response.json();
+      const newsuggestions = data.choices[0].text.trim().split(' ');
+      setSuggestions(newsuggestions);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (inputValue.trim() !== '') {
+        fetchSuggestions();
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [inputValue]);
+
+  /* const handleInputFieldChange = (e) => {
+    setInputValue(e.target.value);
+  }; */
 
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
@@ -110,6 +158,11 @@ export const PostTodos = () => {
             placeholder="Description"
             value={newTodo.description}
             onChange={handleInputChange} />
+          <AIcontainer>
+            {suggestions.map((suggestion, index) => (
+              <AI key={index}>{suggestion}</AI>
+            ))}
+          </AIcontainer>
           {/* Category buttons */}
           <div>
             <CategoryButton

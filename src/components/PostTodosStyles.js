@@ -44,3 +44,12 @@ justify-content: center;
 align-items: center;
 background-color: lightcoral;
 `
+export const AI = styled.p`
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const AIcontainer = styled.div`
+display: flex;
+flex-direction: row;
+`
