@@ -8,6 +8,7 @@
 import React, { useState, useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
+import 'dotenv/config'
 import { BsCalendarDateFill } from 'react-icons/bs';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
@@ -115,6 +116,7 @@ export const PostTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// AI /////////////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
+
 
   const fetchSuggestions = async () => {
     try {
