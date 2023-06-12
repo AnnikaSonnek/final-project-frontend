@@ -265,7 +265,6 @@ const editTodo = (todoId, item) => {
                       <p>{item.category}</p>
                       <p>Created: {new Date (item.createdAt).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
                       <p>Deadline: {new Date(item.deadline).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
-                      <p>{item.completed}</p>
 
                       <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
                       <FormFooter>
