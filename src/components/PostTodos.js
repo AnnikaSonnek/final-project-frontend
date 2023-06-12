@@ -8,11 +8,15 @@
 import React, { useState, useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
+import 'dotenv/config'
 import { BsCalendarDateFill } from 'react-icons/bs';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
+
+require('dotenv').config()
+const apikey = process.env.REACT_APP_API_KEY
 
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
 const CustomInput = forwardRef(({ onClick }, ref) => (
@@ -102,12 +106,13 @@ export const PostTodos = () => {
   // ///////////////////////////// AI /////////////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
+
   const fetchSuggestions = async () => {
     try {
       const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
-          Authorization: 'Bearer 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' },
+          Authorization: `Bearer ${apikey}`},
         body: JSON.stringify({
           model: 'text-babbage-001',
           prompt: inputValue,
