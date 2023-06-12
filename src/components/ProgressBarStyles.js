@@ -1,15 +1,16 @@
+// In the styled components file (ProgressBarStyles.js)
 import styled from 'styled-components/macro';
 
 export const WrapCircles = styled.div`
   display: flex;
-  min-height: 100vh;
+  min-height: 50vh;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
 `;
 
-export const Circle = styled.div`
+export const StyledCircle = styled.div`
   position: relative;
   width: 150px;
   height: 150px;
@@ -17,19 +18,7 @@ export const Circle = styled.div`
   border-radius: 50%;
   background: #FFCDB2;
   overflow: hidden;
-
-  &.per-25 {
-    background-image: conic-gradient(#B5838D 25%, #FFCDB2 0);
-  }
-  &.per-50 {
-    background-image: conic-gradient(#B5838D 50%, #FFCDB2 0);
-  }
-  &.per-75 {
-    background-image: conic-gradient(#B5838D 75%, #FFCDB2 0);
-  }
-  &.per-100 {
-    background-image: conic-gradient(#B5838D 100%, #FFCDB2 0);
-  }
+  background-image: conic-gradient(#B5838D ${props => props.completedPercentage * 3.6}deg, #B5838D 0, #FFCDB2 0);
 
   .inner {
     display: flex;
@@ -47,4 +36,4 @@ export const Circle = styled.div`
     font-weight: 300;
     color: rgba(255, 255, 255, 0.75);
   }
-`;
+`

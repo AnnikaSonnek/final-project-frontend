@@ -8,15 +8,16 @@
 import React, { useState, useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
-import 'dotenv/config'
+// import 'dotenv/config'
 import { BsCalendarDateFill } from 'react-icons/bs';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
+import { ProgressBar } from './ProgressBar';
 
-require('dotenv').config()
-const apikey = process.env.REACT_APP_API_KEY
+/*require('dotenv').config()
+const apikey = process.env.REACT_APP_API_KEY*/
 
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
 const CustomInput = forwardRef(({ onClick }, ref) => (
@@ -36,8 +37,8 @@ export const PostTodos = () => {
   const [deadlineDate, setDeadlineDate] = useState(null);
   // get the Deadline date using the useState hook.
   const [accordionOpen, setAccordionOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  // const [inputValue, setInputValue] = useState('');
+  // const [suggestions, setSuggestions] = useState([]);
 
   // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
@@ -95,7 +96,7 @@ export const PostTodos = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewTodo({ ...newTodo, [name]: value });
-    setInputValue(event.target.value)
+    // setInputValue(event.target.value)
   };
 
   const toggleAccordion = () => {
@@ -107,7 +108,7 @@ export const PostTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
 
-  const fetchSuggestions = async () => {
+  /* const fetchSuggestions = async () => {
     try {
       const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
@@ -138,17 +139,20 @@ export const PostTodos = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [inputValue]);
+  }, [inputValue]); */
 
   /* const handleInputFieldChange = (e) => {
     setInputValue(e.target.value);
   }; */
+  
 
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
+    <>
+    <ProgressBar />    
     <FormWrapper>
       <p>skriv din todo här!</p>
       <button type="button" onClick={toggleAccordion}>
@@ -163,11 +167,11 @@ export const PostTodos = () => {
             placeholder="Description"
             value={newTodo.description}
             onChange={handleInputChange} />
-          <AIcontainer>
+          {/*<AIcontainer>
             {suggestions.map((suggestion, index) => (
               <AI key={index}>{suggestion}</AI>
             ))}
-          </AIcontainer>
+            </AIcontainer>*/}
           {/* Category buttons */}
           <div>
             <CategoryButton
@@ -228,6 +232,7 @@ export const PostTodos = () => {
         </FormPostTodos>
       )}
     </FormWrapper>
+    </>
   )
 }
 

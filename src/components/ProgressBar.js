@@ -2,38 +2,36 @@
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
 import React from 'react';
-// import { useSelector } from 'react-redux';
-import { Circle, WrapCircles } from './ProgressBarStyles'
+import { useSelector } from 'react-redux';
+import { StyledCircle, WrapCircles } from './ProgressBarStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////// PROGRESSBAR //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
 export const ProgressBar = () => {
-  // const todolist = useSelector((store) => store.todos.items)
+  const todolist = useSelector((store) => store.todos.items)
 
+  // Filtering out the completed and uncompleted items
+  const completedTodos = todolist.filter((todo) => todo.completed)
+  // const uncompletedTodos = todolist.filter((todo) => !todo.completed)
+
+  const totalTasks = todolist.length;
+
+  const completedPercentage = (completedTodos.length / totalTasks) * 100;
+  // const uncompletedPercentage = (uncompletedTasks.length / totalTasks) * 100;
+
+  // //////////////////////////////////////////////////////////////////////// //
+  // ///////////////////////////// RETURN JSX /////////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
   return (
     <>
       <p>Progressbar</p>
       <WrapCircles>
-        <Circle className="per-0">
-          <div className="inner">0%</div>
-        </Circle>
-        <Circle className="per-25">
-          <div className="inner">25%</div>
-        </Circle>
-        <Circle className="per-50">
-          <div className="inner">50%</div>
-        </Circle>
-        <Circle className="per-75">
-          <div className="inner">75%</div>
-        </Circle>
-        <Circle className="per-100">
-          <div className="inner">100%</div>
-        </Circle>
+        <StyledCircle completedPercentage={completedPercentage}>
+          <div className="inner">{`${completedPercentage.toFixed(0)}%`}</div>
+        </StyledCircle>
       </WrapCircles>
     </>
   )
 }
-// //////////////////////////////////////////////////////////////////////// //
-// ///////////////////////////// RETURN JSX /////////////////////////////// //
-// //////////////////////////////////////////////////////////////////////// //
+

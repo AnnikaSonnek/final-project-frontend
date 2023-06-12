@@ -14,13 +14,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { BsCalendarDateFill } from 'react-icons/bs';
 import { todos } from '../reducers/todos';
+import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
-import { ProgressBar } from './ProgressBar';
-
-
-
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////// CUSTOM INPUT FOR DATEPICKER /////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
@@ -41,7 +38,8 @@ export const SeeTodos = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.user.accessToken)
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
- 
+  const userId = useSelector((store) => store.user.userId); // Get the userID.
+  const checkedtasks = useSelector((store) => store.user.checkedTasks)
 
 // //////////////////////// STATE VARIABLES /////////////////////////// //
   const [messageToDelete, setMessageToDelete] = useState(null)
@@ -108,28 +106,60 @@ export const SeeTodos = () => {
 
 
  // /////////////////// TOGGLE TODO ///////////////// //
-  const onToggleTodo = (todoId, completed) => {
-    const options = {
-      method: 'PATCH',
-      body: JSON.stringify({
-        completed: !completed
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: accessToken
-      }
-    };
-    fetch(API_URL(`todos/${todoId}/completed`), options)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          dispatch(todos.actions.setError(null));
-          console.log(data.response)
-        } else {
-          dispatch(todos.actions.setError(data.response));
-        }
-      });
+ const onToggleTodo = (todoId, completed) => {
+  const options = {
+    method: 'PATCH',
+    body: JSON.stringify({
+      completed: !completed
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: accessToken
+    }
   };
+
+  fetch(API_URL(`todos/${todoId}/completed`), options)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        dispatch(todos.actions.setError(null));
+        console.log(data.response);
+
+        // Increment or decrement checked tasks based on the completion status
+        const increment = completed ? -1 : 1;
+        console.log(increment)
+        console.log(userId)
+
+        fetch(API_URL(`users/${userId}/checkedtasks`), {
+          method: 'PATCH',
+          body: JSON.stringify({
+            increment: increment
+          }),
+          headers: {
+            Authorization: accessToken,
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((response) => response.json())
+          .then((userData) => {
+            // Handle the response data for the user update if needed
+            console.log(userData);
+            dispatch(user.actions.setCheckedTasks(userData.response.checkedTasks))
+          })
+          .catch((error) => {
+            // Handle the error if the user update fails
+            console.error('Error updating user:', error);
+          });
+      } else {
+        dispatch(todos.actions.setError(data.response));
+      }
+    })
+    .catch((error) => {
+      // Handle the error if the todo update fails
+      console.error('Error updating todo:', error);
+    });
+};
+
 
  // /////////////////// EDIT TODO ///////////////// //
   const handleEditSubmit = (e) => {
@@ -160,6 +190,7 @@ export const SeeTodos = () => {
       })
       .finally(() => {
           setSelectedTodo(null);
+          console.log('checked tasks in store', checkedtasks)
         })
     // ...
   };
@@ -213,7 +244,6 @@ const editTodo = (todoId, item) => {
 
   return (
     <>
-    <ProgressBar />
     <GlobalStyle>
       <Wrapper>
         {todoList.map((item) => (
