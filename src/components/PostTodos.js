@@ -14,6 +14,8 @@ import { API_URL } from '../utils/urls';
 import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
 
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
 const CustomInput = forwardRef(({ onClick }, ref) => (
   <IconButton onClick={onClick} ref={ref} type="button">
@@ -53,6 +55,11 @@ export const PostTodos = () => {
     setNewTodo({ ...newTodo, priority });
   };
 
+  // //////CLEARS THE SUGGESTIONS AFTER SUBMIT////////////
+  const clearSuggestions = () => {
+    setSuggestions([]);
+  };
+
   // ////////////////FORM SUBMIT//////////////////
   const onFormSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -85,6 +92,7 @@ export const PostTodos = () => {
         }) // Dispatch an action to clear any previous error in the store
         setDeadlineDate(null);
         setAccordionOpen(!accordionOpen);
+        clearSuggestions()
       })
   };
 
@@ -92,6 +100,12 @@ export const PostTodos = () => {
     const { name, value } = event.target;
     setNewTodo({ ...newTodo, [name]: value });
     setInputValue(event.target.value)
+
+    if (event.target.value.trim() === '') {
+      setSuggestions([]);
+    } else {
+      setSuggestions([value]); // Set the suggestion as an array containing the current input value
+    }
   };
 
   const toggleAccordion = () => {
@@ -107,10 +121,10 @@ export const PostTodos = () => {
       const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
-          Authorization: 'Bearer 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' },
+          Authorization: `Bearer ${apiKey}` },
         body: JSON.stringify({
           model: 'text-babbage-001',
-          prompt: inputValue,
+          prompt: `To-do: ${inputValue}`,
           echo: true,
           max_tokens: 2,
           temperature: 0.3
@@ -130,7 +144,7 @@ export const PostTodos = () => {
       if (inputValue.trim() !== '') {
         fetchSuggestions();
       }
-    }, 1000);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [inputValue]);
@@ -160,7 +174,10 @@ export const PostTodos = () => {
             onChange={handleInputChange} />
           <AIcontainer>
             {suggestions.map((suggestion, index) => (
-              <AI key={index}>{suggestion}</AI>
+              <AI key={index}>
+                {suggestion}
+                <span className="word-spacing">&nbsp;</span>
+              </AI>
             ))}
           </AIcontainer>
           {/* Category buttons */}
@@ -225,4 +242,3 @@ export const PostTodos = () => {
     </FormWrapper>
   )
 }
-
