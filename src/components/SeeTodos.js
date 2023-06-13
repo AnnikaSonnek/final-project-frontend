@@ -5,9 +5,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
+
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
+
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
@@ -19,12 +21,9 @@ import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, 
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
 import { ProgressBar } from './ProgressBar';
 
-
-
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////// CUSTOM INPUT FOR DATEPICKER /////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-
 
 const CustomInput = forwardRef(({ onClick }, ref) => (
   <IconButton onClick={onClick} ref={ref} type="button">
@@ -32,18 +31,15 @@ const CustomInput = forwardRef(({ onClick }, ref) => (
   </IconButton>
 ));
 
-
-
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////////////// SEE TODOS-COMPONENT /////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
+
 export const SeeTodos = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.user.accessToken)
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
- 
-
-// //////////////////////// STATE VARIABLES /////////////////////////// //
+  // //////////////////////// STATE VARIABLES /////////////////////////// //
   const [messageToDelete, setMessageToDelete] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -51,13 +47,12 @@ export const SeeTodos = () => {
   const [selectedDeadline, setSelectedDeadline] = useState(null);
   const [updatedTodo, setUpdatedTodo] = useState({});
 
-
-// //////////////////////////////////////////////////////////////////////// //
-// //////////////////////////// FETCH FUNCTIONS /////////////////////////// //
-// //////////////////////////////////////////////////////////////////////// //
-
+  // //////////////////////////////////////////////////////////////////////// //
+  // //////////////////////////// FETCH FUNCTIONS /////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
 
   // /////////////////// USE EFFECT FETCH ALL TODOS ///////////////// //
+
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -82,7 +77,8 @@ export const SeeTodos = () => {
       });
   })
 
- // /////////////////// DELETE TODO ///////////////// //
+  // /////////////////// DELETE TODO ///////////////// //
+
   const DeleteMessage = (deleteID) => {
     const options = {
       method: 'DELETE',
@@ -106,8 +102,8 @@ export const SeeTodos = () => {
       .catch((error) => console.log(error))
   };
 
+  // /////////////////// TOGGLE TODO ///////////////// //
 
- // /////////////////// TOGGLE TODO ///////////////// //
   const onToggleTodo = (todoId, completed) => {
     const options = {
       method: 'PATCH',
@@ -130,13 +126,13 @@ export const SeeTodos = () => {
         }
       });
   };
+  // /////////////////// EDIT TODO ///////////////// //
 
- // /////////////////// EDIT TODO ///////////////// //
   const handleEditSubmit = (e) => {
     e.preventDefault();
     const todoId = selectedTodo;
     // Handle the submission of updatedTodo object
-    console.log("updated todo:", updatedTodo);
+    console.log('updated todo:', updatedTodo);
 
     const options = {
       method: 'PATCH',
@@ -156,19 +152,19 @@ export const SeeTodos = () => {
         } else {
           dispatch(todos.actions.setError(data.response));
         }
-        
       })
       .finally(() => {
-          setSelectedTodo(null);
-        })
+        setSelectedTodo(null);
+      })
     // ...
   };
 
-// //////////////////////////////////////////////////////////////////////// //
-// ///////////////////////// HANDLE INPUT-FUNCTIONS /////////////////////// //
-// //////////////////////////////////////////////////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
+  // ///////////////////////// HANDLE INPUT-FUNCTIONS /////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
 
- // ////////////////// FIND TODO TO EDIT //////////////// //
+  // ////////////////// FIND TODO TO EDIT //////////////// //
+
 const editTodo = (todoId, item) => {
     // Find the selected todo by its ID
     setSelectedTodo(todoId);
