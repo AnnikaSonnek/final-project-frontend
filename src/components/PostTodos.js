@@ -14,10 +14,8 @@ import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ProgressBar } from './ProgressBar';
 
-/*require('dotenv').config()
-const apikey = process.env.REACT_APP_API_KEY*/
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
 const CustomInput = forwardRef(({ onClick }, ref) => (
@@ -58,6 +56,11 @@ export const PostTodos = () => {
     setNewTodo({ ...newTodo, priority });
   };
 
+  // //////CLEARS THE SUGGESTIONS AFTER SUBMIT////////////
+  const clearSuggestions = () => {
+    setSuggestions([]);
+  };
+
   // ////////////////FORM SUBMIT//////////////////
   const onFormSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -90,13 +93,14 @@ export const PostTodos = () => {
         }) // Dispatch an action to clear any previous error in the store
         setDeadlineDate(null);
         setAccordionOpen(!accordionOpen);
+        clearSuggestions()
       })
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewTodo({ ...newTodo, [name]: value });
-    // setInputValue(event.target.value)
+    setInputValue(event.target.value)
   };
 
   const toggleAccordion = () => {
@@ -107,16 +111,15 @@ export const PostTodos = () => {
   // ///////////////////////////// AI /////////////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
-
-  /* const fetchSuggestions = async () => {
+  const fetchSuggestions = async () => {
     try {
       const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
-          Authorization: `Bearer ${apikey}`},
+          Authorization: `Bearer ${apiKey}` },
         body: JSON.stringify({
           model: 'text-babbage-001',
-          prompt: inputValue,
+          prompt: `To-do: ${inputValue}`,
           echo: true,
           max_tokens: 2,
           temperature: 0.3
@@ -136,7 +139,7 @@ export const PostTodos = () => {
       if (inputValue.trim() !== '') {
         fetchSuggestions();
       }
-    }, 1000);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [inputValue]); */
@@ -169,7 +172,10 @@ export const PostTodos = () => {
             onChange={handleInputChange} />
           {/*<AIcontainer>
             {suggestions.map((suggestion, index) => (
-              <AI key={index}>{suggestion}</AI>
+              <AI key={index}>
+                {suggestion}
+                <span className="word-spacing">&nbsp;</span>
+              </AI>
             ))}
             </AIcontainer>*/}
           {/* Category buttons */}
@@ -242,4 +248,3 @@ export const PostTodos = () => {
     </>
   )
 }
-
