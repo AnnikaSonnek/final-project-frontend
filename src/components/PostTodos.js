@@ -228,6 +228,13 @@ export const PostTodos = () => {
               setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
               console.log(deadlineDate);
             }} />
+          <PriorityButton
+            type="button"
+            onClick={() => setNewTodo({ ...newTodo, deadline: null })}
+            active={newTodo.deadline === null}
+          >
+            No deadline
+        </PriorityButton>
           <button type="submit">Submit</button>
         </FormPostTodos>
       )}

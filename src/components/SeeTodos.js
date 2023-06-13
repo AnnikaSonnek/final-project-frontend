@@ -16,7 +16,7 @@ import { BsCalendarDateFill } from 'react-icons/bs';
 import { todos } from '../reducers/todos';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
-import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront } from './SeeTodosStyles';
+import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront, NoDeadlineButton } from './SeeTodosStyles';
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////// CUSTOM INPUT FOR DATEPICKER /////////////////////////// //
@@ -208,8 +208,10 @@ const editTodo = (todoId, item) => {
     
     if (selected) {
       console.log("selected todo:", selectedTodo)
+      const deadline = item.deadline ? new Date(item.deadline) : null;
       setSelectedCategory(item.category);
       setSelectedPriority(item.priority);
+      setSelectedDeadline(deadline)
     } else {
       console.log("no selected todo")
     }
@@ -263,8 +265,13 @@ const editTodo = (todoId, item) => {
                       <p>{item.description}</p>
                       <p>{item.priority}</p>
                       <p>{item.category}</p>
-                      <p>Created: {new Date (item.createdAt).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
-                      <p>Deadline: {new Date(item.deadline).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' })}</p>
+                      <p>Created: {item.createdAt}</p>
+                      {item.deadline && (
+                        <p>
+                          Deadline: {item.deadline}
+                        </p>
+                      )}
+
 
                       <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
                       <FormFooter>
@@ -339,27 +346,38 @@ const editTodo = (todoId, item) => {
                         </PriorityButton>
                       </div>
                       <CalendarContainer>
-                        <DatePicker
-                          customInput={<CustomInput />}
-                          selected={selectedDeadline}
-                          popperPlacement="top-start" // Add this line to adjust the position of the calendar
-                          popperModifiers={{
-                            preventOverflow: {
-                              enabled: true,
-                              escapeWithReference: false, // Add this line to prevent the calendar from escaping the reference element
-                              boundariesElement: 'viewport' // Add this line to set the viewport as the boundary for the calendar
-                          }}}
-                          onChange={(date) => {
-                            console.log('Date selected:', date);
-                            setSelectedDeadline(date);
-                            const adjustedDate = new Date(date.setHours(0, 0, 0));
-                            setUpdatedTodo({
-                              ...updatedTodo,
-                              deadline: adjustedDate ? adjustedDate.toISOString() : null,
-                            });
-                            console.log('Selected deadline:', selectedDeadline);
+                      <DatePicker
+                        customInput={<CustomInput />}
+                        selected={selectedDeadline}
+                        popperPlacement="top-start"
+                        popperModifiers={{
+                          preventOverflow: {
+                            enabled: true,
+                            escapeWithReference: false,
+                            boundariesElement: "viewport"
+                          }
                         }}
-                        />
+                        onChange={(date) => {
+                          console.log("Date selected:", date);
+                          setSelectedDeadline(date);
+
+                          // Handle the case when no date is selected
+                          const adjustedDate = date ? new Date(date.setHours(0, 0, 0)) : null;
+                          setUpdatedTodo({
+                            ...updatedTodo,
+                            deadline: adjustedDate ? adjustedDate.toISOString() : null
+                          });
+
+                          console.log("Selected deadline:", selectedDeadline);
+                        }}
+                      />
+
+                      <NoDeadlineButton
+                          type="button"
+                          style={selectedDeadline === null ? { backgroundColor: 'green' } : {}}
+                          onClick={() => setUpdatedTodo({...updatedTodo, deadline: null})}>
+              No deadline
+                        </NoDeadlineButton>  
                     </CalendarContainer>
                       <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
                     </FormGroup>

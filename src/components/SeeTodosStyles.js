@@ -161,3 +161,11 @@ export const CalendarContainer = styled.div`
   width: 30px;
   height: 30px;
 } `
+
+export const NoDeadlineButton = styled.button`
+width: 80px; 
+  /* Define your button styles here */
+  /* Add styles for the green button when there is no deadline */
+  background-color: ${(props) => (props.noDeadline ? 'green' : 'default-color')};
+  /* Add other styles as needed */
+`;
