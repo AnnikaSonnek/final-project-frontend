@@ -154,7 +154,7 @@ export const PostTodos = () => {
 
   return (
     <>
-      <ProgressBar />    
+      <ProgressBar />
       <FormWrapper>
         <p>skriv din todo här!</p>
         <button type="button" onClick={toggleAccordion}>
@@ -176,7 +176,7 @@ export const PostTodos = () => {
                   <span className="word-spacing">&nbsp;</span>
                 </AI>
               ))}
-              </AIcontainer>
+            </AIcontainer>
             {/* Category buttons */}
             <div>
               <CategoryButton
@@ -236,11 +236,12 @@ export const PostTodos = () => {
             <PriorityButton
               type="button"
               onClick={() => setNewTodo({ ...newTodo, deadline: null })}
-              active={newTodo.deadline === null}
-            >
+              active={newTodo.deadline === null}>
               No deadline
-          </PriorityButton>
-            <button type="submit">Submit</button>
+            </PriorityButton>
+            <button type="submit">
+              Submit
+            </button>
           </FormPostTodos>
         )}
       </FormWrapper>

@@ -17,7 +17,7 @@ export const StyledCircleProgress = styled.div`
   border-radius: 50%;
   background: #FFCDB2;
   overflow: hidden;
-  background-image: conic-gradient(#B5838D ${props => props.completedPercentage * 3.6}deg, #B5838D 0, #FFCDB2 0);
+  background-image: conic-gradient(#B5838D ${(props) => props.completedPercentage * 3.6}deg, #B5838D 0, #FFCDB2 0);
 
   .inner {
     display: flex;
@@ -45,11 +45,11 @@ export const Donut = styled.div`
   background: #FFCDB2;
   overflow: hidden;
   background-image: conic-gradient(
-    #B5838D 0deg ${props => props.jobPercentage}deg,
-    #B5B883 ${props => props.jobPercentage}deg ${props => props.jobPercentage + props.schoolPercentage}deg,
-    #838DB5 ${props => props.jobPercentage + props.schoolPercentage}deg ${props => props.jobPercentage + props.schoolPercentage + props.familyPercentage}deg,
-    #83B58D ${props => props.jobPercentage + props.schoolPercentage + props.familyPercentage}deg ${props => props.jobPercentage + props.schoolPercentage + props.familyPercentage + props.hobbiesPercentage}deg,
-    transparent ${props => props.jobPercentage + props.schoolPercentage + props.familyPercentage + props.hobbiesPercentage}deg 360deg
+    #B5838D 0deg ${(props) => props.jobPercentage}deg,
+    #B5B883 ${(props) => props.jobPercentage}deg ${(props) => props.jobPercentage + props.schoolPercentage}deg,
+    #838DB5 ${(props) => props.jobPercentage + props.schoolPercentage}deg ${(props) => props.jobPercentage + props.schoolPercentage + props.familyPercentage}deg,
+    #83B58D ${(props) => props.jobPercentage + props.schoolPercentage + props.familyPercentage}deg ${(props) => props.jobPercentage + props.schoolPercentage + props.familyPercentage + props.hobbiesPercentage}deg,
+    transparent ${(props) => props.jobPercentage + props.schoolPercentage + props.familyPercentage + props.hobbiesPercentage}deg 360deg
   );
 
   .inner {
