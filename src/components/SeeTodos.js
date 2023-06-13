@@ -160,7 +160,6 @@ export const SeeTodos = () => {
       });
 };
 
-
  // /////////////////// EDIT TODO ///////////////// //
   const handleEditSubmit = (e) => {
     e.preventDefault();
