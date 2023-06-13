@@ -127,7 +127,7 @@ export const SeeTodos = () => {
     const options = {
       method: 'PATCH',
       body: JSON.stringify({
-        completed: !completed
+        completed: !completed // Changes the status of completed
       }),
       headers: {
         'Content-Type': 'application/json',
