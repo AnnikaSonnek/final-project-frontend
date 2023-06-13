@@ -173,8 +173,7 @@ export const PostTodos = () => {
               name="description"
               placeholder="Description"
               value={newTodo.description}
-              onChange={handleInputChange}
-            />
+              onChange={handleInputChange} />
             <AIcontainer>
               {suggestions.map((suggestion, index) => (
                 <AI key={index}>
@@ -238,8 +237,7 @@ export const PostTodos = () => {
                 setDeadlineDate(date);
                 setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
                 console.log(deadlineDate);
-              }}
-            />
+              }} />
             <PriorityButton
               type="button"
               onClick={() => setNewTodo({ ...newTodo, deadline: null })}

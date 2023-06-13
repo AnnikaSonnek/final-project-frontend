@@ -18,7 +18,24 @@ import { BsCalendarDateFill } from 'react-icons/bs';
 import { todos } from '../reducers/todos';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
-import { GlobalStyle, Wrapper, DisplayedTodo, TodoContainer, CalendarContainer, FormInput, LabelHighlight, FormGroup, EditSubmitButton, FormHeader, FormFooter, FlipCard, FlipCardBack, FlipCardInner, FlipCardFront, NoDeadlineButton } from './SeeTodosStyles';
+import {
+  GlobalStyle,
+  Wrapper,
+  DisplayedTodo,
+  TodoContainer,
+  CalendarContainer,
+  FormInput,
+  LabelHighlight,
+  FormGroup,
+  EditSubmitButton,
+  FormHeader,
+  FormFooter,
+  FlipCard,
+  FlipCardBack,
+  FlipCardInner,
+  FlipCardFront,
+  NoDeadlineButton
+} from './SeeTodosStyles';
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
@@ -37,14 +54,14 @@ const CustomInput = forwardRef(({ onClick }, ref) => (
 
 export const SeeTodos = () => {
   const dispatch = useDispatch();
-  const accessToken = useSelector((store) => store.user.accessToken)
+  const accessToken = useSelector((store) => store.user.accessToken);
   const todoList = useSelector((store) => store.todos.items); // We fint the thoughts in the store and set them to the variable
   const userId = useSelector((store) => store.user.userId); // Get the userID.
-  const checkedtasks = useSelector((store) => store.user.checkedTasks)
+  const checkedtasks = useSelector((store) => store.user.checkedTasks);
 
   // //////////////////////// STATE VARIABLES /////////////////////////// //
-  const [messageToDelete, setMessageToDelete] = useState(null)
-  const [selectedTodo, setSelectedTodo] = useState(null)
+  const [messageToDelete, setMessageToDelete] = useState(null);
+  const [selectedTodo, setSelectedTodo] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedDeadline, setSelectedDeadline] = useState(null);
@@ -78,7 +95,7 @@ export const SeeTodos = () => {
           dispatch(todos.actions.setItems([]));
         }
       });
-  })
+  });
 
   // /////////////////// DELETE TODO ///////////////// //
 
@@ -97,12 +114,12 @@ export const SeeTodos = () => {
         if (data.success) {
           setMessageToDelete(data.response._id);
           // Remove the deleted message from the message list
-          console.log(messageToDelete)
+          console.log(messageToDelete);
         } else {
-          console.error(data.message)
+          console.error(data.message);
         }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => console.log(error));
   };
 
   // /////////////////// TOGGLE TODO ///////////////// //
@@ -127,13 +144,13 @@ export const SeeTodos = () => {
 
           // Increment or decrement checked tasks based on the completion status
           const increment = completed ? -1 : 1;
-          console.log(increment)
-          console.log(userId)
+          console.log(increment);
+          console.log(userId);
 
           fetch(API_URL(`users/${userId}/checkedtasks`), {
             method: 'PATCH',
             body: JSON.stringify({
-              increment: increment
+              increment
             }),
             headers: {
               Authorization: accessToken,
@@ -144,7 +161,7 @@ export const SeeTodos = () => {
             .then((userData) => {
               // Handle the response data for the user update if needed
               console.log(userData);
-              dispatch(user.actions.setCheckedTasks(userData.response.checkedTasks))
+              dispatch(user.actions.setCheckedTasks(userData.response.checkedTasks));
             })
             .catch((error) => {
               // Handle the error if the user update fails
@@ -179,17 +196,17 @@ export const SeeTodos = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(JSON.stringify(updatedTodo))
+          console.log(JSON.stringify(updatedTodo));
           dispatch(todos.actions.setError(null));
-          console.log(data.response)
+          console.log(data.response);
         } else {
           dispatch(todos.actions.setError(data.response));
         }
       })
       .finally(() => {
         setSelectedTodo(null);
-        console.log('checked tasks in store', checkedtasks)
-      })
+        console.log('checked tasks in store', checkedtasks);
+      });
     // ...
   };
 
@@ -206,13 +223,13 @@ export const SeeTodos = () => {
     const selected = todoList.find((todo) => todo._id === todoId);
 
     if (selected) {
-      console.log("selected todo:", selectedTodo)
+      console.log('selected todo:', selectedTodo);
       const deadline = item.deadline ? new Date(item.deadline) : null;
       setSelectedCategory(item.category);
       setSelectedPriority(item.priority);
-      setSelectedDeadline(deadline)
+      setSelectedDeadline(deadline);
     } else {
-      console.log("no selected todo")
+      console.log('no selected todo');
     }
   };
   // ////////////////// FLIP CARD BACK TO LIST //////////////// //
@@ -224,14 +241,15 @@ export const SeeTodos = () => {
   // ////////////////// HANDLE DESCRIPTION //////////////// //
   const handleDescriptionChange = (e) => {
     setUpdatedTodo({
-      ...updatedTodo, description: e.target.value
+      ...updatedTodo,
+      description: e.target.value
     });
   };
 
   // ////////////////// CATEGORY //////////////// //
   const handleCategoryChange = (category) => {
     setUpdatedTodo({ ...updatedTodo, category });
-    setSelectedCategory(category)
+    setSelectedCategory(category);
   };
 
   // ////////////////// HANDLE PRIORITY //////////////// //
@@ -245,153 +263,157 @@ export const SeeTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
-    <>
-      <GlobalStyle>
-        <Wrapper>
-          {todoList.map((item) => (
-            <TodoContainer key={item._id}>
-              <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
-              <FlipCard>
-                <FlipCardInner className={`flipcard-inner${selectedTodo === item._id ? ' flipped' : ''}`}>
-                  <FlipCardFront>
-                    <DisplayedTodo>
-                      <FormGroup>
-                        <input
-                          type="checkbox"
-                          name={item._id}
-                          id={item._id}
-                          checked={item.completed}
-                          onChange={() => onToggleTodo(item._id, item.completed)} />
-                        <p>{item.description}</p>
-                        <p>{item.priority}</p>
-                        <p>{item.category}</p>
-                        <p>Created: {item.createdAt}</p>
-                        {item.deadline && (
-                          <p>
-                            Deadline: {item.deadline}
-                          </p>
-                        )}
+    <GlobalStyle>
+      <Wrapper>
+        {todoList.map((item) => (
+          <TodoContainer key={item._id}>
+            <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
+            <FlipCard>
+              <FlipCardInner
+                className={`flipcard-inner${selectedTodo === item._id ? ' flipped' : ''}`}>
+                <FlipCardFront>
+                  <DisplayedTodo>
+                    <FormGroup>
+                      <input
+                        type="checkbox"
+                        name={item._id}
+                        id={item._id}
+                        checked={item.completed}
+                        onChange={() => onToggleTodo(item._id, item.completed)} />
+                      <p>{item.description}</p>
+                      <p>{item.priority}</p>
+                      <p>{item.category}</p>
+                      <p>Created: {item.createdAt}</p>
+                      {item.deadline && <p>Deadline: {item.deadline}</p>}
 
-
-                        <button type="button" onClick={() => DeleteMessage(item._id)}>Delete</button>
-                        <FormFooter>
-                          Do you want to edit this todo? <label className="label-highlight" htmlFor={`form_switch_${item._id}`} onClick={() => editTodo(item._id, item)}>EDIT</label>
-                        </FormFooter>
-                      </FormGroup>
-                    </DisplayedTodo>
-                  </FlipCardFront>
-                  <FlipCardBack>
-                    <form onSubmit={handleEditSubmit}>
-                      <FormHeader>
-                        <h3>EDIT TODO</h3>
-                      </FormHeader>
-                      <FormGroup>
-                        <FormInput
-                          defaultValue={item.description}
-                          required
-                          type="text"
-                          name="description"
-                          placeholder="Description"
-                          onChange={handleDescriptionChange} />
-                        <div>
-                          <CategoryButton
-                            type="button"
-                            style={selectedCategory === 'Job' ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handleCategoryChange('Job')}>
-                            Job
-                          </CategoryButton>
-                          <CategoryButton
-                            type="button"
-                            style={selectedCategory === 'School' ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handleCategoryChange('School')}>
-                            School
-                          </CategoryButton>
-                          <CategoryButton
-                            type="button"
-                            style={selectedCategory === 'Family' ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handleCategoryChange('Family')}>
-                            Family
-                          </CategoryButton>
-                          <CategoryButton
-                            type="button"
-                            style={selectedCategory === 'Hobbies' ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handleCategoryChange('Hobbies')}>
-                            Hobbies
-                          </CategoryButton>
-                        </div>
-                        <div>
-                          <PriorityButton
-                            type="button"
-                            style={selectedPriority === 1 ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handlePriorityChange(1)}>
-                            1
-                          </PriorityButton>
-                          <PriorityButton
-                            type="button"
-                            style={selectedPriority === 2 ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handlePriorityChange(2)}>
-                            2
-                          </PriorityButton>
-                          <PriorityButton
-                            type="button"
-                            style={selectedPriority === 3 ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handlePriorityChange(3)}>
-                            3
-                          </PriorityButton>
-                          <PriorityButton
-                            type="button"
-                            style={selectedPriority === null ? { backgroundColor: 'green' } : {}}
-                            onClick={() => handlePriorityChange(null)}>
-                            No priority
-                          </PriorityButton>
-                        </div>
-                        <CalendarContainer>
-                          <DatePicker
-                            customInput={<CustomInput />}
-                            selected={selectedDeadline}
-                            popperPlacement="top-start"
-                            popperModifiers={{
-                              preventOverflow: {
-                                enabled: true,
-                                escapeWithReference: false,
-                                boundariesElement: "viewport"
-                              }
-                            }}
-                            onChange={(date) => {
-                              console.log("Date selected:", date);
-                              setSelectedDeadline(date);
-
-                              // Handle the case when no date is selected
-                              const adjustedDate = date ? new Date(date.setHours(0, 0, 0)) : null;
-                              setUpdatedTodo({
-                                ...updatedTodo,
-                                deadline: adjustedDate ? adjustedDate.toISOString() : null
-                              });
-
-                              console.log("Selected deadline:", selectedDeadline);
-                            }}
-                          />
-
-                          <NoDeadlineButton
-                            type="button"
-                            style={selectedDeadline === null ? { backgroundColor: 'green' } : {}}
-                            onClick={() => setUpdatedTodo({ ...updatedTodo, deadline: null })}>
-                            No deadline
-                          </NoDeadlineButton>
-                        </CalendarContainer>
-                        <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">Submit</EditSubmitButton>
-                      </FormGroup>
+                      <button type="button" onClick={() => DeleteMessage(item._id)}>
+                        Delete
+                      </button>
                       <FormFooter>
-                        See updated todo <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                        Do you want to edit this todo?{' '}
+                        <label
+                          className="label-highlight"
+                          htmlFor={`form_switch_${item._id}`}
+                          onClick={() => editTodo(item._id, item)}>
+                          EDIT
+                        </label>
                       </FormFooter>
-                    </form>
-                  </FlipCardBack>
-                </FlipCardInner>
-              </FlipCard>
-            </TodoContainer>
-          ))}
-        </Wrapper>
-      </GlobalStyle>
-    </>
+                    </FormGroup>
+                  </DisplayedTodo>
+                </FlipCardFront>
+                <FlipCardBack>
+                  <form onSubmit={handleEditSubmit}>
+                    <FormHeader>
+                      <h3>EDIT TODO</h3>
+                    </FormHeader>
+                    <FormGroup>
+                      <FormInput
+                        defaultValue={item.description}
+                        required
+                        type="text"
+                        name="description"
+                        placeholder="Description"
+                        onChange={handleDescriptionChange} />
+                      <div>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'Job' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Job')}>
+                          Job
+                        </CategoryButton>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'School' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('School')}>
+                          School
+                        </CategoryButton>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'Family' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Family')}>
+                          Family
+                        </CategoryButton>
+                        <CategoryButton
+                          type="button"
+                          style={selectedCategory === 'Hobbies' ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handleCategoryChange('Hobbies')}>
+                          Hobbies
+                        </CategoryButton>
+                      </div>
+                      <div>
+                        <PriorityButton
+                          type="button"
+                          style={selectedPriority === 1 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(1)}>
+                          1
+                        </PriorityButton>
+                        <PriorityButton
+                          type="button"
+                          style={selectedPriority === 2 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(2)}>
+                          2
+                        </PriorityButton>
+                        <PriorityButton
+                          type="button"
+                          style={selectedPriority === 3 ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(3)}>
+                          3
+                        </PriorityButton>
+                        <PriorityButton
+                          type="button"
+                          style={selectedPriority === null ? { backgroundColor: 'green' } : {}}
+                          onClick={() => handlePriorityChange(null)}>
+                          No priority
+                        </PriorityButton>
+                      </div>
+                      <CalendarContainer>
+                        <DatePicker
+                          customInput={<CustomInput />}
+                          selected={selectedDeadline}
+                          popperPlacement="top-start"
+                          popperModifiers={{
+                            preventOverflow: {
+                              enabled: true,
+                              escapeWithReference: false,
+                              boundariesElement: 'viewport'
+                            }
+                          }}
+                          onChange={(date) => {
+                            console.log('Date selected:', date);
+                            setSelectedDeadline(date);
+
+                            // Handle the case when no date is selected
+                            const adjustedDate = date ? new Date(date.setHours(0, 0, 0)) : null;
+                            setUpdatedTodo({
+                              ...updatedTodo,
+                              deadline: adjustedDate ? adjustedDate.toISOString() : null
+                            });
+
+                            console.log('Selected deadline:', selectedDeadline);
+                          }} />
+
+                        <NoDeadlineButton
+                          type="button"
+                          style={selectedDeadline === null ? { backgroundColor: 'green' } : {}}
+                          onClick={() => setUpdatedTodo({ ...updatedTodo, deadline: null })}>
+                          No deadline
+                        </NoDeadlineButton>
+                      </CalendarContainer>
+                      <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
+                        Submit
+                      </EditSubmitButton>
+                    </FormGroup>
+                    <FormFooter>
+                      See updated todo{' '}
+                      <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                    </FormFooter>
+                  </form>
+                </FlipCardBack>
+              </FlipCardInner>
+            </FlipCard>
+          </TodoContainer>
+        ))}
+      </Wrapper>
+    </GlobalStyle>
   );
 };
