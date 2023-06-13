@@ -14,7 +14,7 @@ import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { ProgressBar } from './ProgressBar';
 const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
@@ -35,8 +35,8 @@ export const PostTodos = () => {
   const [deadlineDate, setDeadlineDate] = useState(null);
   // get the Deadline date using the useState hook.
   const [accordionOpen, setAccordionOpen] = useState(false);
-  // const [inputValue, setInputValue] = useState('');
-  // const [suggestions, setSuggestions] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
@@ -142,11 +142,11 @@ export const PostTodos = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [inputValue]); */
+  }, [inputValue]);
 
-  /* const handleInputFieldChange = (e) => {
+  const handleInputFieldChange = (e) => {
     setInputValue(e.target.value);
-  }; */
+  };
   
 
   // //////////////////////////////////////////////////////////////////////// //
@@ -170,14 +170,14 @@ export const PostTodos = () => {
             placeholder="Description"
             value={newTodo.description}
             onChange={handleInputChange} />
-          {/*<AIcontainer>
+          <AIcontainer>
             {suggestions.map((suggestion, index) => (
               <AI key={index}>
                 {suggestion}
                 <span className="word-spacing">&nbsp;</span>
               </AI>
             ))}
-            </AIcontainer>*/}
+            </AIcontainer>
           {/* Category buttons */}
           <div>
             <CategoryButton
