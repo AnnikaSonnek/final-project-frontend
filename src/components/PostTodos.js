@@ -5,13 +5,21 @@
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
 
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker'; // import DatePicker from 'react-datepicker'
 import { BsCalendarDateFill } from 'react-icons/bs';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
-import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
+import {
+  FormPostTodos,
+  AI,
+  AIcontainer,
+  IconButton,
+  CategoryButton,
+  PriorityButton,
+  FormWrapper
+} from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ProgressBar } from './ProgressBar';
 
@@ -90,17 +98,17 @@ export const PostTodos = () => {
           deadline: null,
           category: '',
           priority: ''
-        }) // Dispatch an action to clear any previous error in the store
+        }); // Dispatch an action to clear any previous error in the store
         setDeadlineDate(null);
         setAccordionOpen(!accordionOpen);
-        clearSuggestions()
-      })
+        clearSuggestions();
+      });
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewTodo({ ...newTodo, [name]: value });
-    setInputValue(event.target.value)
+    setInputValue(event.target.value);
   };
 
   const toggleAccordion = () => {
@@ -115,8 +123,7 @@ export const PostTodos = () => {
     try {
       const response = await fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}` },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
         body: JSON.stringify({
           model: 'text-babbage-001',
           prompt: `To-do: ${inputValue}`,
@@ -167,7 +174,8 @@ export const PostTodos = () => {
               name="description"
               placeholder="Description"
               value={newTodo.description}
-              onChange={handleInputChange} />
+              onChange={handleInputChange}
+            />
             <AIcontainer>
               {suggestions.map((suggestion, index) => (
                 <AI key={index}>
@@ -231,19 +239,18 @@ export const PostTodos = () => {
                 setDeadlineDate(date);
                 setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
                 console.log(deadlineDate);
-              }} />
+              }}
+            />
             <PriorityButton
               type="button"
               onClick={() => setNewTodo({ ...newTodo, deadline: null })}
               active={newTodo.deadline === null}>
               No deadline
             </PriorityButton>
-            <button type="submit">
-              Submit
-            </button>
+            <button type="submit">Submit</button>
           </FormPostTodos>
         )}
       </FormWrapper>
     </>
-  )
-}
+  );
+};
