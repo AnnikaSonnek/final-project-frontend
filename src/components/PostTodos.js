@@ -15,6 +15,7 @@ import { API_URL } from '../utils/urls';
 import { FormPostTodos, AI, AIcontainer, IconButton, CategoryButton, PriorityButton, FormWrapper } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ProgressBar } from './ProgressBar';
+
 const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
@@ -144,107 +145,105 @@ export const PostTodos = () => {
     return () => clearTimeout(timer);
   }, [inputValue]);
 
-  const handleInputFieldChange = (e) => {
+  /* const handleInputFieldChange = (e) => {
     setInputValue(e.target.value);
-  };
-  
-
+  }; */
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
     <>
-    <ProgressBar />    
-    <FormWrapper>
-      <p>skriv din todo här!</p>
-      <button type="button" onClick={toggleAccordion}>
-        {accordionOpen ? '-' : '+'}
-      </button>
-      {accordionOpen && (
-        <FormPostTodos onSubmit={onFormSubmit}>
-          <input
-            required
-            type="text"
-            name="description"
-            placeholder="Description"
-            value={newTodo.description}
-            onChange={handleInputChange} />
-          <AIcontainer>
-            {suggestions.map((suggestion, index) => (
-              <AI key={index}>
-                {suggestion}
-                <span className="word-spacing">&nbsp;</span>
-              </AI>
-            ))}
-            </AIcontainer>
-          {/* Category buttons */}
-          <div>
-            <CategoryButton
-              type="button"
-              onClick={() => handleCategoryChange('Job')}
-              active={newTodo.category === 'Job'}>
-              Job
-            </CategoryButton>
-            <CategoryButton
-              type="button"
-              onClick={() => handleCategoryChange('School')}
-              active={newTodo.category === 'School'}>
-              School
-            </CategoryButton>
-            <CategoryButton
-              type="button"
-              onClick={() => handleCategoryChange('Family')}
-              active={newTodo.category === 'Family'}>
-              Family
-            </CategoryButton>
-            <CategoryButton
-              type="button"
-              onClick={() => handleCategoryChange('Hobbies')}
-              active={newTodo.category === 'Hobbies'}>
-              Hobbies
-            </CategoryButton>
-          </div>
-          <div>
+      <ProgressBar />    
+      <FormWrapper>
+        <p>skriv din todo här!</p>
+        <button type="button" onClick={toggleAccordion}>
+          {accordionOpen ? '-' : '+'}
+        </button>
+        {accordionOpen && (
+          <FormPostTodos onSubmit={onFormSubmit}>
+            <input
+              required
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newTodo.description}
+              onChange={handleInputChange} />
+            <AIcontainer>
+              {suggestions.map((suggestion, index) => (
+                <AI key={index}>
+                  {suggestion}
+                  <span className="word-spacing">&nbsp;</span>
+                </AI>
+              ))}
+              </AIcontainer>
+            {/* Category buttons */}
+            <div>
+              <CategoryButton
+                type="button"
+                onClick={() => handleCategoryChange('Job')}
+                active={newTodo.category === 'Job'}>
+                Job
+              </CategoryButton>
+              <CategoryButton
+                type="button"
+                onClick={() => handleCategoryChange('School')}
+                active={newTodo.category === 'School'}>
+                School
+              </CategoryButton>
+              <CategoryButton
+                type="button"
+                onClick={() => handleCategoryChange('Family')}
+                active={newTodo.category === 'Family'}>
+                Family
+              </CategoryButton>
+              <CategoryButton
+                type="button"
+                onClick={() => handleCategoryChange('Hobbies')}
+                active={newTodo.category === 'Hobbies'}>
+                Hobbies
+              </CategoryButton>
+            </div>
+            <div>
+              <PriorityButton
+                type="button"
+                onClick={() => handlePriorityChange(1)}
+                active={newTodo.priority === 1}>
+                1
+              </PriorityButton>
+              <PriorityButton
+                type="button"
+                onClick={() => handlePriorityChange(2)}
+                active={newTodo.priority === 2}>
+                2
+              </PriorityButton>
+              <PriorityButton
+                type="button"
+                onClick={() => handlePriorityChange(3)}
+                active={newTodo.priority === 3}>
+                3
+              </PriorityButton>
+            </div>
+            <DatePicker
+              selected={deadlineDate}
+              customInput={<CustomInput />}
+              onChange={(date) => {
+                console.log('Date selected:', date);
+                setDeadlineDate(date);
+                setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
+                console.log(deadlineDate);
+              }} />
             <PriorityButton
               type="button"
-              onClick={() => handlePriorityChange(1)}
-              active={newTodo.priority === 1}>
-              1
-            </PriorityButton>
-            <PriorityButton
-              type="button"
-              onClick={() => handlePriorityChange(2)}
-              active={newTodo.priority === 2}>
-              2
-            </PriorityButton>
-            <PriorityButton
-              type="button"
-              onClick={() => handlePriorityChange(3)}
-              active={newTodo.priority === 3}>
-              3
-            </PriorityButton>
-          </div>
-          <DatePicker
-            selected={deadlineDate}
-            customInput={<CustomInput />}
-            onChange={(date) => {
-              console.log('Date selected:', date);
-              setDeadlineDate(date);
-              setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
-              console.log(deadlineDate);
-            }} />
-          <PriorityButton
-            type="button"
-            onClick={() => setNewTodo({ ...newTodo, deadline: null })}
-            active={newTodo.deadline === null}
-          >
-            No deadline
-        </PriorityButton>
-          <button type="submit">Submit</button>
-        </FormPostTodos>
-      )}
-    </FormWrapper>
+              onClick={() => setNewTodo({ ...newTodo, deadline: null })}
+              active={newTodo.deadline === null}
+            >
+              No deadline
+          </PriorityButton>
+            <button type="submit">Submit</button>
+          </FormPostTodos>
+        )}
+      </FormWrapper>
     </>
   )
 }
