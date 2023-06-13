@@ -58,7 +58,11 @@
       "error",
       2,
       {
-        "SwitchCase": 1
+        "ignoredNodes": ["TemplateLiteral"],
+        "SwitchCase": 1,
+        "VariableDeclarator": {
+          "ignore": process.env.ESLINT_IGNORE_INDENTATION === 'true' // Check the environment variable
+        }
       }
     ],
     "jsx-a11y/anchor-is-valid": "off",
