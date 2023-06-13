@@ -190,7 +190,6 @@ export const SeeTodos = () => {
           setSelectedTodo(null);
           console.log('checked tasks in store', checkedtasks)
         })
-    // ...
   };
 
   // //////////////////////////////////////////////////////////////////////// //
