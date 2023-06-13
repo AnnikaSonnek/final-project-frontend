@@ -117,7 +117,7 @@ export const SeeTodos = () => {
         Authorization: accessToken
       }
     };
-    
+
     fetch(API_URL(`todos/${todoId}/completed`), options)
       .then((response) => response.json())
       .then((data) => {
