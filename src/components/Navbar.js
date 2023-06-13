@@ -30,6 +30,7 @@ export const Navbar = () => {
     dispatch(user.actions.setUserId(null));
     dispatch(user.actions.setError(null));
     dispatch(todos.actions.setItems([]));
+    navigate('/');
   };
 
   const onPersonalPageButtonClick = () => {
