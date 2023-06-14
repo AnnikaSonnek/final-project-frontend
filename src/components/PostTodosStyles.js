@@ -75,6 +75,7 @@ p {
   color: white;
 }
 `;
+
 export const OuterWrapper = styled.div`
 display: flex;
 flex-direction: column;
@@ -90,7 +91,7 @@ width: 330px;
 
 export const CategoryButtonContainer = styled.div`
 display: flex;
-gap: 10px
+gap: 10px;
 `;
 
 export const PacmanContainer = styled.div`
