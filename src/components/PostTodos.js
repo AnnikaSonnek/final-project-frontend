@@ -116,6 +116,7 @@ export const PostTodos = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    console.log('name, value', name, value)
     setNewTodo({ ...newTodo, [name]: value });
     setInputValue(event.target.value);
   };
@@ -161,7 +162,11 @@ export const PostTodos = () => {
   }, [inputValue]);
 
   const handleAiSuggestion = () => {
-    setInputValue(inputValue);
+    console.log(suggestions)
+    const suggestion = suggestions.slice(1).join(' '); // detta är för att få bort todo: från texten och att få det till String ist för Array
+    console.log('ready to put into input?', suggestion)
+    setNewTodo({ ...newTodo, description: suggestion });
+    setSuggestions([]);
   };
 
   // //////////////////////////////////////////////////////////////////////// //
@@ -174,7 +179,7 @@ export const PostTodos = () => {
         <img alt="pacman" src={pacman} />
         <AIcontainer>
           {suggestions.map((suggestion, index) => (
-            <AI key={index} onClick={() => handleAiSuggestion(suggestion)}>
+            <AI key={index} onClick={handleAiSuggestion}>
               {suggestion}
               <span className="word-spacing">&nbsp;</span>
             </AI>
