@@ -43,6 +43,10 @@ export const FormGroup = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  h2 {
+    padding: 18px 0 18px 0
+  }
 `;
 
 export const EditForm = styled.form`
