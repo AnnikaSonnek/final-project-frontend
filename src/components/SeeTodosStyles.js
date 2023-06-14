@@ -29,13 +29,16 @@ export const FormInput = styled.input`
   background: #fafafa;
   border: 1px solid #eeeeee;
   padding: 12px;
-  width: 100%;
+  border-radius: 12px;
+  margin-top: 12px;
+  width: 330px;
 `;
 
 export const FormGroup = styled.div`
   margin-bottom: 1rem;
-  background: lightgreen;
+  background: #8DB48E;
   border-radius: 12px;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,21 +47,29 @@ export const FormGroup = styled.div`
 
 export const EditForm = styled.form`
   margin-bottom: 1rem;
-  background: lightgreen;
+  background: #4D724D;
   border-radius: 12px;
 `;
 
 export const EditSubmitButton = styled.button`
-  background: #69d2e7;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  color: #ffffff;
-  padding: 10px;
-  width: 20%;
-  text-transform: uppercase;
+ border-radius: 12px;
+ border: none;
+ padding: 5px 20px;
+ background-color: lightgrey;
 
   &:hover {
-    background: #69c8e7;
+    background: grey;
+  }
+`;
+
+export const DeleteButton = styled.button`
+ border-radius: 12px;
+ border: none;
+ padding: 5px 20px;
+ background-color: lightgrey;
+
+  &:hover {
+    background: grey;
   }
 `;
 
@@ -94,7 +105,7 @@ export const FlipCardFront = styled.div`
   position: absolute;
   z-index: 1; //ADDED
   width: 100%;
-  height: 100%;
+  height: 300px;
   backface-visibility: hidden;
   color: black;
 `;
@@ -132,7 +143,7 @@ export const SwitchForm = styled.div`
 `;
 
 export const LabelHighlight = styled.label`
-  color: blue;
+  color: #db3a34;
 `;
 
 export const LoginInput = styled.input`
@@ -144,7 +155,7 @@ export const LoginInput = styled.input`
 `;
 
 export const TodoContainer = styled.div`
-  margin-bottom: 15rem;
+  margin-bottom: 13rem;
 `;
 
 export const CalendarContainer = styled.div`

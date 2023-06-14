@@ -11,6 +11,7 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker'; // import DatePicker from 'react-datepicker'
 import { BsCalendarDateFill } from 'react-icons/bs';
+import pacman from '../img/pacman.png';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import {
@@ -20,10 +21,15 @@ import {
   IconButton,
   CategoryButton,
   PriorityButton,
-  FormWrapper
+  FormWrapper,
+  OuterWrapper,
+  AcordionColapsed,
+  FormInput,
+  CategoryButtonContainer,
+  AddButton,
+  PacmanContainer
 } from './PostTodosStyles';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ProgressBar } from './ProgressBar';
 
 const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
@@ -159,32 +165,36 @@ export const PostTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
-    <>
-      <ProgressBar />
+    <OuterWrapper>
+      <PacmanContainer>
+        <img alt="pacman" src={pacman} />
+        <AIcontainer>
+          {suggestions.map((suggestion, index) => (
+            <AI key={index}>
+              {suggestion}
+              <span className="word-spacing">&nbsp;</span>
+            </AI>
+          ))}
+        </AIcontainer>
+      </PacmanContainer>
       <FormWrapper>
-        <p>skriv din todo här!</p>
-        <button type="button" onClick={toggleAccordion}>
-          {accordionOpen ? '-' : '+'}
-        </button>
+        <AcordionColapsed>
+          <p>ADD TASK</p>
+          <AddButton type="button" onClick={toggleAccordion}>
+            {accordionOpen ? '-' : '+'}
+          </AddButton>
+        </AcordionColapsed>
         {accordionOpen && (
           <FormPostTodos onSubmit={onFormSubmit}>
-            <input
+            <FormInput
               required
               type="text"
               name="description"
               placeholder="Description"
               value={newTodo.description}
               onChange={handleInputChange} />
-            <AIcontainer>
-              {suggestions.map((suggestion, index) => (
-                <AI key={index}>
-                  {suggestion}
-                  <span className="word-spacing">&nbsp;</span>
-                </AI>
-              ))}
-            </AIcontainer>
             {/* Category buttons */}
-            <div>
+            <CategoryButtonContainer>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Job')}
@@ -209,7 +219,7 @@ export const PostTodos = () => {
                 active={newTodo.category === 'Hobbies'}>
                 Hobbies
               </CategoryButton>
-            </div>
+            </CategoryButtonContainer>
             <div>
               <PriorityButton
                 type="button"
@@ -249,6 +259,6 @@ export const PostTodos = () => {
           </FormPostTodos>
         )}
       </FormWrapper>
-    </>
+    </OuterWrapper>
   );
 };
