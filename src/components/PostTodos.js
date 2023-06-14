@@ -9,9 +9,10 @@
 
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DatePicker from 'react-datepicker'; // import DatePicker from 'react-datepicker'
+import DatePicker, { CalendarContainer } from 'react-datepicker'
 import { BsCalendarDateFill } from 'react-icons/bs';
 import pacman from '../img/pacman.png';
+import nodate from '../img/nodate.png';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import {
@@ -27,8 +28,12 @@ import {
   FormInput,
   CategoryButtonContainer,
   AddButton,
-  PacmanContainer
-} from './PostTodosStyles';
+  PacmanContainer,
+  PriorityButtonContainer,
+  SubmitButton,
+  NoDateButton,
+  DateButtonsContainer
+} from './PostTodosStyles.js';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
@@ -188,10 +193,14 @@ export const PostTodos = () => {
       </PacmanContainer>
       <FormWrapper>
         <AcordionColapsed>
-          <p>ADD TASK</p>
-          <AddButton type="button" onClick={toggleAccordion}>
-            {accordionOpen ? '-' : '+'}
-          </AddButton>
+          <div>
+            <p>ADD TASK</p>
+          </div>
+          <div>
+            <AddButton type="button" onClick={toggleAccordion}>
+              {accordionOpen ? '-' : '+'}
+            </AddButton>
+          </div>
         </AcordionColapsed>
         {accordionOpen && (
           <FormPostTodos onSubmit={onFormSubmit}>
@@ -229,7 +238,7 @@ export const PostTodos = () => {
                 Hobbies
               </CategoryButton>
             </CategoryButtonContainer>
-            <div>
+            <PriorityButtonContainer>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(1)}
@@ -248,23 +257,27 @@ export const PostTodos = () => {
                 active={newTodo.priority === 3}>
                 3
               </PriorityButton>
-            </div>
-            <DatePicker
-              selected={deadlineDate}
-              customInput={<CustomInput />}
-              onChange={(date) => {
-                console.log('Date selected:', date);
-                setDeadlineDate(date);
-                setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
-                console.log(deadlineDate);
-              }} />
-            <PriorityButton
-              type="button"
-              onClick={() => setNewTodo({ ...newTodo, deadline: null })}
-              active={newTodo.deadline === null}>
-              No deadline
-            </PriorityButton>
-            <button type="submit">Submit</button>
+            </PriorityButtonContainer>
+            <DateButtonsContainer>
+              <CalendarContainer>
+                <DatePicker
+                  selected={deadlineDate}
+                  customInput={<CustomInput />}
+                  onChange={(date) => {
+                    console.log('Date selected:', date);
+                    setDeadlineDate(date);
+                    setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
+                    console.log(deadlineDate);
+                  }} />
+              </CalendarContainer>
+              <NoDateButton
+                type="button"
+                onClick={() => setNewTodo({ ...newTodo, deadline: null })}
+                active={newTodo.deadline === null}>
+                <img alt="nodate" src={nodate} />
+              </NoDateButton>
+            </DateButtonsContainer>
+            <SubmitButton type="submit">Submit</SubmitButton>
           </FormPostTodos>
         )}
       </FormWrapper>

@@ -5,7 +5,7 @@ display: flex;
 flex-direction: column;
 align-items: center; 
 justify-content: center; 
-padding: 1rem;`
+padding: 0 1em 1em 1em;`
 
 export const CalendarContainer = styled.div`
 position: relative;
@@ -18,7 +18,6 @@ height: 20px;
   height: 30px;
     }
 `
-
 export const IconButton = styled.button`
 background-color: transparent;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -37,6 +36,14 @@ border-radius: 12px;
 border: none;
 padding: 3px 10px;
 margin-top: 10px;
+
+&:active,
+  &:focus {
+    /* Add your desired styles for the pressed state */
+    background-color: #ccc; /* Example: Change the background color */
+    transform: translateY(2px); /* Example: Push the button down slightly */
+    outline: none; /* Remove the default focus outline */
+  }
 `
 
 export const PriorityButton = styled.button`
@@ -45,7 +52,30 @@ border-radius: 12px;
 border: none;
 padding: 3px 10px;
 margin-top: 10px;
+
+&:active,
+  &:focus {
+    /* Add your desired styles for the pressed state */
+    background-color: #ccc; /* Example: Change the background color */
+    transform: translateY(2px); /* Example: Push the button down slightly */
+    outline: none; /* Remove the default focus outline */
+  }
 `
+
+export const NoDateButton = styled.button`
+width: 70px; 
+border-radius: 12px;
+border: none;
+background-color: transparent;
+margin-top: 5.5px;
+padding-left: 18px;
+
+img {
+width: 35px; 
+height: auto; 
+}
+`
+
 export const FormWrapper = styled.div`
 display: flex; 
 width: 350px;
@@ -84,7 +114,7 @@ background: #fafafa;
 border: 1px solid #eeeeee;
 padding: 12px;
 border-radius: 12px;
-margin-top: 12px;
+height: 60px;
 width: 330px;
 `;
 
@@ -93,10 +123,18 @@ display: flex;
 gap: 10px
 `;
 
+export const PriorityButtonContainer = styled.div`
+display: flex;
+gap: 10px
+`;
+
 export const PacmanContainer = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
+position: relative;
+width: 100%;
+right: 160px;
 
 img {
   width: 30px;
@@ -109,4 +147,22 @@ border: none;
 background-color: transparent;
 color: white;
 font-size: 30px;
+`;
+
+export const SubmitButton = styled.button`
+border-radius: 12px;
+border: none;
+padding: 5px 20px;
+
+&:hover {
+background: grey;
+}
+`;
+
+export const DateButtonsContainer = styled.div`
+display: flex;
+gap: 10px;
+background-color: ffffff;
+border-radius: 12px;
+border: none;
 `;
