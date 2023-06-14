@@ -28,7 +28,6 @@ import {
   LabelHighlight,
   FormGroup,
   EditSubmitButton,
-  FormHeader,
   FormFooter,
   FlipCard,
   FlipCardBack,
@@ -259,7 +258,6 @@ export const SeeTodos = () => {
   };
 
   const FormatDate = (date) => {
-
     const options = {
       weekday: 'long',
       day: 'numeric',
@@ -267,9 +265,8 @@ export const SeeTodos = () => {
       timeZone: 'Europe/Stockholm'
     };
 
-    return date.toLocaleString('sv-SE', options)
-
-  }
+    return date.toLocaleString('sv-SE', options);
+  };
 
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
@@ -292,7 +289,8 @@ export const SeeTodos = () => {
                         name={item._id}
                         id={item._id}
                         checked={item.completed}
-                        onChange={() => onToggleTodo(item._id, item.completed)} />
+                        onChange={() => onToggleTodo(item._id, item.completed)}
+                      />
                       <p>{item.description}</p>
                       <p>{item.priority}</p>
                       <p>{item.category}</p>
@@ -314,9 +312,6 @@ export const SeeTodos = () => {
                 </FlipCardFront>
                 <FlipCardBack>
                   <form onSubmit={handleEditSubmit}>
-                    <FormHeader>
-                      <h3>EDIT TODO</h3>
-                    </FormHeader>
                     <FormGroup>
                       <FormInput
                         defaultValue={item.description}
@@ -324,7 +319,8 @@ export const SeeTodos = () => {
                         type="text"
                         name="description"
                         placeholder="Description"
-                        onChange={handleDescriptionChange} />
+                        onChange={handleDescriptionChange}
+                      />
                       <div>
                         <CategoryButton
                           type="button"
@@ -393,15 +389,14 @@ export const SeeTodos = () => {
                             console.log('Date selected:', date);
                             setSelectedDeadline(date);
 
-                            
                             setUpdatedTodo({
                               ...updatedTodo,
-                              deadline: date ? date : null // Handle the case when no date is selected
+                              deadline: date
                             });
 
                             console.log('Selected deadline:', selectedDeadline);
-                          }} />
-
+                          }}
+                        />
                         <NoDeadlineButton
                           type="button"
                           style={selectedDeadline === null ? { backgroundColor: 'green' } : {}}
@@ -415,11 +410,11 @@ export const SeeTodos = () => {
                       <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
                         Submit
                       </EditSubmitButton>
+                      <FormFooter>
+                        See updated todo{' '}
+                        <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                      </FormFooter>
                     </FormGroup>
-                    <FormFooter>
-                      See updated todo{' '}
-                      <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
-                    </FormFooter>
                   </form>
                 </FlipCardBack>
               </FlipCardInner>

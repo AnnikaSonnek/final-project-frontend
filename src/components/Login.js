@@ -127,7 +127,7 @@ export const Login = () => {
           <div className="flipcard-front">
             <form className="login-form" action="" onSubmit={onLoginFormSubmit}>
               <div className="form-header">
-                <h3>Login Form</h3>
+                <h3>Login</h3>
                 <p>Login to access your dashboard</p>
               </div>
               <div className="form-group">
@@ -159,14 +159,14 @@ export const Login = () => {
                 </button>
               </div>
               <div className="form-footer">
-              Dont have an account? <label className="label-highlight" htmlFor="form_switch"> Sign Up </label>
+                <p>Don&apos;t have an account? <label className="label-highlight" htmlFor="form_switch"> Sign Up </label></p>
               </div>
             </form>
           </div>
           <div className="flipcard-back">
             <form className="login-form" action="" onSubmit={onRegisterFormSubmit}>
               <div className="form-header">
-                <h3>Signup Form</h3>
+                <h3>Sign up</h3>
                 <p>Register for a new account</p>
               </div>
               <div className="form-group">
@@ -209,7 +209,7 @@ export const Login = () => {
                 </button>
               </div>
               <div className="form-footer">
-              Already have an account? <label className="label-highlight" htmlFor="form_switch"> Login</label>
+                <p>Already have an account? <label className="label-highlight" htmlFor="form_switch"> Login</label></p>
               </div>
             </form>
           </div>

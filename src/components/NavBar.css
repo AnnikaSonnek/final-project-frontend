@@ -3,9 +3,7 @@
 .logo-picture {
   display: flex;
   scale: 15%;
-  padding-top: 7px;
-  align-items: center;
-  margin-right: auto;
+  width: 60px;
 }
 
 .top-nav {
@@ -15,8 +13,7 @@
   justify-content: space-between;
   color: #210440;
   height: 50px;
-  padding: 10px;
-  padding-left: 0px;
+  padding: 10px 10px 10px 0px;
 }
 
 .menu {

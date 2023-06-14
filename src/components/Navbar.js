@@ -19,7 +19,6 @@ import './NavBar.css';
 // //////////////////////////////////////////////////////////////////////// //
 
 export const Navbar = () => {
-  const loggedInUser = useSelector((store) => store.user.username);
   const avatar = useSelector((store) => store.user.avatar);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,28 +57,29 @@ export const Navbar = () => {
           <img alt="avatar" src={bild3} />
         ) : null}
       </div>
-      <p>Hello {loggedInUser}!</p>
-      <input id="menu-toggle" type="checkbox" />
-      <label className="menu-button-container" htmlFor="menu-toggle">
-        <div className="menu-button" />
-      </label>
-      <ul className="menu">
-        <li>
-          <button type="button" className="Btn" onClick={onLogoutButtonClick}>
-        Logout
-          </button>
-        </li>
-        <li>
-          <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
-        Personal Page
-          </button>
-        </li>
-        <li>
-          <button type="button" className="Btn" onClick={onTotoPageButtonClick}>
-        Todopage
-          </button>
-        </li>
-      </ul>
+      <div>
+        <input id="menu-toggle" type="checkbox" />
+        <label className="menu-button-container" htmlFor="menu-toggle">
+          <div className="menu-button" />
+        </label>
+        <ul className="menu">
+          <li>
+            <button type="button" className="Btn" onClick={onLogoutButtonClick}>
+          Logout
+            </button>
+          </li>
+          <li>
+            <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
+          Personal Page
+            </button>
+          </li>
+          <li>
+            <button type="button" className="Btn" onClick={onTotoPageButtonClick}>
+          Todopage
+            </button>
+          </li>
+        </ul>
+      </div>
     </section>
   );
 };
