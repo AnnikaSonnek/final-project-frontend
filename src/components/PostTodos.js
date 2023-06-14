@@ -160,6 +160,10 @@ export const PostTodos = () => {
     return () => clearTimeout(timer);
   }, [inputValue]);
 
+  const handleAiSuggestion = () => {
+    setInputValue(inputValue);
+  };
+
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
@@ -170,7 +174,7 @@ export const PostTodos = () => {
         <img alt="pacman" src={pacman} />
         <AIcontainer>
           {suggestions.map((suggestion, index) => (
-            <AI key={index}>
+            <AI key={index} onClick={() => handleAiSuggestion(suggestion)}>
               {suggestion}
               <span className="word-spacing">&nbsp;</span>
             </AI>
