@@ -46,7 +46,7 @@ export const AcordionColapsed = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 1.2rem;
   border-radius: 12px;
 
   p {
