@@ -82,6 +82,13 @@
   transform: rotate(-405deg);
 }
 
+.Btn {
+  border-radius: 12px;
+  border: none;
+  padding: 5px 10px;
+  background-color: #8DB48E;
+}
+
 @media (max-width: 668px) {
   .menu-button-container {
     display: flex;

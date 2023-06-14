@@ -28,13 +28,13 @@ import {
   LabelHighlight,
   FormGroup,
   EditSubmitButton,
-  FormHeader,
   FormFooter,
   FlipCard,
   FlipCardBack,
   FlipCardInner,
   FlipCardFront,
-  NoDeadlineButton
+  NoDeadlineButton,
+  DeleteButton
 } from './SeeTodosStyles';
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
 
@@ -285,27 +285,23 @@ export const SeeTodos = () => {
                       <p>{item.category}</p>
                       <p>Created: {item.createdAt}</p>
                       {item.deadline && <p>Deadline: {item.deadline}</p>}
-
-                      <button type="button" onClick={() => DeleteMessage(item._id)}>
+                      <DeleteButton type="button" onClick={() => DeleteMessage(item._id)}>
                         Delete
-                      </button>
+                      </DeleteButton>
                       <FormFooter>
                         Do you want to edit this todo?{' '}
-                        <label
+                        <LabelHighlight
                           className="label-highlight"
                           htmlFor={`form_switch_${item._id}`}
                           onClick={() => editTodo(item._id, item)}>
                           EDIT
-                        </label>
+                        </LabelHighlight>
                       </FormFooter>
                     </FormGroup>
                   </DisplayedTodo>
                 </FlipCardFront>
                 <FlipCardBack>
                   <form onSubmit={handleEditSubmit}>
-                    <FormHeader>
-                      <h3>EDIT TODO</h3>
-                    </FormHeader>
                     <FormGroup>
                       <FormInput
                         defaultValue={item.description}
@@ -402,11 +398,11 @@ export const SeeTodos = () => {
                       <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
                         Submit
                       </EditSubmitButton>
+                      <FormFooter>
+                        See updated todo{' '}
+                        <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                      </FormFooter>
                     </FormGroup>
-                    <FormFooter>
-                      See updated todo{' '}
-                      <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
-                    </FormFooter>
                   </form>
                 </FlipCardBack>
               </FlipCardInner>

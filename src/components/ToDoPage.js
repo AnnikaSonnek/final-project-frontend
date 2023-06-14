@@ -20,7 +20,6 @@ export const ToDoPage = () => {
   return (
     <>
       <Navbar />
-      <p>Hej hej!</p>
       <PostTodos />
       <SeeTodos />
     </>

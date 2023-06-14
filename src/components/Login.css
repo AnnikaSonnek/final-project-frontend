@@ -12,6 +12,7 @@
      font-size: 1rem;
      height: 100%;
      line-height: 1.6;
+     color: #212427;
  }
  .wrap {
      width: 350px;
@@ -35,20 +36,21 @@
    margin-bottom: 1rem;
 }
 .form-button{
-  background: #69d2e7;
-  border: 1px solid #ddd;
+  background: #8DB48E;
+  border: none;
   border-radius: 12px;
   color: #ffffff;
   padding: 10px;
-  width: 100%;
+  width: 150px;
   text-transform: uppercase;
 }
 .form-button:hover{
-  background: #69c8e7;
+  background: #4D724D;
 }
 .form-header{
 text-align: center;
 margin-bottom : 2rem;
+color: #212427;
 }
 .form-footer{
 text-align: center;
@@ -83,10 +85,10 @@ input[type="checkbox"]:checked + .flipcard .flipcard-inner{
 transform: rotateY(180deg);
 }
 .form-button-register{
-background: #2c91d8;
+background: #8DB48E;
 }
 .form-button-register:hover{
-background: #2c91a8;
+background: #4D724D;
 }
 .switch_form:before{
 content: " ";
@@ -94,11 +96,11 @@ display: block;
 background:red;
 }
 .label-highlight{
-color: blue;
+color: #db3a34;
 }
 .login-input {
     border: none;
-    background-color: #E6B8B8;
+    background-color: #8DB48E;
     border-radius: 12px;
     height: 40px;
     width: 100%;
