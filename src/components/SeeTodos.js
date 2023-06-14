@@ -28,13 +28,13 @@ import {
   LabelHighlight,
   FormGroup,
   EditSubmitButton,
+  FormHeader,
   FormFooter,
   FlipCard,
   FlipCardBack,
   FlipCardInner,
   FlipCardFront,
-  NoDeadlineButton,
-  DeleteButton
+  NoDeadlineButton
 } from './SeeTodosStyles';
 import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
 
@@ -258,6 +258,19 @@ export const SeeTodos = () => {
     setSelectedPriority(priority);
   };
 
+  const FormatDate = (date) => {
+
+    const options = {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      timeZone: 'Europe/Stockholm'
+    };
+
+    return date.toLocaleString('sv-SE', options)
+
+  }
+
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
@@ -283,25 +296,27 @@ export const SeeTodos = () => {
                       <p>{item.description}</p>
                       <p>{item.priority}</p>
                       <p>{item.category}</p>
-                      <p>Created: {item.createdAt}</p>
-                      {item.deadline && <p>Deadline: {item.deadline}</p>}
-                      <DeleteButton type="button" onClick={() => DeleteMessage(item._id)}>
+                      {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
+                      <button type="button" onClick={() => DeleteMessage(item._id)}>
                         Delete
-                      </DeleteButton>
+                      </button>
                       <FormFooter>
                         Do you want to edit this todo?{' '}
-                        <LabelHighlight
+                        <label
                           className="label-highlight"
                           htmlFor={`form_switch_${item._id}`}
                           onClick={() => editTodo(item._id, item)}>
                           EDIT
-                        </LabelHighlight>
+                        </label>
                       </FormFooter>
                     </FormGroup>
                   </DisplayedTodo>
                 </FlipCardFront>
                 <FlipCardBack>
                   <form onSubmit={handleEditSubmit}>
+                    <FormHeader>
+                      <h3>EDIT TODO</h3>
+                    </FormHeader>
                     <FormGroup>
                       <FormInput
                         defaultValue={item.description}
@@ -378,11 +393,10 @@ export const SeeTodos = () => {
                             console.log('Date selected:', date);
                             setSelectedDeadline(date);
 
-                            // Handle the case when no date is selected
-                            const adjustedDate = date ? new Date(date.setHours(0, 0, 0)) : null;
+                            
                             setUpdatedTodo({
                               ...updatedTodo,
-                              deadline: adjustedDate ? adjustedDate.toISOString() : null
+                              deadline: date ? date : null // Handle the case when no date is selected
                             });
 
                             console.log('Selected deadline:', selectedDeadline);
@@ -391,18 +405,21 @@ export const SeeTodos = () => {
                         <NoDeadlineButton
                           type="button"
                           style={selectedDeadline === null ? { backgroundColor: 'green' } : {}}
-                          onClick={() => setUpdatedTodo({ ...updatedTodo, deadline: null })}>
+                          onClick={() => {
+                            setSelectedDeadline(null);
+                            setUpdatedTodo({ ...updatedTodo, deadline: null });
+                          }}>
                           No deadline
                         </NoDeadlineButton>
                       </CalendarContainer>
                       <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
                         Submit
                       </EditSubmitButton>
-                      <FormFooter>
-                        See updated todo{' '}
-                        <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
-                      </FormFooter>
                     </FormGroup>
+                    <FormFooter>
+                      See updated todo{' '}
+                      <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                    </FormFooter>
                   </form>
                 </FlipCardBack>
               </FlipCardInner>
