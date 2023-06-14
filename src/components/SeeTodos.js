@@ -13,8 +13,12 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { BsCalendarDateFill } from 'react-icons/bs';
+import 'react-datepicker/dist/react-datepicker.css';
+import trashbin from '../img/trash.png';
+import editpen from '../img/edit.png';
+import turn from '../img/turn.png';
+import nodate from '../img/nodate.png';
 import { todos } from '../reducers/todos';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
@@ -33,9 +37,16 @@ import {
   FlipCardBack,
   FlipCardInner,
   FlipCardFront,
-  NoDeadlineButton
+  NoDateButton,
+  TrashButton,
+  LabelFront,
+  Checkbox,
+  PriorityButtonContainer,
+  CategoryButtonContainer,
+  CategoryButton,
+  PriorityButton,
+  IconButton
 } from './SeeTodosStyles';
-import { CategoryButton, PriorityButton, IconButton } from './PostTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////// CUSTOM INPUT FOR DATEPICKER /////////////////////////// //
@@ -284,28 +295,24 @@ export const SeeTodos = () => {
                 <FlipCardFront>
                   <DisplayedTodo>
                     <FormGroup>
-                      <input
-                        type="checkbox"
-                        name={item._id}
-                        id={item._id}
-                        checked={item.completed}
-                        onChange={() => onToggleTodo(item._id, item.completed)}
-                      />
-                      <p>{item.description}</p>
-                      <p>{item.priority}</p>
-                      <p>{item.category}</p>
-                      {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
-                      <button type="button" onClick={() => DeleteMessage(item._id)}>
-                        Delete
-                      </button>
+                      <h2>{item.description}</h2>
+                      <p>Prio: {item.priority} Category: {item.category}</p>{item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
                       <FormFooter>
-                        Do you want to edit this todo?{' '}
-                        <label
+                        <Checkbox
+                          type="checkbox"
+                          name={item._id}
+                          id={item._id}
+                          checked={item.completed}
+                          onChange={() => onToggleTodo(item._id, item.completed)} />
+                        <TrashButton type="button" onClick={() => DeleteMessage(item._id)}>
+                          <img alt="trashbin" src={trashbin} />
+                        </TrashButton>
+                        <LabelFront
                           className="label-highlight"
                           htmlFor={`form_switch_${item._id}`}
                           onClick={() => editTodo(item._id, item)}>
-                          EDIT
-                        </label>
+                          <img alt="editpen" src={editpen} />
+                        </LabelFront>
                       </FormFooter>
                     </FormGroup>
                   </DisplayedTodo>
@@ -319,60 +326,59 @@ export const SeeTodos = () => {
                         type="text"
                         name="description"
                         placeholder="Description"
-                        onChange={handleDescriptionChange}
-                      />
-                      <div>
+                        onChange={handleDescriptionChange} />
+                      <CategoryButtonContainer>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'Job' ? { backgroundColor: 'green' } : {}}
+                          style={selectedCategory === 'Job' ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handleCategoryChange('Job')}>
                           Job
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'School' ? { backgroundColor: 'green' } : {}}
+                          style={selectedCategory === 'School' ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handleCategoryChange('School')}>
                           School
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'Family' ? { backgroundColor: 'green' } : {}}
+                          style={selectedCategory === 'Family' ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handleCategoryChange('Family')}>
                           Family
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'Hobbies' ? { backgroundColor: 'green' } : {}}
+                          style={selectedCategory === 'Hobbies' ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handleCategoryChange('Hobbies')}>
                           Hobbies
                         </CategoryButton>
-                      </div>
-                      <div>
+                      </CategoryButtonContainer>
+                      <PriorityButtonContainer>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === 1 ? { backgroundColor: 'green' } : {}}
+                          style={selectedPriority === 1 ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handlePriorityChange(1)}>
                           1
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === 2 ? { backgroundColor: 'green' } : {}}
+                          style={selectedPriority === 2 ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handlePriorityChange(2)}>
                           2
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === 3 ? { backgroundColor: 'green' } : {}}
+                          style={selectedPriority === 3 ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handlePriorityChange(3)}>
                           3
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === null ? { backgroundColor: 'green' } : {}}
+                          style={selectedPriority === null ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => handlePriorityChange(null)}>
-                          No priority
+                          X
                         </PriorityButton>
-                      </div>
+                      </PriorityButtonContainer>
                       <CalendarContainer>
                         <DatePicker
                           customInput={<CustomInput />}
@@ -393,26 +399,25 @@ export const SeeTodos = () => {
                               ...updatedTodo,
                               deadline: date
                             });
-
                             console.log('Selected deadline:', selectedDeadline);
-                          }}
-                        />
-                        <NoDeadlineButton
+                          }} />
+                        <NoDateButton
                           type="button"
-                          style={selectedDeadline === null ? { backgroundColor: 'green' } : {}}
+                          style={selectedDeadline === null ? { backgroundColor: '#4D724D' } : {}}
                           onClick={() => {
                             setSelectedDeadline(null);
                             setUpdatedTodo({ ...updatedTodo, deadline: null });
                           }}>
-                          No deadline
-                        </NoDeadlineButton>
+                          <img alt="nodate" src={nodate} />
+                        </NoDateButton>
+                        <LabelHighlight onClick={() => backtoTodoList()}>
+                          <img alt="turn" src={turn} />
+                        </LabelHighlight>
                       </CalendarContainer>
-                      <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
-                        Submit
-                      </EditSubmitButton>
                       <FormFooter>
-                        See updated todo{' '}
-                        <LabelHighlight onClick={() => backtoTodoList()}>CLICK HERE</LabelHighlight>
+                        <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
+                          Submit
+                        </EditSubmitButton>
                       </FormFooter>
                     </FormGroup>
                   </form>
