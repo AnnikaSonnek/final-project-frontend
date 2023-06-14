@@ -4,24 +4,27 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend } from 'chart.js'
-import { WrapCircles, ChartContainer, LabelContainer } from './ProgressBarStyles';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {
+  ProgressbarWrapper,
+  ChartContainer,
+  LabelContainer,
+  StatsWrapper,
+  Span
+} from './ProgressBarStyles';
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////// PROGRESSBAR //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
 export const ProgressBar = () => {
-  const todolist = useSelector((store) => store.todos.items)
-  const checkedtodostotal = useSelector((store) => store.user.checkedTasks)
+  const todolist = useSelector((store) => store.todos.items);
+  const checkedtodostotal = useSelector((store) => store.user.checkedTasks);
 
   // Filtering out the completed and uncompleted items
-  const completedTodos = todolist.filter((todo) => todo.completed)
-  const uncompletedTodos = todolist.filter((todo) => !todo.completed)
+  const completedTodos = todolist.filter((todo) => todo.completed);
+  const uncompletedTodos = todolist.filter((todo) => !todo.completed);
 
   const totalTasks = todolist.length;
 
@@ -76,7 +79,7 @@ export const ProgressBar = () => {
         hoverBackgroundColor: ['#4BC0C0', '#FF6384']
       }
     ]
-  }
+  };
 
   const options = {
     cutout: '80%' // Adjust the cutout percentage as needed
@@ -86,42 +89,44 @@ export const ProgressBar = () => {
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
   return (
-    <>
-      <p>Progressbar</p>
-      <p>✅{`Total checked tasks: ${checkedtodostotal}`}</p>
-      <WrapCircles>
-        {/* <StyledCircleProgress completedPercentage={completedPercentage}>
-          <div className="inner">{`${completedPercentage.toFixed(0)}%`}</div>
-  </StyledCircleProgress> */}
+    <ProgressbarWrapper>
+      <StatsWrapper>
         <ChartContainer>
           <Doughnut data={data} options={options} />
           <LabelContainer>
             <p>
-              <span style={{ color: '#FF6384' }}>Job</span>
+              <Span style={{ color: 'black', backgroundColor: '#FF6384' }}>Job</Span>
             </p>
             <p>
-              <span style={{ color: '#36A2EB' }}>School</span>
+              <Span style={{ color: 'white', backgroundColor: '#36A2EB' }}>School</Span>
             </p>
             <p>
-              <span style={{ color: '#FFCE56' }}>Family</span>
+              <Span style={{ color: 'black', backgroundColor: '#FFCE56' }}>Family</Span>
             </p>
             <p>
-              <span style={{ color: '#4BC0C0' }}>Hobbies</span>
+              <Span style={{ color: 'black', backgroundColor: '#4BC0C0' }}>Hobbies</Span>
             </p>
           </LabelContainer>
         </ChartContainer>
         <ChartContainer>
           <Doughnut data={progressdata} options={options} />
           <LabelContainer>
-            <p>{`${completedPercentageString}%`}</p>
+            <p style={{ fontSize: '1.2rem' }}>{`${completedPercentageString}% completed`}</p>
           </LabelContainer>
         </ChartContainer>
+      </StatsWrapper>
+      <StatsWrapper>
         <div>
-          <h2>Deadlines This Week: {tasksCountThisWeek}</h2>
-          {/* Rest of your JSX */}
+          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>{`${tasksCountThisWeek}`}</p>
+          <p style={{ fontSize: '1.2rem' }}>Deadlines this week</p>
+          <p style={{ textAlign: 'center', fontSize: '2rem' }}>⌛</p>
         </div>
-      </WrapCircles>
-    </>
-  )
-}
-
+        <div>
+          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>{`${checkedtodostotal}`}</p>
+          <p style={{ fontSize: '1.2rem' }}>Total finished todos</p>
+          <p style={{ textAlign: 'center', fontSize: '2rem' }}>✅</p>
+        </div>
+      </StatsWrapper>
+    </ProgressbarWrapper>
+  );
+};

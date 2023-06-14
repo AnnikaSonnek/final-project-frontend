@@ -9,8 +9,8 @@ export const PersonalPage = () => {
   return (
     <>
       <Navbar />
-      <ProgressBar />
       <Levels />
+      <ProgressBar />
       <AvatarPicker />
       <InputField />
     </>
