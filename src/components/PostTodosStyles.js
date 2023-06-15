@@ -97,12 +97,6 @@ p {
   margin: 0;
   padding: 0;
 }
-
-@media (min-width: 720px) {
-  width: 100%;
-    }
-
-
 `;
 
 export const OuterWrapper = styled.div`
