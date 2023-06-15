@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
@@ -13,8 +15,11 @@ import {
   Span,
   TextStatsContainer,
   TextStatsNumber,
-  TextStatsDesc
+  TextStatsDesc,
+  ImgWrapper,
+  Img
 } from './ProgressBarStyles';
+import notasks from '../img/notasks.png';
 
 ChartJS.register(ArcElement, Legend);
 
@@ -93,43 +98,59 @@ export const ProgressBar = () => {
   // //////////////////////////////////////////////////////////////////////// //
   return (
     <ProgressbarWrapper>
-      <StatsWrapper>
-        <ChartContainer>
-          <Doughnut data={data} options={options} />
-          <LabelContainer>
-            <p>
-              <Span style={{ color: 'black', backgroundColor: '#CD8484' }}>Job</Span>
-            </p>
-            <p>
-              <Span style={{ color: 'white', backgroundColor: '#76A1D3' }}>School</Span>
-            </p>
-            <p>
-              <Span style={{ color: 'black', backgroundColor: '#DFD78E' }}>Family</Span>
-            </p>
-            <p>
-              <Span style={{ color: 'black', backgroundColor: '#8DB48E' }}>Hobbies</Span>
-            </p>
-          </LabelContainer>
-        </ChartContainer>
-        <ChartContainer>
-          <Doughnut data={progressdata} options={options} />
-          <LabelContainer>
-            <p style={{ textAlign: 'center', fontSize: '1rem', fontWeight: 600 }}>{`${completedPercentageString}% completed`}</p>
-          </LabelContainer>
-        </ChartContainer>
-      </StatsWrapper>
-      <StatsWrapper>
-        <TextStatsContainer>
-          <TextStatsNumber>{`${tasksCountThisWeek}`}</TextStatsNumber>
-          <TextStatsDesc>Deadlines this week</TextStatsDesc>
-          <p style={{ fontSize: '2rem' }}>⌛</p>
-        </TextStatsContainer>
-        <TextStatsContainer>
-          <TextStatsNumber>{`${checkedtodostotal}`}</TextStatsNumber>
-          <TextStatsDesc>Total completed todos</TextStatsDesc>
-          <p style={{ fontSize: '2rem' }}>✅</p>
-        </TextStatsContainer>
-      </StatsWrapper>
+      {totalTasks === 0 || totalTasks === null ? (
+        <ImgWrapper>
+          <Img alt="tasklist" src={notasks} />
+          <p>You haven&apos;t added any todos yet.</p>
+        </ImgWrapper>
+      ) : (
+        <>
+          <StatsWrapper>
+            <ChartContainer>
+              <Doughnut data={data} options={options} />
+              <LabelContainer>
+                <p>
+                  <Span style={{ color: 'black', backgroundColor: '#CD8484' }}>Job</Span>
+                </p>
+                <p>
+                  <Span style={{ color: 'white', backgroundColor: '#76A1D3' }}>School</Span>
+                </p>
+                <p>
+                  <Span style={{ color: 'black', backgroundColor: '#DFD78E' }}>Family</Span>
+                </p>
+                <p>
+                  <Span style={{ color: 'black', backgroundColor: '#8DB48E' }}>Hobbies</Span>
+                </p>
+              </LabelContainer>
+            </ChartContainer>
+            <ChartContainer>
+              <Doughnut data={progressdata} options={options} />
+              <LabelContainer>
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '1rem',
+                    fontWeight: 600
+                  }}>
+                  {`${completedPercentageString}% completed`}
+                </p>
+              </LabelContainer>
+            </ChartContainer>
+          </StatsWrapper>
+          <StatsWrapper>
+            <TextStatsContainer>
+              <TextStatsNumber>{`${tasksCountThisWeek}`}</TextStatsNumber>
+              <TextStatsDesc>Deadlines this week</TextStatsDesc>
+              <p style={{ fontSize: '2rem' }}>⌛</p>
+            </TextStatsContainer>
+            <TextStatsContainer>
+              <TextStatsNumber>{`${checkedtodostotal}`}</TextStatsNumber>
+              <TextStatsDesc>Total completed todos</TextStatsDesc>
+              <p style={{ fontSize: '2rem' }}>✅</p>
+            </TextStatsContainer>
+          </StatsWrapper>
+        </>
+      )}
     </ProgressbarWrapper>
   );
 };
