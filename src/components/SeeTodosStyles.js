@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 16px;
  }
 
  @media (min-width: 1024px) {
@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  gap: 16px;
  }
 `;
 
@@ -64,7 +64,6 @@ export const FormInput = styled.input`
   padding: 12px;
   border-radius: 12px;
   margin-top: 7px;
-  margin-bottom: 7px;
   width: 330px;
 `;
 
@@ -206,7 +205,7 @@ export const FlipCardFront = styled.div`
   position: absolute;
   z-index: 1; //ADDED
   width: 100%;
-  height: 200vh;
+  height: 100%;
   backface-visibility: hidden;
   color: #212427;
 `;
@@ -215,7 +214,7 @@ export const FlipCardBack = styled.div`
   position: absolute;
   z-index: 1; //ADDED
   width: 100%;
-  height: 200vh;
+  height: 100%;
   backface-visibility: hidden;
   transform: rotateY(180deg);
 `;
@@ -238,7 +237,7 @@ export const PriorityButtonContainer = styled.div`
 display: flex;
 gap: 10px;
 margin-top: 7px;
-margin-bottom: 3px;
+
 `;
 
 export const CategoryButtonContainer = styled.div`
@@ -292,7 +291,7 @@ export const LoginInput = styled.input`
 `;
 
 export const TodoContainer = styled.div`
-  margin-bottom: 11rem;
+  margin-bottom: 11.5rem;
 `;
 
 export const TransparentDiv = styled.div`
@@ -309,7 +308,7 @@ export const CalendarContainer = styled.div`
   justify-content: flex-start;
   width: 50px;
   width: 100%;
-  padding-left: 20px;
+  padding-left: 30px;
   height: 20px;
   gap: 15px;
   margin-bottom: 5px;
@@ -324,7 +323,7 @@ border-radius: 12px;
 border: none;
 font-family: Quicksand;
 white-space: nowrap;
-margin-top: 8px;
+margin-top: 4px;
 padding: 2px 10px 2px 10px;`
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
@@ -373,5 +372,4 @@ align-items: center;
 padding: 0.5rem;
 color: white;
 cursor: pointer;
-margin-top: 7px;
 `

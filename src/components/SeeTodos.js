@@ -355,46 +355,68 @@ export const SeeTodos = () => {
                       <CategoryButtonContainer>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'Job' ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handleCategoryChange('Job')}>
-                          Job
+                          onClick={() => handleCategoryChange('Job')}
+                          style={
+                            selectedCategory !== 'Job'
+                              ? { backgroundColor: '#CDA384' }
+                              : { backgroundColor: '#AF8D74', transform: 'translateY(2px)' }
+                          }>
+                          Hobbies
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'School' ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handleCategoryChange('School')}>
+                          onClick={() => handleCategoryChange('School')}
+                          style={
+                            selectedCategory !== 'School'
+                              ? { backgroundColor: '#76A1D3' }
+                              : { backgroundColor: '#678CB8', transform: 'translateY(2px)' }
+                          }>
                           School
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'Family' ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handleCategoryChange('Family')}>
+                          onClick={() => handleCategoryChange('Family')}
+                          style={
+                            selectedCategory !== 'Family'
+                              ? { backgroundColor: '#DFD78E' }
+                              : { backgroundColor: '#C0B97A', transform: 'translateY(2px)' }
+                          }>
                           Family
                         </CategoryButton>
                         <CategoryButton
                           type="button"
-                          style={selectedCategory === 'Hobbies' ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handleCategoryChange('Hobbies')}>
+                          onClick={() => handleCategoryChange('Hobbies')}
+                          style={
+                            selectedCategory !== 'Hobbies'
+                              ? { backgroundColor: '#CDA384' }
+                              : { backgroundColor: '#AF8D74', transform: 'translateY(2px)' }
+                          }>
                           Hobbies
                         </CategoryButton>
                       </CategoryButtonContainer>
                       <PriorityButtonContainer>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === 1 ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handlePriorityChange(1)}>
+                          onClick={() => handlePriorityChange(1)}
+                          style={
+                            selectedPriority === 1 ? { backgroundColor: '#9771B6', transform: 'translateY(2px)' } : {}
+                          }>
                           1
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === 2 ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handlePriorityChange(2)}>
+                          onClick={() => handlePriorityChange(2)}
+                          style={
+                            selectedPriority === 2 ? { backgroundColor: '#C281B4', transform: 'translateY(2px)' } : {}
+                          }>
                           2
                         </PriorityButton>
                         <PriorityButton
                           type="button"
-                          style={selectedPriority === 3 ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => handlePriorityChange(3)}>
+                          onClick={() => handlePriorityChange(3)}
+                          style={
+                            selectedPriority === 3 ? { backgroundColor: '#D3A7CA', transform: 'translateY(2px)' } : {}
+                          }>
                           3
                         </PriorityButton>
                         <PriorityButton
