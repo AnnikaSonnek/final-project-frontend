@@ -81,6 +81,7 @@ export const SeeTodos = () => {
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedDeadline, setSelectedDeadline] = useState(null);
   const [updatedTodo, setUpdatedTodo] = useState({});
+  const [todoLength, setTodoLength] = useState(null);
 
   // //////////////////////////////////////////////////////////////////////// //
   // //////////////////////////// FETCH FUNCTIONS /////////////////////////// //
@@ -104,6 +105,7 @@ export const SeeTodos = () => {
           // If the fetch is successful the error is set to null and the items (which is the list of todos) is set to the response from the database, displaying all todos.
           dispatch(todos.actions.setError(null));
           dispatch(todos.actions.setItems(data.response));
+          setTodoLength(data.response.length);
         } else {
           // If the fetch is unsuccessful the error is set to the response that is returned from the server and the items(todoslist) is set to be an empty array.
           dispatch(todos.actions.setError(data.response));
@@ -279,8 +281,9 @@ export const SeeTodos = () => {
     return date.toLocaleString('sv-SE', options);
   };
 
-  const numberOfCardsToShow = 2; // Set the number of cards to show
-  const showGap = numberOfCardsToShow === 2;
+  // const numberOfCardsToShow = 2; // Set the number of cards to show
+  // const showGap = numberOfCardsToShow === 2;
+  const showGap = todoLength > 1;
 
   const getPrioBackgroundColor = (priority) => {
     if (priority === 1) {

@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     grid-template-columns: ${(props) => (props.showGap ? '1fr 1fr' : '1fr')};
-    gap: ${(props) => (props.showGap ? '16px' : '0')};
+    gap: ${(props) => (props.showGap ? '16px' : '0px')};
   }
 
  @media (min-width: 1024px) {
