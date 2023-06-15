@@ -23,6 +23,14 @@ export const Wrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 10px;
  }
+
+ @media (min-width: 1024px) {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+ }
 `;
 
 export const CheckboxContainer = styled.div`
