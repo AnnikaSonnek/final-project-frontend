@@ -10,7 +10,7 @@ gap: 1.5rem;
 `;
 
 export const LevelsWrapper = styled.div`
-padding-top: 5rem;
+padding-top: 2rem;
 display: flex;
 flex-direction: column;
 justify-content: center; 

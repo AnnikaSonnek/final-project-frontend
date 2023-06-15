@@ -1,10 +1,24 @@
 import styled from 'styled-components/macro'
 
-export const AvatarPickerWrapper = styled.div`
+export const AvatarPickerOuterWrapper = styled.div`
+display: flex;
+flex-direction: column;
+
+@media (min-width: 668px) {
+  align-items: center;
+}
+`
+
+export const AvatarPickerInnerWrapper = styled.div`
 display: flex;
 flex-direction: column;
 background-color: rgb(141, 180, 142);
 border-radius: 12px;
+width: 100%;
+
+@media (min-width: 668px) {
+  max-width: 690px;
+}
 `
 
 export const AvatarPictures = styled.img`

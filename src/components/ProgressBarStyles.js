@@ -21,7 +21,7 @@ padding-bottom: 6rem;
 @media (min-width: 668px) {
     flex-direction: row;
     gap: 15rem;
-    padding-bottom: 10rem;
+    padding-top: 4rem;
 }
 `;
 
