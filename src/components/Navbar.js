@@ -20,6 +20,7 @@ import './NavBar.css';
 
 export const Navbar = () => {
   const avatar = useSelector((store) => store.user.avatar);
+  console.log(avatar)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,9 +40,15 @@ export const Navbar = () => {
   return (
     <section className="top-nav">
       <div className="logo-picture">
-        {avatar === 1 ? <img alt="avatar" src={bild} /> : null}
-        {avatar === 2 ? <img alt="avatar" src={bild2} /> : null}
-        {avatar === 3 ? <img alt="avatar" src={bild3} /> : null}
+        {avatar === 1 ? (
+          <img alt="avatar" src={bild} />
+        ) : null}
+        {avatar === 2 ? (
+          <img alt="avatar" src={bild2} />
+        ) : null}
+        {avatar === 3 ? (
+          <img alt="avatar" src={bild3} />
+        ) : null}
       </div>
       <div>
         <input id="menu-toggle" type="checkbox" />

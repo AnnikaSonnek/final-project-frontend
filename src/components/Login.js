@@ -101,6 +101,7 @@ export const Login = () => {
           // Update user state with access token, username, and user ID
           dispatch(user.actions.setAccessToken(data.response.accessToken));
           dispatch(user.actions.setUsername(data.response.username));
+          dispatch(user.actions.setAvatar(data.response.avatar));
           dispatch(user.actions.setUserId(data.response.id));
           dispatch(user.actions.setError(null));
           navigate('/todopage'); // Redirect to home page
@@ -205,7 +206,7 @@ export const Login = () => {
               <div className="form-group">
                 <button
                   className="form-button form-button-register"
-                  type="submit">Signup
+                  type="submit">Sign up
                 </button>
               </div>
               <div className="form-footer">

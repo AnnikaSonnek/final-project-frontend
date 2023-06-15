@@ -216,25 +216,25 @@ export const PostTodos = () => {
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Job')}
-                style={selectedCategory === 'Job' ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedCategory === 'Job' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 Job
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('School')}
-                style={selectedCategory === 'School' ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedCategory === 'School' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 School
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Family')}
-                style={selectedCategory === 'Family' ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedCategory === 'Family' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 Family
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Hobbies')}
-                style={selectedCategory === 'Hobbies' ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedCategory === 'Hobbies' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 Hobbies
               </CategoryButton>
             </CategoryButtonContainer>
@@ -242,19 +242,19 @@ export const PostTodos = () => {
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(1)}
-                style={selectedPriority === 1 ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedPriority === 1 ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 1
               </PriorityButton>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(2)}
-                style={selectedPriority === 2 ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedPriority === 2 ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 2
               </PriorityButton>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(3)}
-                style={selectedPriority === 3 ? { backgroundColor: '#4D724D' } : {}}>
+                style={selectedPriority === 3 ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
                 3
               </PriorityButton>
             </PriorityButtonContainer>

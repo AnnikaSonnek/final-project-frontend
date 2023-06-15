@@ -37,14 +37,10 @@ border: none;
 padding: 3px 10px;
 margin-top: 10px;
 cursor: pointer;
+font-family:  "Quicksand", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
 
-&:active,
-  &:focus {
-    /* Add your desired styles for the pressed state */
-    background-color: #ccc; /* Example: Change the background color */
-    transform: translateY(2px); /* Example: Push the button down slightly */
-    outline: none; /* Remove the default focus outline */
-  }
 `
 
 export const PriorityButton = styled.button`
@@ -53,14 +49,9 @@ border-radius: 12px;
 border: none;
 padding: 3px 10px;
 margin-top: 10px;
-
-&:active,
-  &:focus {
-    /* Add your desired styles for the pressed state */
-    background-color: #ccc; /* Example: Change the background color */
-    transform: translateY(2px); /* Example: Push the button down slightly */
-    outline: none; /* Remove the default focus outline */
-  }
+font-family:  "Quicksand", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
 `
 
 export const NoDateButton = styled.button`
@@ -104,7 +95,8 @@ align-items: center;
 padding: 0px 12px;
 
 p {
-  color: white;
+  color: #212427;
+  font-weight: 600;
   margin: 0;
   padding: 0;
 }
@@ -113,7 +105,12 @@ p {
 export const OuterWrapper = styled.div`
 display: flex;
 flex-direction: column;
-padding-top: 5rem;
+padding-top: 1rem;
+
+@media (min-width: 668px) {
+  padding-top: 3rem;
+    }
+
 `
 export const FormInput = styled.input`
 background: #fafafa;
@@ -122,6 +119,9 @@ padding: 12px;
 border-radius: 12px;
 height: 60px;
 width: 330px;
+font-family:  "Quicksand", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
 `;
 
 export const CategoryButtonContainer = styled.div`
@@ -151,7 +151,7 @@ img {
 export const AddButton = styled.button`
 border: none;
 background-color: transparent;
-color: white;
+color: #212427;
 font-size: 30px;
 cursor: pointer;
 `;

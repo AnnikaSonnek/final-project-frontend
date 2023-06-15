@@ -31,6 +31,10 @@
    border: 1px solid #eeeeee;
    padding: 12px;
    width: 100%;
+   font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif
+
 }
 .form-group{
    margin-bottom: 1rem;
@@ -39,10 +43,14 @@
   background: #8DB48E;
   border: none;
   border-radius: 12px;
-  color: #ffffff;
+  color: #212427;
+  font-weight: 600;
   padding: 10px;
   width: 150px;
   text-transform: uppercase;
+  font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 .form-button:hover{
   background: #4D724D;
@@ -75,7 +83,7 @@ height: 100%;
 backface-visibility: hidden;
 }
 .flipcard-front{
-color: black;
+color: #212427;
 }
 .flipcard-back{
 background-color: dodgerblue;				
@@ -104,4 +112,13 @@ color: #db3a34;
     border-radius: 12px;
     height: 40px;
     width: 100%;
+    font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    padding: 12px;
+    color: #212427;
+}
+
+.login-input::placeholder {
+  color: #232323
 }

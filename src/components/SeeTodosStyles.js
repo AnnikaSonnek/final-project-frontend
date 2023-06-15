@@ -66,12 +66,12 @@ export const FormGroup = styled.div`
   h2 {
     padding: 0 0 10px 0;
     font-size: 1rem;
-    color: black;
+    color: #212427;
   }
 
   hr {
     width: 90%;
-    border: 2px solid black;
+    border: 2px solid #212427;
     margin-bottom: 5px;
     margin-bottom: 5px;
   }
@@ -137,7 +137,7 @@ export const DisplayedItemsContainer = styled.div`
 display: flex;
 
 p {
-  color: black;
+  color: #212427;
 }
 `;
 export const DisplayedDeadlineContainer = styled.div`
@@ -145,7 +145,7 @@ display: flex;
 margin-bottom: 0;
 
 p {
-  color: black;
+  color: #212427;
   margin-bottom: 0;
 }
 `;
@@ -192,7 +192,7 @@ export const FlipCardFront = styled.div`
   width: 100%;
   height: 300px;
   backface-visibility: hidden;
-  color: black;
+  color: #212427;
 `;
 
 export const FlipCardBack = styled.div`
@@ -313,7 +313,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   width: 19px;
   background-color: #8DB48E;
   border-radius: 5px;
-  border: 2px solid #000000;
+  border: 2px solid #212427;
   cursor: pointer;
   display: flex;
   align-items: center;

@@ -3,9 +3,11 @@ import styled from 'styled-components/macro'
 export const AvatarPickerOuterWrapper = styled.div`
 display: flex;
 flex-direction: column;
+padding-bottom: 2rem; 
 
 @media (min-width: 668px) {
   align-items: center;
+  padding-bottom: 4rem; 
 }
 `
 
