@@ -279,6 +279,27 @@ export const SeeTodos = () => {
     return date.toLocaleString('sv-SE', options);
   };
 
+  const getPrioBackgroundColor = (priority) => {
+    if (priority === 1) {
+      return '#9771B6';
+    } else if (priority === 2) {
+      return '#C281B4';
+    } else if (priority === 3) {
+      return '#D3A7CA';
+    }
+  };
+
+  const getCategoryBackgroundColor = (category) => {
+    if (category === 'Job') {
+      return '#CD8484';
+    } else if (category === 'School') {
+      return '#76A1D3';
+    } else if (category === 'Family') {
+      return '#DFD78E';
+    } else {
+      return '#CDA384';
+    }
+  };
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
@@ -307,14 +328,14 @@ export const SeeTodos = () => {
                       <hr />
                       <DisplayedItemsContainer>
                         {item.priority && (
-                          <DisplayedPriority>
+                          <DisplayedPriority
+                            style={{ backgroundColor: getPrioBackgroundColor(item.priority) }}>
                             <p>{item.priority}</p>
                           </DisplayedPriority>
                         )}
-                        <DisplayedCategory>
-                          <p>
-                            {item.category}
-                          </p>
+                        <DisplayedCategory
+                          style={{ backgroundColor: getCategoryBackgroundColor(item.category) }}>
+                          <p>{item.category}</p>
                         </DisplayedCategory>
                       </DisplayedItemsContainer>
                       <DisplayedDeadlineContainer>
@@ -399,7 +420,9 @@ export const SeeTodos = () => {
                           type="button"
                           onClick={() => handlePriorityChange(1)}
                           style={
-                            selectedPriority === 1 ? { backgroundColor: '#9771B6', transform: 'translateY(2px)' } : {}
+                            selectedPriority === 1
+                              ? { backgroundColor: '#9771B6', transform: 'translateY(2px)' }
+                              : {}
                           }>
                           1
                         </PriorityButton>
@@ -407,7 +430,9 @@ export const SeeTodos = () => {
                           type="button"
                           onClick={() => handlePriorityChange(2)}
                           style={
-                            selectedPriority === 2 ? { backgroundColor: '#C281B4', transform: 'translateY(2px)' } : {}
+                            selectedPriority === 2
+                              ? { backgroundColor: '#C281B4', transform: 'translateY(2px)' }
+                              : {}
                           }>
                           2
                         </PriorityButton>
@@ -415,7 +440,9 @@ export const SeeTodos = () => {
                           type="button"
                           onClick={() => handlePriorityChange(3)}
                           style={
-                            selectedPriority === 3 ? { backgroundColor: '#D3A7CA', transform: 'translateY(2px)' } : {}
+                            selectedPriority === 3
+                              ? { backgroundColor: '#D3A7CA', transform: 'translateY(2px)' }
+                              : {}
                           }>
                           3
                         </PriorityButton>
@@ -434,7 +461,7 @@ export const SeeTodos = () => {
                             setSelectedDeadline(null);
                             setUpdatedTodo({ ...updatedTodo, deadline: null });
                           }}>
-                            No Deadline
+                          No Deadline
                         </NoDateButton>
                         <DatePicker
                           customInput={<CustomInput />}
