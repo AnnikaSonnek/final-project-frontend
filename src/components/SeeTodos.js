@@ -318,6 +318,9 @@ export const SeeTodos = () => {
                       </DisplayedItemsContainer>
                       <DisplayedDeadlineContainer>
                         {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
+                        ) : (
+                        <TransparentDiv />
+                          )}
                       </DisplayedDeadlineContainer>
                       <FormFooter>
                         <TrashButtonContainer>

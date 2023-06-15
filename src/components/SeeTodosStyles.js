@@ -15,6 +15,14 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 720px) {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+ }
 `;
 
 export const CheckboxContainer = styled.div`
@@ -190,7 +198,7 @@ export const FlipCardFront = styled.div`
   position: absolute;
   z-index: 1; //ADDED
   width: 100%;
-  height: 300px;
+  height: 200vh;
   backface-visibility: hidden;
   color: #212427;
 `;
@@ -199,9 +207,8 @@ export const FlipCardBack = styled.div`
   position: absolute;
   z-index: 1; //ADDED
   width: 100%;
-  height: 100%;
+  height: 200vh;
   backface-visibility: hidden;
-  background-color: dodgerblue;
   transform: rotateY(180deg);
 `;
 
@@ -277,7 +284,7 @@ export const LoginInput = styled.input`
 `;
 
 export const TodoContainer = styled.div`
-  margin-bottom: 12rem;
+  margin-bottom: 11rem;
 `;
 
 export const CalendarContainer = styled.div`
