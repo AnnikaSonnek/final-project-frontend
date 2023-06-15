@@ -279,13 +279,16 @@ export const SeeTodos = () => {
     return date.toLocaleString('sv-SE', options);
   };
 
+  const numberOfCardsToShow = 2; // Set the number of cards to show
+  const showGap = numberOfCardsToShow === 2;
+
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
     <GlobalStyle>
-      <Wrapper>
+      <Wrapper showGap={showGap}>
         {todoList.map((item) => (
           <TodoContainer key={item._id}>
             <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
@@ -358,10 +361,10 @@ export const SeeTodos = () => {
                           onClick={() => handleCategoryChange('Job')}
                           style={
                             selectedCategory !== 'Job'
-                              ? { backgroundColor: '#CDA384' }
-                              : { backgroundColor: '#AF8D74', transform: 'translateY(2px)' }
+                              ? { backgroundColor: '#CD8484' }
+                              : { backgroundColor: '#B17373', transform: 'translateY(2px)' }
                           }>
-                          Hobbies
+                          Job
                         </CategoryButton>
                         <CategoryButton
                           type="button"

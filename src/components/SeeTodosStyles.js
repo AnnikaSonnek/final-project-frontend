@@ -12,24 +12,20 @@ export const Wrapper = styled.div`
   width: 350px;
   margin: 10px auto;
   background: #ffffff;
-  display: flex;
+  display: grid;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 
   @media (min-width: 720px) {
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
- }
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: ${(props) => (props.showGap ? '1fr 1fr' : '1fr')};
+    gap: ${(props) => (props.showGap ? '16px' : '0')};
+  }
 
  @media (min-width: 1024px) {
-  display: grid;
-  align-items: center;
-  justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
  }
 `;
 
