@@ -55,18 +55,15 @@ font-family:  "Quicksand", "Roboto", "Oxygen",
 `
 
 export const NoDateButton = styled.button`
-width: 70px; 
+width: 100px; 
 border-radius: 12px;
 border: none;
 background-color: transparent;
-margin-top: 5.5px;
-padding-left: 18px;
+padding: 3px 10px;
 cursor: pointer;
-
-img {
-width: 35px; 
-height: auto; 
-}
+font-family:  "Quicksand", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
 `
 
 export const FormWrapper = styled.div`
@@ -100,6 +97,12 @@ p {
   margin: 0;
   padding: 0;
 }
+
+@media (min-width: 720px) {
+  width: 100%;
+    }
+
+
 `;
 
 export const OuterWrapper = styled.div`
@@ -160,6 +163,7 @@ export const SubmitButton = styled.button`
 border-radius: 12px;
 border: none;
 padding: 5px 20px;
+margin-top: 10px;
 cursor: pointer;
 
 &:hover {
@@ -169,8 +173,12 @@ background: grey;
 
 export const DateButtonsContainer = styled.div`
 display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 gap: 10px;
 background-color: ffffff;
 border-radius: 12px;
+padding-top: 10px;
 border: none;
 `;

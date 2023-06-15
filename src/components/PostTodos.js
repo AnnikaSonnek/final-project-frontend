@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import DatePicker, { CalendarContainer } from 'react-datepicker';
 import { BsCalendarDateFill } from 'react-icons/bs';
 import pacman from '../img/pacman.png';
-import nodate from '../img/nodate.png';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
 import {
@@ -41,7 +40,7 @@ const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 // This codesnippet adds the the Icon and make it into a button and brins out the calendar
 const CustomInput = forwardRef(({ onClick }, ref) => (
   <IconButton onClick={onClick} ref={ref} type="button">
-    <BsCalendarDateFill fill="black" />
+    <BsCalendarDateFill fill="#212427" />
   </IconButton>
 ));
 
@@ -61,6 +60,7 @@ export const PostTodos = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
+  const [selectedDeadline, setSelectedDeadline] = useState(null);
 
   // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
@@ -216,25 +216,41 @@ export const PostTodos = () => {
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Job')}
-                style={selectedCategory === 'Job' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedCategory !== 'Job'
+                    ? { backgroundColor: '#CD8484' }
+                    : { backgroundColor: '#B17373', transform: 'translateY(2px)' }
+                }>
                 Job
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('School')}
-                style={selectedCategory === 'School' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedCategory !== 'School'
+                    ? { backgroundColor: '#76A1D3' }
+                    : { backgroundColor: '#678CB8', transform: 'translateY(2px)' }
+                }>
                 School
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Family')}
-                style={selectedCategory === 'Family' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedCategory !== 'Family'
+                    ? { backgroundColor: '#DFD78E' }
+                    : { backgroundColor: '#AF8D74', transform: 'translateY(2px)' }
+                }>
                 Family
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Hobbies')}
-                style={selectedCategory === 'Hobbies' ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedCategory !== 'Hobbies'
+                    ? { backgroundColor: '#CDA384' }
+                    : { backgroundColor: '#AF8D74', transform: 'translateY(2px)' }
+                }>
                 Hobbies
               </CategoryButton>
             </CategoryButtonContainer>
@@ -272,9 +288,12 @@ export const PostTodos = () => {
               </CalendarContainer>
               <NoDateButton
                 type="button"
-                onClick={() => setNewTodo({ ...newTodo, deadline: null })}
-                active={newTodo.deadline === null}>
-                <img alt="nodate" src={nodate} />
+                onClick={() => {
+                  setSelectedDeadline(null)
+                  setNewTodo({ ...newTodo, deadline: null })
+                }}
+                style={selectedDeadline === null ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                  No deadline
               </NoDateButton>
             </DateButtonsContainer>
             <SubmitButton
