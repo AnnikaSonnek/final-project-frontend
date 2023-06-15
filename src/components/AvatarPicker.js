@@ -6,36 +6,21 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { user } from 'reducers/user';
-import styled from 'styled-components'
-import avatar3 from '../img/picture3.jpg';
-import avatar1 from '../img/default-avatar.jpg';
+import avatar3 from '../img/picture3.png';
+import avatar1 from '../img/default-avatar.png';
 import avatar2 from '../img/picture2.png';
 import { API_URL } from '../utils/urls';
-
-const AvatarPictures = styled.img`
-  width: 50px;
-`;
-
-const HiddenRadio = styled.input`
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-`;
-
-const AvatarContainer = styled.label`
-  display: flex;
-  width: 65px;
-  align-items: center;
-  cursor: pointer;
-  background-color: ${(props) => (props.selected ? 'lightblue' : 'transparent')};
-  border: 2px solid ${(props) => (props.selected ? 'blue' : 'transparent')};
-  padding: 5px;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.09);
-  }
-`;
+import {
+  AvatarPictures,
+  HiddenRadio,
+  AvatarContainer,
+  ContainerAllAvatars,
+  Form,
+  AvatarPickerWrapper,
+  AcordionColapsed,
+  AddButton
+} from './AvatarPickerStyles';
+import { CategoryButton } from './PostTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// PERSONAL PAGE ////////////////////////// //
@@ -45,8 +30,13 @@ export const AvatarPicker = () => {
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const accessToken = useSelector((store) => store.user.accessToken);
   const userID = useSelector((store) => store.user.userId);
+  const [accordionOpen, setAccordionOpen] = useState(false);
 
   const dispatch = useDispatch();
+
+  const toggleAccordion = () => {
+    setAccordionOpen(!accordionOpen);
+  };
 
   const onSelectAvatarSubmit = (event) => {
     event.preventDefault();
@@ -85,32 +75,44 @@ export const AvatarPicker = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
   return (
-    <form onSubmit={onSelectAvatarSubmit}>
-      <AvatarContainer selected={selectedAvatar === 1}>
-        <HiddenRadio
-          type="radio"
-          value={1}
-          checked={selectedAvatar === 1}
-          onChange={(event) => setSelectedAvatar(Number(event.target.value))} />
-        <AvatarPictures alt="avatar" src={avatar1} />
-      </AvatarContainer>
-      <AvatarContainer selected={selectedAvatar === 2}>
-        <HiddenRadio
-          type="radio"
-          value={2}
-          checked={selectedAvatar === 2}
-          onChange={(event) => setSelectedAvatar(Number(event.target.value))} />
-        <AvatarPictures alt="avatar" src={avatar2} />
-      </AvatarContainer>
-      <AvatarContainer selected={selectedAvatar === 3}>
-        <HiddenRadio
-          type="radio"
-          value={3}
-          checked={selectedAvatar === 3}
-          onChange={(event) => setSelectedAvatar(Number(event.target.value))} />
-        <AvatarPictures alt="avatar" src={avatar3} />
-      </AvatarContainer>
-      <button type="submit">Submit</button>
-    </form>
-  )
-}
+    <AvatarPickerWrapper>
+      <AcordionColapsed>
+        <p>CHANGE YOUR AVATAR</p>
+        <AddButton type="button" onClick={toggleAccordion}>
+          {accordionOpen ? '-' : '+'}
+        </AddButton>
+      </AcordionColapsed>
+      {accordionOpen && (
+        <Form onSubmit={onSelectAvatarSubmit}>
+          <ContainerAllAvatars>
+            <AvatarContainer selected={selectedAvatar === 1}>
+              <HiddenRadio
+                type="radio"
+                value={1}
+                checked={selectedAvatar === 1}
+                onChange={(event) => setSelectedAvatar(Number(event.target.value))} />
+              <AvatarPictures alt="avatar" src={avatar1} />
+            </AvatarContainer>
+            <AvatarContainer selected={selectedAvatar === 2}>
+              <HiddenRadio
+                type="radio"
+                value={2}
+                checked={selectedAvatar === 2}
+                onChange={(event) => setSelectedAvatar(Number(event.target.value))} />
+              <AvatarPictures alt="avatar" src={avatar2} />
+            </AvatarContainer>
+            <AvatarContainer selected={selectedAvatar === 3}>
+              <HiddenRadio
+                type="radio"
+                value={3}
+                checked={selectedAvatar === 3}
+                onChange={(event) => setSelectedAvatar(Number(event.target.value))} />
+              <AvatarPictures alt="avatar" src={avatar3} />
+            </AvatarContainer>
+          </ContainerAllAvatars>
+          <CategoryButton type="submit">Submit</CategoryButton>
+        </Form>
+      )}
+    </AvatarPickerWrapper>
+  );
+};

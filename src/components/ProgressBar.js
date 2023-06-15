@@ -10,7 +10,10 @@ import {
   ChartContainer,
   LabelContainer,
   StatsWrapper,
-  Span
+  Span,
+  TextStatsContainer,
+  TextStatsNumber,
+  TextStatsDesc
 } from './ProgressBarStyles';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -64,8 +67,8 @@ export const ProgressBar = () => {
     datasets: [
       {
         data: [jobTodosCount, schoolTodosCount, familyTodosCount, hobbiesTodosCount],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+        backgroundColor: ['#CD8484', '#76A1D3', '#DFD78E', '#8DB48E'],
+        hoverBackgroundColor: ['#CD8484', '#76A1D3', '#DFD78E', '#8DB48E']
       }
     ]
   };
@@ -75,8 +78,8 @@ export const ProgressBar = () => {
     datasets: [
       {
         data: [completedPercentage, uncompletedPercentage],
-        backgroundColor: ['#4BC0C0', '#FF6384'],
-        hoverBackgroundColor: ['#4BC0C0', '#FF6384']
+        backgroundColor: ['#CD8484', '#F5F5F5'],
+        hoverBackgroundColor: ['#CD8484', '#F5F5F5']
       }
     ]
   };
@@ -95,37 +98,37 @@ export const ProgressBar = () => {
           <Doughnut data={data} options={options} />
           <LabelContainer>
             <p>
-              <Span style={{ color: 'black', backgroundColor: '#FF6384' }}>Job</Span>
+              <Span style={{ color: 'black', backgroundColor: '#CD8484' }}>Job</Span>
             </p>
             <p>
-              <Span style={{ color: 'white', backgroundColor: '#36A2EB' }}>School</Span>
+              <Span style={{ color: 'white', backgroundColor: '#76A1D3' }}>School</Span>
             </p>
             <p>
-              <Span style={{ color: 'black', backgroundColor: '#FFCE56' }}>Family</Span>
+              <Span style={{ color: 'black', backgroundColor: '#DFD78E' }}>Family</Span>
             </p>
             <p>
-              <Span style={{ color: 'black', backgroundColor: '#4BC0C0' }}>Hobbies</Span>
+              <Span style={{ color: 'black', backgroundColor: '#8DB48E' }}>Hobbies</Span>
             </p>
           </LabelContainer>
         </ChartContainer>
         <ChartContainer>
           <Doughnut data={progressdata} options={options} />
           <LabelContainer>
-            <p style={{ fontSize: '1.2rem' }}>{`${completedPercentageString}% completed`}</p>
+            <p style={{ textAlign: 'center', fontSize: '1rem', fontWeight: 600 }}>{`${completedPercentageString}% completed`}</p>
           </LabelContainer>
         </ChartContainer>
       </StatsWrapper>
       <StatsWrapper>
-        <div>
-          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>{`${tasksCountThisWeek}`}</p>
-          <p style={{ fontSize: '1.2rem' }}>Deadlines this week</p>
-          <p style={{ textAlign: 'center', fontSize: '2rem' }}>⌛</p>
-        </div>
-        <div>
-          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>{`${checkedtodostotal}`}</p>
-          <p style={{ fontSize: '1.2rem' }}>Total finished todos</p>
-          <p style={{ textAlign: 'center', fontSize: '2rem' }}>✅</p>
-        </div>
+        <TextStatsContainer>
+          <TextStatsNumber>{`${tasksCountThisWeek}`}</TextStatsNumber>
+          <TextStatsDesc>Deadlines this week</TextStatsDesc>
+          <p style={{ fontSize: '2rem' }}>⌛</p>
+        </TextStatsContainer>
+        <TextStatsContainer>
+          <TextStatsNumber>{`${checkedtodostotal}`}</TextStatsNumber>
+          <TextStatsDesc>Total completed todos</TextStatsDesc>
+          <p style={{ fontSize: '2rem' }}>✅</p>
+        </TextStatsContainer>
       </StatsWrapper>
     </ProgressbarWrapper>
   );

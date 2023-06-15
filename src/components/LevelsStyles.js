@@ -15,3 +15,27 @@ flex-direction: column;
 justify-content: center; 
 align-items: center;
 `
+
+export const Paragraph = styled.p`
+text-align: ${(props) => (props.center ? 'center' : '')};;
+line-height: 1.6;
+`
+
+export const PrizeImg = styled.img`
+width: 60px;
+`
+
+export const ImgContainer = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+`
+export const ImgBackgroundContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 1rem; 
+border-radius: 50px;
+border: dotted 4px black
+`
