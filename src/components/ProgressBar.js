@@ -31,7 +31,7 @@ export const ProgressBar = () => {
 
   const totalTasks = todolist.length;
 
-  const completedPercentage = (completedTodos.length / totalTasks) * 100;
+  const completedPercentage = totalTasks !== 0 ? (completedTodos.length / totalTasks) * 100 : 0;
   const uncompletedPercentage = (uncompletedTodos.length / totalTasks) * 100;
 
   const completedPercentageString = completedPercentage.toFixed(0);

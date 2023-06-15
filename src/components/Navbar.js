@@ -13,6 +13,7 @@ import bild3 from '../img/picture3.png';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
 import './NavBar.css';
+import { TextStatsNumber } from './ProgressBarStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////////////////// NAVBAR //////////////////////////////////// //
@@ -20,9 +21,14 @@ import './NavBar.css';
 
 export const Navbar = () => {
   const avatar = useSelector((store) => store.user.avatar);
-  console.log(avatar)
+  const todolist = useSelector((store) => store.todos.items);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const totalTasks = todolist.length;
+  const completedTodos = todolist.filter((todo) => todo.completed);
+  const completedPercentage = totalTasks !== 0 ? (completedTodos.length / totalTasks) * 100 : 0;
+  const completedPercentageString = completedPercentage.toFixed(0);
 
   const onLogoutButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));
@@ -40,15 +46,11 @@ export const Navbar = () => {
   return (
     <section className="top-nav">
       <div className="logo-picture">
-        {avatar === 1 ? (
-          <img alt="avatar" src={bild} />
-        ) : null}
-        {avatar === 2 ? (
-          <img alt="avatar" src={bild2} />
-        ) : null}
-        {avatar === 3 ? (
-          <img alt="avatar" src={bild3} />
-        ) : null}
+        {avatar === 1 ? <img alt="avatar" src={bild} /> : null}
+        {avatar === 2 ? <img alt="avatar" src={bild2} /> : null}
+        {avatar === 3 ? <img alt="avatar" src={bild3} /> : null}
+
+        <TextStatsNumber>{`${completedPercentageString}%`}</TextStatsNumber>
       </div>
       <div>
         <input id="menu-toggle" type="checkbox" />
@@ -57,12 +59,12 @@ export const Navbar = () => {
         </label>
         <ul className="menu">
           <li>
-            <NavLink to="/personalpage" activeClassName="active" className="Btn">
+            <NavLink to="/personalpage" activeclassName="active" className="Btn">
               Personal page
             </NavLink>
           </li>
           <li>
-            <NavLink to="/todopage" activeClassName="active" className="Btn">
+            <NavLink to="/todopage" activeclassName="active" className="Btn">
               Todos
             </NavLink>
           </li>

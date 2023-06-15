@@ -258,19 +258,31 @@ export const PostTodos = () => {
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(1)}
-                style={selectedPriority === 1 ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedPriority !== 1
+                    ? { backgroundColor: '#f0f0f0' }
+                    : { backgroundColor: '#9771B6', transform: 'translateY(2px)' }
+                }>
                 1
               </PriorityButton>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(2)}
-                style={selectedPriority === 2 ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedPriority !== 2
+                    ? { backgroundColor: '#f0f0f0' }
+                    : { backgroundColor: '#C281B4', transform: 'translateY(2px)' }
+                }>
                 2
               </PriorityButton>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(3)}
-                style={selectedPriority === 3 ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={
+                  selectedPriority !== 3
+                    ? { backgroundColor: '#f0f0f0' }
+                    : { backgroundColor: '#D3A7CA', transform: 'translateY(2px)' }
+                }>
                 3
               </PriorityButton>
             </PriorityButtonContainer>
@@ -293,7 +305,7 @@ export const PostTodos = () => {
                   setNewTodo({ ...newTodo, deadline: null })
                 }}
                 style={selectedDeadline === null ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
-                  No deadline
+                No deadline
               </NoDateButton>
             </DateButtonsContainer>
             <SubmitButton
