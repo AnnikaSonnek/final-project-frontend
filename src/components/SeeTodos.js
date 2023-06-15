@@ -45,7 +45,13 @@ import {
   CategoryButtonContainer,
   CategoryButton,
   PriorityButton,
-  IconButton
+  IconButton,
+  CheckboxContainer,
+  TrashButtonContainer,
+  LabelFrontContainer,
+  DisplayedPriority,
+  DisplayedCategory,
+  DisplayedItemsContainer
 } from './SeeTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
@@ -295,24 +301,43 @@ export const SeeTodos = () => {
                 <FlipCardFront>
                   <DisplayedTodo>
                     <FormGroup>
-                      <h2>{item.description}</h2>
-                      <p>Prio: {item.priority} Category: {item.category}</p>{item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
-                      <FormFooter>
+                      <CheckboxContainer>
                         <Checkbox
                           type="checkbox"
                           name={item._id}
                           id={item._id}
                           checked={item.completed}
                           onChange={() => onToggleTodo(item._id, item.completed)} />
-                        <TrashButton type="button" onClick={() => DeleteMessage(item._id)}>
-                          <img alt="trashbin" src={trashbin} />
-                        </TrashButton>
-                        <LabelFront
-                          className="label-highlight"
-                          htmlFor={`form_switch_${item._id}`}
-                          onClick={() => editTodo(item._id, item)}>
-                          <img alt="editpen" src={editpen} />
-                        </LabelFront>
+                      </CheckboxContainer>
+                      <h2>{item.description}</h2>
+                      <hr />
+                      <DisplayedItemsContainer>
+                        {item.priority && (
+                          <DisplayedPriority>
+                            <p>{item.priority}</p>
+                          </DisplayedPriority>
+                        )}
+                        <DisplayedCategory>
+                          <p>
+                            {item.category}
+                          </p>
+                        </DisplayedCategory>
+                      </DisplayedItemsContainer>
+                      {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
+                      <FormFooter>
+                        <TrashButtonContainer>
+                          <TrashButton type="button" onClick={() => DeleteMessage(item._id)}>
+                            <img alt="trashbin" src={trashbin} />
+                          </TrashButton>
+                        </TrashButtonContainer>
+                        <LabelFrontContainer>
+                          <LabelFront
+                            className="label-highlight"
+                            htmlFor={`form_switch_${item._id}`}
+                            onClick={() => editTodo(item._id, item)}>
+                            <img alt="editpen" src={editpen} />
+                          </LabelFront>
+                        </LabelFrontContainer>
                       </FormFooter>
                     </FormGroup>
                   </DisplayedTodo>

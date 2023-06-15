@@ -18,6 +18,24 @@ export const Wrapper = styled.div`
   align-items: flex-start;
 `;
 
+export const CheckboxContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 7px;
+`;
+
+export const TrashButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 7px;
+`;
+export const LabelFrontContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const DisplayedTodo = styled.form`
   width: 350px;
   margin: 0 auto;
@@ -35,6 +53,8 @@ export const FormInput = styled.input`
 `;
 
 export const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
   background: #8DB48E;
   border-radius: 12px;
@@ -45,7 +65,14 @@ export const FormGroup = styled.div`
   justify-content: center;
 
   h2 {
-    padding: 18px 0 18px 0
+    padding: 0 0 10px 0;
+    font-size: 1rem
+  }
+
+  hr {
+    width: 90%;
+    border: 2px solid white;
+    margin-bottom: 10px;
   }
 `;
 
@@ -90,8 +117,33 @@ export const FormHeader = styled.div`
   margin-bottom: 2rem;
 `;
 
+export const DisplayedPriority = styled.div`
+ border-radius: 12px;
+ border: none;
+ scale: 0.8;
+ padding: 5px 12px;
+ background-color: #CDA384;
+`;
+
+export const DisplayedItemsContainer = styled.div`
+display: flex;
+`;
+
+export const DisplayedCategory = styled.div`
+ border-radius: 12px;
+ border: none;
+ scale: 0.8;
+ padding: 5px 12px;
+ background-color: #DFD78E;
+`;
+
 export const FormFooter = styled.div`
-  text-align: center;
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+padding-right: 7px;
+
+width: 100%;
 `;
 
 export const FlipCard = styled.div`
@@ -187,9 +239,9 @@ margin: 18px 0 0 5px;
 `;
 
 export const LabelFront = styled.label`
+margin-top: 10px;
   img {
     width: 20px;
-    margin-bottom: 0.5px;
   }
 `;
 
@@ -240,7 +292,6 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   -webkit-appearance: none;
   height: 19px;
   width: 19px;
-  position: absolute;
   background-color: #8DB48E;
   border-radius: 5px;
   border: 2px solid #000000;
