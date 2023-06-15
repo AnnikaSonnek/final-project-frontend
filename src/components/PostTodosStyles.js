@@ -113,6 +113,7 @@ p {
 export const OuterWrapper = styled.div`
 display: flex;
 flex-direction: column;
+padding-top: 5rem;
 `
 export const FormInput = styled.input`
 background: #fafafa;

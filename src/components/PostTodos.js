@@ -59,6 +59,8 @@ export const PostTodos = () => {
   const [accordionOpen, setAccordionOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
 
   // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
@@ -71,11 +73,13 @@ export const PostTodos = () => {
   // //////HANDLE CATEGORIES////////////
   const handleCategoryChange = (category) => {
     setNewTodo({ ...newTodo, category });
+    setSelectedCategory(category)
   };
 
   // //////HANDLE PRIORITIES////////////
   const handlePriorityChange = (priority) => {
     setNewTodo({ ...newTodo, priority });
+    setSelectedPriority(priority)
   };
 
   // //////CLEARS THE SUGGESTIONS AFTER SUBMIT////////////
@@ -212,25 +216,25 @@ export const PostTodos = () => {
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Job')}
-                active={newTodo.category === 'Job'}>
+                style={selectedCategory === 'Job' ? { backgroundColor: '#4D724D' } : {}}>
                 Job
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('School')}
-                active={newTodo.category === 'School'}>
+                style={selectedCategory === 'School' ? { backgroundColor: '#4D724D' } : {}}>
                 School
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Family')}
-                active={newTodo.category === 'Family'}>
+                style={selectedCategory === 'Family' ? { backgroundColor: '#4D724D' } : {}}>
                 Family
               </CategoryButton>
               <CategoryButton
                 type="button"
                 onClick={() => handleCategoryChange('Hobbies')}
-                active={newTodo.category === 'Hobbies'}>
+                style={selectedCategory === 'Hobbies' ? { backgroundColor: '#4D724D' } : {}}>
                 Hobbies
               </CategoryButton>
             </CategoryButtonContainer>
@@ -238,19 +242,19 @@ export const PostTodos = () => {
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(1)}
-                active={newTodo.priority === 1}>
+                style={selectedPriority === 1 ? { backgroundColor: '#4D724D' } : {}}>
                 1
               </PriorityButton>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(2)}
-                active={newTodo.priority === 2}>
+                style={selectedPriority === 2 ? { backgroundColor: '#4D724D' } : {}}>
                 2
               </PriorityButton>
               <PriorityButton
                 type="button"
                 onClick={() => handlePriorityChange(3)}
-                active={newTodo.priority === 3}>
+                style={selectedPriority === 3 ? { backgroundColor: '#4D724D' } : {}}>
                 3
               </PriorityButton>
             </PriorityButtonContainer>
