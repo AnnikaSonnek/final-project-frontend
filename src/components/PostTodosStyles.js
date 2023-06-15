@@ -81,9 +81,7 @@ display: flex;
 width: 350px;
 margin: auto; 
 flex-direction: column;
-justify-content: center;
 border-radius: 12px;
-align-items: center;
 background-color: #8DB48E;
 `
 export const AI = styled.p`
@@ -100,9 +98,12 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
+padding: 0px 12px;
 
 p {
   color: white;
+  margin: 0;
+  padding: 0;
 }
 `;
 
@@ -126,7 +127,7 @@ gap: 10px;
 
 export const PriorityButtonContainer = styled.div`
 display: flex;
-gap: 10px
+gap: 10px;
 `;
 
 export const PacmanContainer = styled.div`

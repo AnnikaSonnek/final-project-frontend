@@ -10,12 +10,11 @@ export const GlobalStyle = styled.div`
 
 export const Wrapper = styled.div`
   width: 350px;
-  height: 400px;
-  margin: 50px auto;
+  margin: 10px auto;
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 `;
 
 export const CheckboxContainer = styled.div`

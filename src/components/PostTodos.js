@@ -9,7 +9,7 @@
 
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DatePicker, { CalendarContainer } from 'react-datepicker'
+import DatePicker, { CalendarContainer } from 'react-datepicker';
 import { BsCalendarDateFill } from 'react-icons/bs';
 import pacman from '../img/pacman.png';
 import nodate from '../img/nodate.png';
@@ -121,7 +121,7 @@ export const PostTodos = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log('name, value', name, value)
+    console.log('name, value', name, value);
     setNewTodo({ ...newTodo, [name]: value });
     setInputValue(event.target.value);
   };
@@ -167,9 +167,9 @@ export const PostTodos = () => {
   }, [inputValue]);
 
   const handleAiSuggestion = () => {
-    console.log(suggestions)
+    console.log(suggestions);
     const suggestion = suggestions.slice(1).join(' '); // detta är för att få bort todo: från texten och att få det till String ist för Array
-    console.log('ready to put into input?', suggestion)
+    console.log('ready to put into input?', suggestion);
     setNewTodo({ ...newTodo, description: suggestion });
     setSuggestions([]);
   };
@@ -193,14 +193,10 @@ export const PostTodos = () => {
       </PacmanContainer>
       <FormWrapper>
         <AcordionColapsed>
-          <div>
-            <p>ADD TASK</p>
-          </div>
-          <div>
-            <AddButton type="button" onClick={toggleAccordion}>
-              {accordionOpen ? '-' : '+'}
-            </AddButton>
-          </div>
+          <p>ADD TASK</p>
+          <AddButton type="button" onClick={toggleAccordion}>
+            {accordionOpen ? '-' : '+'}
+          </AddButton>
         </AcordionColapsed>
         {accordionOpen && (
           <FormPostTodos onSubmit={onFormSubmit}>
