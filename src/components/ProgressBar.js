@@ -10,7 +10,10 @@ import {
   ChartContainer,
   LabelContainer,
   StatsWrapper,
-  Span
+  Span,
+  TextStatsContainer,
+  TextStatsNumber,
+  TextStatsDesc
 } from './ProgressBarStyles';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -111,21 +114,21 @@ export const ProgressBar = () => {
         <ChartContainer>
           <Doughnut data={progressdata} options={options} />
           <LabelContainer>
-            <p style={{ fontSize: '1.2rem' }}>{`${completedPercentageString}% completed`}</p>
+            <p style={{ textAlign: 'center', fontSize: '1rem', fontWeight: 600 }}>{`${completedPercentageString}% completed`}</p>
           </LabelContainer>
         </ChartContainer>
       </StatsWrapper>
       <StatsWrapper>
-        <div>
-          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>{`${tasksCountThisWeek}`}</p>
-          <p style={{ fontSize: '1.2rem' }}>Deadlines this week</p>
-          <p style={{ textAlign: 'center', fontSize: '2rem' }}>⌛</p>
-        </div>
-        <div>
-          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>{`${checkedtodostotal}`}</p>
-          <p style={{ fontSize: '1.2rem' }}>Total finished todos</p>
-          <p style={{ textAlign: 'center', fontSize: '2rem' }}>✅</p>
-        </div>
+        <TextStatsContainer>
+          <TextStatsNumber>{`${tasksCountThisWeek}`}</TextStatsNumber>
+          <TextStatsDesc>Deadlines this week</TextStatsDesc>
+          <p style={{ fontSize: '2rem' }}>⌛</p>
+        </TextStatsContainer>
+        <TextStatsContainer>
+          <TextStatsNumber>{`${checkedtodostotal}`}</TextStatsNumber>
+          <TextStatsDesc>Total completed todos</TextStatsDesc>
+          <p style={{ fontSize: '2rem' }}>✅</p>
+        </TextStatsContainer>
       </StatsWrapper>
     </ProgressbarWrapper>
   );
