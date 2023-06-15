@@ -6,6 +6,7 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 max-width: 20rem;
+gap: 1.5rem;
 `;
 
 export const LevelsWrapper = styled.div`
@@ -14,6 +15,7 @@ display: flex;
 flex-direction: column;
 justify-content: center; 
 align-items: center;
+padding-bottom: 1rem;
 `
 
 export const Paragraph = styled.p`
@@ -37,5 +39,5 @@ align-items: center;
 justify-content: center;
 padding: 1rem; 
 border-radius: 50px;
-border: dotted 4px black
+border: dotted 4px #5A5A5A;
 `
