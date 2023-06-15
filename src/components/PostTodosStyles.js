@@ -131,6 +131,15 @@ display: flex;
 gap: 10px;
 `;
 
+export const Mockup = styled.img`
+width: 200px;
+`;
+
+export const MockupContainer = styled.div`
+display: flex;
+justify-content: center;
+`;
+
 export const PacmanContainer = styled.div`
 position: fixed;
 display: flex;

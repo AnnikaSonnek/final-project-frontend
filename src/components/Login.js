@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { user } from 'reducers/user';
 import { API_URL } from '../utils/urls';
+import { Mockup, MockupContainer } from './PostTodosStyles.js';
+import { Loader } from './Loader'
+import mockup from '../img/mockup.png';
 import './Login.css'
 
 // //////////////////////////////////////////////////////////////////////// //
@@ -24,6 +27,7 @@ export const Login = () => {
   const [registerMail, setRegisterMail] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
   const [mode] = useState('login');
+  const [isLoading, setIsLoading] = useState(false); // Add a loading state
 
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
@@ -43,6 +47,7 @@ export const Login = () => {
   // Handle login form submission
   const onLoginFormSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     // Prepare request options
     const options = {
@@ -58,6 +63,7 @@ export const Login = () => {
     fetch(API_URL(mode), options)
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         if (data.success) {
           console.log(data.response)
           // Update user state with access token, username, and user ID
@@ -82,6 +88,7 @@ export const Login = () => {
   // Handle registration form submission
   const onRegisterFormSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     // Prepare request options
     const options = {
@@ -96,6 +103,8 @@ export const Login = () => {
     fetch(API_URL('register'), options)
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
+
         if (data.success) {
           console.log(data.response)
           // Update user state with access token, username, and user ID
@@ -122,6 +131,10 @@ export const Login = () => {
 
   return (
     <div className="wrap">
+      {isLoading && <Loader />}
+      <MockupContainer>
+        <Mockup alt="mockup" src={mockup} />
+      </MockupContainer>
       <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
       <div className="flipcard">
         <div className="flipcard-inner">
@@ -217,6 +230,5 @@ export const Login = () => {
         </div>
       </div>
     </div>
-
   )
 };
