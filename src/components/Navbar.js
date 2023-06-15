@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import bild from '../img/default-avatar.png';
 import bild2 from '../img/picture2.png';
 import bild3 from '../img/picture3.png';
@@ -32,14 +32,6 @@ export const Navbar = () => {
     navigate('/');
   };
 
-  const onPersonalPageButtonClick = () => {
-    navigate('/Personalpage');
-  };
-
-  const onTotoPageButtonClick = () => {
-    navigate('/Todopage');
-  };
-
   // //////////////////////////////////////////////////////////////////////// //
   // ///////////////////////////// RETURN JSX /////////////////////////////// //
   // //////////////////////////////////////////////////////////////////////// //
@@ -47,15 +39,9 @@ export const Navbar = () => {
   return (
     <section className="top-nav">
       <div className="logo-picture">
-        {avatar === 1 ? (
-          <img alt="avatar" src={bild} />
-        ) : null}
-        {avatar === 2 ? (
-          <img alt="avatar" src={bild2} />
-        ) : null}
-        {avatar === 3 ? (
-          <img alt="avatar" src={bild3} />
-        ) : null}
+        {avatar === 1 ? <img alt="avatar" src={bild} /> : null}
+        {avatar === 2 ? <img alt="avatar" src={bild2} /> : null}
+        {avatar === 3 ? <img alt="avatar" src={bild3} /> : null}
       </div>
       <div>
         <input id="menu-toggle" type="checkbox" />
@@ -64,19 +50,19 @@ export const Navbar = () => {
         </label>
         <ul className="menu">
           <li>
-            <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
-          Personal Page
-            </button>
+            <NavLink to="/personalpage" activeClassName="active" className="Btn">
+              Personal page
+            </NavLink>
           </li>
           <li>
-            <button type="button" className="Btn" onClick={onTotoPageButtonClick}>
-          Todos
-            </button>
+            <NavLink to="/todopage" activeClassName="active" className="Btn">
+              Todos
+            </NavLink>
           </li>
           <li>
-            <button type="button" className="Btn" onClick={onLogoutButtonClick}>
-          Logout
-            </button>
+            <NavLink to="/" className="Btn" onClick={onLogoutButtonClick}>
+              Logout
+            </NavLink>
           </li>
         </ul>
       </div>
