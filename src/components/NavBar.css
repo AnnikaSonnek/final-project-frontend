@@ -2,8 +2,8 @@
 
 .logo-picture {
   display: flex;
-  scale: 15%;
-  width: 60px;
+  height: 65px;
+  width: 65px;
 }
 
 .top-nav {
@@ -11,14 +11,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  color: #210440;
   height: 50px;
-  padding: 10px 10px 10px 0px;
+  padding: 50px 15px 10px 20px;
 }
 
 .menu {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -83,7 +83,12 @@
   border-radius: 12px;
   border: none;
   padding: 5px 10px;
+  font-size: 1rem;
   background-color: #8DB48E;
+  font-family:  "Quicksand", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+  font-weight: 600;
 }
 
 @media (max-width: 668px) {

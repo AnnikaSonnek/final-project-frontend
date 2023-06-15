@@ -7,9 +7,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import bild from '../img/default-avatar.jpg';
+import bild from '../img/default-avatar.png';
 import bild2 from '../img/picture2.png';
-import bild3 from '../img/picture3.jpg';
+import bild3 from '../img/picture3.png';
 import { user } from '../reducers/user';
 import { todos } from '../reducers/todos';
 import './NavBar.css';
@@ -64,18 +64,18 @@ export const Navbar = () => {
         </label>
         <ul className="menu">
           <li>
-            <button type="button" className="Btn" onClick={onLogoutButtonClick}>
-          Logout
-            </button>
-          </li>
-          <li>
             <button type="button" className="Btn" onClick={onPersonalPageButtonClick}>
           Personal Page
             </button>
           </li>
           <li>
             <button type="button" className="Btn" onClick={onTotoPageButtonClick}>
-          Todopage
+          Todos
+            </button>
+          </li>
+          <li>
+            <button type="button" className="Btn" onClick={onLogoutButtonClick}>
+          Logout
             </button>
           </li>
         </ul>

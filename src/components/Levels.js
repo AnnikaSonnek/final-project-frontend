@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DescriptionWrapper, LevelsWrapper, Paragraph, ImgContainer, PrizeImg, ImgBackgroundContainer } from './LevelsStyles';
+import { TextStatsDesc } from './ProgressBarStyles';
 import apple from '../img/apple-black.png'
 import orange from '../img/orange-black.png'
 import banana from '../img/banana-black.png'
@@ -110,7 +111,7 @@ export const Levels = () => {
             </ImgBackgroundContainer>
           ) : null}
         </ImgContainer>
-        <p>Level {currentLevel}</p>
+        <TextStatsDesc>Level {currentLevel}</TextStatsDesc>
       </DescriptionWrapper>
     </LevelsWrapper>
   );

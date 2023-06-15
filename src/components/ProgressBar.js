@@ -4,7 +4,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Legend } from 'chart.js';
 import {
   ProgressbarWrapper,
   ChartContainer,
@@ -16,7 +16,7 @@ import {
   TextStatsDesc
 } from './ProgressBarStyles';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Legend);
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////// PROGRESSBAR //////////////////////////////// //
