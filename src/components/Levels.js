@@ -2,15 +2,13 @@
 /* eslint-disable no-plusplus */
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { DescriptionWrapper, LevelsWrapper, Paragraph, ImgContainer, PrizeImg } from './LevelsStyles';
+import { DescriptionWrapper, LevelsWrapper, Paragraph, ImgContainer, PrizeImg, ImgBackgroundContainer } from './LevelsStyles';
 import apple from '../img/apple-black.png'
 import orange from '../img/orange-black.png'
 import banana from '../img/banana-black.png'
-import blueberries from '../img/blueberry-black.png'
-import watermelon from '../img/watermelon-black.png'
+import blueberries from '../img/blueberry-white.png'
+import watermelon from '../img/watermelon-white.png'
 import pineapple from '../img/pineapple-black.png'
-
-
 
 export const Levels = () => {
   const checkedtaskstotal = useSelector((store) => store.user.checkedTasks);
@@ -78,18 +76,41 @@ export const Levels = () => {
   return (
     <LevelsWrapper>
       <DescriptionWrapper>
-        <p>{`Hello ${username}!`}</p>
+        <h2>{`Hello ${username}!`}</h2>
         <Paragraph center>{currentDescription}</Paragraph>
-        <h2>Current Level: {currentLevel}</h2>
-        <h2>You get: {currentFruit}</h2>
         <ImgContainer>
-         { currentFruit === 'Apple' ? (
-          <PrizeImg style={{ backgroundColor: 'red' }} alt='Apple' src={apple} />
-        ) : null}
-        { currentFruit === 'Banana' ? (
-          <PrizeImg style={{ backgroundColor: 'yellow' }} alt='Banana' src={banana} />
-        ) : null}
-        </ImgContainer> 
+          {currentFruit === 'Apple' ? (
+            <ImgBackgroundContainer style={{ backgroundColor: '#CD8484' }}>
+              <PrizeImg alt="Apple" src={apple} />
+            </ImgBackgroundContainer>
+          ) : null}
+          {currentFruit === 'Orange' ? (
+            <ImgBackgroundContainer style={{ backgroundColor: '#CDA384' }}>
+              <PrizeImg alt="Orange" src={orange} />
+            </ImgBackgroundContainer>
+          ) : null}
+          {currentFruit === 'Banana' ? (
+            <ImgBackgroundContainer style={{ backgroundColor: '#DFD78E' }}>
+              <PrizeImg alt="Banana" src={banana} />
+            </ImgBackgroundContainer>
+          ) : null}
+          {currentFruit === 'Blueberries' ? (
+            <ImgBackgroundContainer style={{ backgroundColor: '#76A1D3' }}>
+              <PrizeImg alt="Blueberries" src={blueberries} />
+            </ImgBackgroundContainer>
+          ) : null}
+          {currentFruit === 'Watermelon' ? (
+            <ImgBackgroundContainer style={{ backgroundColor: '#4D724D' }}>
+              <PrizeImg alt="Watermelon" src={watermelon} />
+            </ImgBackgroundContainer>
+          ) : null}
+          {currentFruit === 'Pinapple' ? (
+            <ImgBackgroundContainer style={{ backgroundColor: '#CDA384' }}>
+              <PrizeImg alt="Pineapple" src={pineapple} />
+            </ImgBackgroundContainer>
+          ) : null}
+        </ImgContainer>
+        <p>Level {currentLevel}</p>
       </DescriptionWrapper>
     </LevelsWrapper>
   );
