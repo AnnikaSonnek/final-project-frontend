@@ -277,7 +277,11 @@ export const PostTodos = () => {
                 <img alt="nodate" src={nodate} />
               </NoDateButton>
             </DateButtonsContainer>
-            <SubmitButton type="submit">Submit</SubmitButton>
+            <SubmitButton
+              type="submit"
+              disabled={newTodo.description.length < 6 || newTodo.description.length > 38}>
+              Submit
+            </SubmitButton>
           </FormPostTodos>
         )}
       </FormWrapper>
