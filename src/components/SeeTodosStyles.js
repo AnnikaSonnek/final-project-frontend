@@ -1,4 +1,13 @@
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 export const GlobalStyle = styled.div`
   * {
@@ -21,7 +30,7 @@ export const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     grid-template-columns: ${(props) => (props.showGap ? '1fr 1fr' : '1fr')};
-    gap: ${(props) => (props.showGap ? '16px' : '0')};
+    gap: ${(props) => (props.showGap ? '16px' : '0px')};
   }
 
  @media (min-width: 1024px) {
@@ -126,7 +135,7 @@ export const TrashButton = styled.button`
     transition: transform 0.2s; /* Add a transition effect to the image */
   }
 
-  &:active img {
+  &:hover img {
     transform: translateY(1px); /* Apply a transform on button press */
     opacity: 0.7; /* Reduce the opacity to make the image lighter */
   }
@@ -142,7 +151,10 @@ export const DisplayedPriority = styled.div`
  border: none;
  scale: 0.8;
  padding: 5px 12px;
- background-color: #CDA384;
+ font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    font-weight: 500;
 `;
 
 export const DisplayedItemsContainer = styled.div`
@@ -168,6 +180,10 @@ export const DisplayedCategory = styled.div`
  scale: 0.8;
  padding: 5px 12px;
  background-color: #DFD78E;
+ font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    font-weight: 500;
 `;
 
 export const FormFooter = styled.div`
@@ -219,13 +235,17 @@ export const CategoryButton = styled.button`
 width: 70px; 
 border-radius: 12px;
 border: none;
-font-family: Quicksand;
+font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 padding: 2px 10px;
 `
 export const PriorityButton = styled.button`
 width: 70px; 
 border-radius: 12px;
-font-family: Quicksand;
+font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 border: none;
 padding: 2px 5px;
 `
@@ -276,6 +296,11 @@ margin-top: 10px;
   img {
     width: 20px;
   }
+
+  &.label-highlight img:hover {
+    animation: ${spin} 1s infinite linear; // Use the spin keyframe animation here
+  }
+
 `;
 
 export const LoginInput = styled.input`
@@ -317,7 +342,9 @@ export const CalendarContainer = styled.div`
 export const NoDateButton = styled.button`
 border-radius: 12px;
 border: none;
-font-family: Quicksand;
+font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 white-space: nowrap;
 margin-top: 4px;
 padding: 2px 10px 2px 10px;`

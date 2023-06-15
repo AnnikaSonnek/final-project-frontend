@@ -168,6 +168,9 @@ border: none;
 padding: 5px 20px;
 margin-top: 10px;
 cursor: pointer;
+font-family:  "Quicksand", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
 
 &:hover {
 background: grey;
