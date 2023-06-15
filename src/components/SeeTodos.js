@@ -49,7 +49,8 @@ import {
   DisplayedPriority,
   DisplayedCategory,
   DisplayedItemsContainer,
-  DisplayedDeadlineContainer
+  DisplayedDeadlineContainer,
+  TransparentDiv
 } from './SeeTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
@@ -317,10 +318,11 @@ export const SeeTodos = () => {
                         </DisplayedCategory>
                       </DisplayedItemsContainer>
                       <DisplayedDeadlineContainer>
-                        {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
+                        {item.deadline ? (
+                          <p>Deadline: {FormatDate(new Date(item.deadline))}</p>
                         ) : (
-                        <TransparentDiv />
-                          )}
+                          <TransparentDiv />
+                        )}
                       </DisplayedDeadlineContainer>
                       <FormFooter>
                         <TrashButtonContainer>

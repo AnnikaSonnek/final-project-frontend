@@ -56,6 +56,7 @@ export const FormInput = styled.input`
   padding: 12px;
   border-radius: 12px;
   margin-top: 7px;
+  margin-bottom: 7px;
   width: 330px;
 `;
 
@@ -171,7 +172,6 @@ display: flex;
 flex-direction: row;
 justify-content: flex-end;
 padding-right: 10px;
-
 width: 100%;
 `;
 
@@ -287,6 +287,11 @@ export const TodoContainer = styled.div`
   margin-bottom: 11rem;
 `;
 
+export const TransparentDiv = styled.div`
+  background-color: transparent;
+  height: 25px;
+`;
+
 export const CalendarContainer = styled.div`
   position: relative;
   z-index: 9000;
@@ -299,6 +304,7 @@ export const CalendarContainer = styled.div`
   padding-left: 20px;
   height: 20px;
   gap: 15px;
+  margin-bottom: 5px;
 
 @media (min-width: 668px) {
   width: 30px;
