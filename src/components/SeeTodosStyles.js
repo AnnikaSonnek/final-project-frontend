@@ -282,7 +282,7 @@ export const TodoContainer = styled.div`
 
 export const CalendarContainer = styled.div`
   position: relative;
-  z-index: 9999;
+  z-index: 9000;
   display: flex; 
   flex-direction: row;
   align-items: center;
