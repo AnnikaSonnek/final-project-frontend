@@ -66,13 +66,15 @@ export const FormGroup = styled.div`
 
   h2 {
     padding: 0 0 10px 0;
-    font-size: 1rem
+    font-size: 1rem;
+    color: black;
   }
 
   hr {
     width: 90%;
-    border: 2px solid white;
-    margin-bottom: 10px;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -85,6 +87,7 @@ export const EditForm = styled.form`
 export const EditSubmitButton = styled.button`
  border-radius: 12px;
  border: none;
+ font-family: Quicksand;
  padding: 3px 20px;
  background-color: ffffff;
  margin-bottom: 7px;
@@ -102,14 +105,20 @@ export const DeleteButton = styled.button`
 `;
 
 export const TrashButton = styled.button`
- border-radius: 12px;
- border: none;
- padding: 5px 10px 0 29px;
- background-color: transparent;
+  border-radius: 12px;
+  border: none;
+  padding: 5px 10px 0 29px;
+  background-color: transparent;
 
- img {
-  width: 22px
- }
+  img {
+    width: 22px;
+    transition: transform 0.2s; /* Add a transition effect to the image */
+  }
+
+  &:active img {
+    transform: translateY(1px); /* Apply a transform on button press */
+    opacity: 0.7; /* Reduce the opacity to make the image lighter */
+  }
 `;
 
 export const FormHeader = styled.div`
@@ -127,6 +136,19 @@ export const DisplayedPriority = styled.div`
 
 export const DisplayedItemsContainer = styled.div`
 display: flex;
+
+p {
+  color: black;
+}
+`;
+export const DisplayedDeadlineContainer = styled.div`
+display: flex;
+margin-bottom: 0;
+
+p {
+  color: black;
+  margin-bottom: 0;
+}
 `;
 
 export const DisplayedCategory = styled.div`
@@ -141,7 +163,7 @@ export const FormFooter = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: flex-end;
-padding-right: 7px;
+padding-right: 10px;
 
 width: 100%;
 `;
@@ -188,11 +210,13 @@ export const CategoryButton = styled.button`
 width: 70px; 
 border-radius: 12px;
 border: none;
+font-family: Quicksand;
 padding: 2px 10px;
 `
 export const PriorityButton = styled.button`
 width: 70px; 
 border-radius: 12px;
+font-family: Quicksand;
 border: none;
 padding: 2px 5px;
 `
@@ -254,7 +278,7 @@ export const LoginInput = styled.input`
 `;
 
 export const TodoContainer = styled.div`
-  margin-bottom: 11rem;
+  margin-bottom: 12rem;
 `;
 
 export const CalendarContainer = styled.div`
@@ -263,10 +287,12 @@ export const CalendarContainer = styled.div`
   display: flex; 
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  width: 20px;
+  justify-content: flex-start;
+  width: 50px;
+  width: 100%;
+  padding-left: 20px;
   height: 20px;
-  margin-bottom: 7px;
+  gap: 15px;
 
 @media (min-width: 668px) {
   width: 30px;
@@ -274,18 +300,12 @@ export const CalendarContainer = styled.div`
 } `
 
 export const NoDateButton = styled.button`
-width: 70px; 
 border-radius: 12px;
 border: none;
-background-color: transparent;
-margin-top: 14px;
-padding-left: 18px;
-
-img {
-width: 25px; 
-height: auto; 
-}
-`
+font-family: Quicksand;
+white-space: nowrap;
+margin-top: 8px;
+padding: 2px 10px 2px 10px;`
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   appearance: none;
@@ -325,7 +345,7 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 export const IconButton = styled.button`
 background-color: transparent;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-font-size: 1.1rem;
+font-size: 1.2rem;
 border: none;
 display: flex;
 justify-content: center;
@@ -333,5 +353,5 @@ align-items: center;
 padding: 0.5rem;
 color: white;
 cursor: pointer;
-margin-top: 8px;
+margin-top: 7px;
 `

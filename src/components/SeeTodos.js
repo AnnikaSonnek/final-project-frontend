@@ -17,8 +17,6 @@ import { BsCalendarDateFill } from 'react-icons/bs';
 import 'react-datepicker/dist/react-datepicker.css';
 import trashbin from '../img/trash.png';
 import editpen from '../img/edit.png';
-import turn from '../img/turn.png';
-import nodate from '../img/nodate.png';
 import { todos } from '../reducers/todos';
 import { user } from '../reducers/user';
 import { API_URL } from '../utils/urls';
@@ -29,7 +27,6 @@ import {
   TodoContainer,
   CalendarContainer,
   FormInput,
-  LabelHighlight,
   FormGroup,
   EditSubmitButton,
   FormFooter,
@@ -51,7 +48,8 @@ import {
   LabelFrontContainer,
   DisplayedPriority,
   DisplayedCategory,
-  DisplayedItemsContainer
+  DisplayedItemsContainer,
+  DisplayedDeadlineContainer
 } from './SeeTodosStyles';
 
 // //////////////////////////////////////////////////////////////////////// //
@@ -248,11 +246,6 @@ export const SeeTodos = () => {
       console.log('no selected todo');
     }
   };
-  // ////////////////// FLIP CARD BACK TO LIST //////////////// //
-  const backtoTodoList = () => {
-    // Find the selected todo by its ID
-    setSelectedTodo(null);
-  };
 
   // ////////////////// HANDLE DESCRIPTION //////////////// //
   const handleDescriptionChange = (e) => {
@@ -323,7 +316,9 @@ export const SeeTodos = () => {
                           </p>
                         </DisplayedCategory>
                       </DisplayedItemsContainer>
-                      {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
+                      <DisplayedDeadlineContainer>
+                        {item.deadline && <p>Deadline: {FormatDate(new Date(item.deadline))}</p>}
+                      </DisplayedDeadlineContainer>
                       <FormFooter>
                         <TrashButtonContainer>
                           <TrashButton type="button" onClick={() => DeleteMessage(item._id)}>
@@ -405,6 +400,15 @@ export const SeeTodos = () => {
                         </PriorityButton>
                       </PriorityButtonContainer>
                       <CalendarContainer>
+                        <NoDateButton
+                          type="button"
+                          style={selectedDeadline === null ? { backgroundColor: '#4D724D' } : {}}
+                          onClick={() => {
+                            setSelectedDeadline(null);
+                            setUpdatedTodo({ ...updatedTodo, deadline: null });
+                          }}>
+                            No Deadline
+                        </NoDateButton>
                         <DatePicker
                           customInput={<CustomInput />}
                           selected={selectedDeadline}
@@ -426,22 +430,10 @@ export const SeeTodos = () => {
                             });
                             console.log('Selected deadline:', selectedDeadline);
                           }} />
-                        <NoDateButton
-                          type="button"
-                          style={selectedDeadline === null ? { backgroundColor: '#4D724D' } : {}}
-                          onClick={() => {
-                            setSelectedDeadline(null);
-                            setUpdatedTodo({ ...updatedTodo, deadline: null });
-                          }}>
-                          <img alt="nodate" src={nodate} />
-                        </NoDateButton>
-                        <LabelHighlight onClick={() => backtoTodoList()}>
-                          <img alt="turn" src={turn} />
-                        </LabelHighlight>
                       </CalendarContainer>
                       <FormFooter>
                         <EditSubmitButton htmlFor={`form_switch_${item._id}`} type="submit">
-                          Submit
+                          EDIT
                         </EditSubmitButton>
                       </FormFooter>
                     </FormGroup>

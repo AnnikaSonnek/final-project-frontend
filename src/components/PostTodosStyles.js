@@ -36,6 +36,7 @@ border-radius: 12px;
 border: none;
 padding: 3px 10px;
 margin-top: 10px;
+cursor: pointer;
 
 &:active,
   &:focus {
@@ -69,6 +70,7 @@ border: none;
 background-color: transparent;
 margin-top: 5.5px;
 padding-left: 18px;
+cursor: pointer;
 
 img {
 width: 35px; 
@@ -90,6 +92,7 @@ export const AI = styled.p`
 display: flex;
 justify-content: center;
 align-items: center;
+cursor: pointer;
 `
 export const AIcontainer = styled.div`
 display: flex;
@@ -130,13 +133,13 @@ gap: 10px
 `;
 
 export const PacmanContainer = styled.div`
+position: fixed;
 display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
-width: 100%;
-right: 160px;
-
+width: 330px;
+margin: 0 auto 0 auto;
 img {
   width: 30px;
   margin: 4px;
@@ -148,12 +151,14 @@ border: none;
 background-color: transparent;
 color: white;
 font-size: 30px;
+cursor: pointer;
 `;
 
 export const SubmitButton = styled.button`
 border-radius: 12px;
 border: none;
 padding: 5px 20px;
+cursor: pointer;
 
 &:hover {
 background: grey;
