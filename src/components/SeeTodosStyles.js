@@ -30,7 +30,7 @@ export const FormInput = styled.input`
   border: 1px solid #eeeeee;
   padding: 12px;
   border-radius: 12px;
-  margin-top: 12px;
+  margin-top: 7px;
   width: 330px;
 `;
 
@@ -43,6 +43,10 @@ export const FormGroup = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  h2 {
+    padding: 18px 0 18px 0
+  }
 `;
 
 export const EditForm = styled.form`
@@ -54,8 +58,9 @@ export const EditForm = styled.form`
 export const EditSubmitButton = styled.button`
  border-radius: 12px;
  border: none;
- padding: 5px 20px;
- background-color: lightgrey;
+ padding: 3px 20px;
+ background-color: ffffff;
+ margin-bottom: 7px;
 
   &:hover {
     background: grey;
@@ -67,10 +72,17 @@ export const DeleteButton = styled.button`
  border: none;
  padding: 5px 20px;
  background-color: lightgrey;
+`;
 
-  &:hover {
-    background: grey;
-  }
+export const TrashButton = styled.button`
+ border-radius: 12px;
+ border: none;
+ padding: 5px 10px 0 29px;
+ background-color: transparent;
+
+ img {
+  width: 22px
+ }
 `;
 
 export const FormHeader = styled.div`
@@ -120,6 +132,31 @@ export const FlipCardBack = styled.div`
   transform: rotateY(180deg);
 `;
 
+export const CategoryButton = styled.button`
+width: 70px; 
+border-radius: 12px;
+border: none;
+padding: 2px 10px;
+`
+export const PriorityButton = styled.button`
+width: 70px; 
+border-radius: 12px;
+border: none;
+padding: 2px 5px;
+`
+export const PriorityButtonContainer = styled.div`
+display: flex;
+gap: 10px;
+margin-top: 7px;
+margin-bottom: 3px;
+`;
+
+export const CategoryButtonContainer = styled.div`
+display: flex;
+gap: 10px;
+margin-top: 7px;
+`;
+
 export const CheckboxInput = styled.input`
   &:checked + .flipcard .flipcard-inner {
     transform: rotateY(180deg);
@@ -143,7 +180,17 @@ export const SwitchForm = styled.div`
 `;
 
 export const LabelHighlight = styled.label`
-  color: #db3a34;
+margin: 18px 0 0 5px;
+  img {
+    width: 19px;
+  }
+`;
+
+export const LabelFront = styled.label`
+  img {
+    width: 20px;
+    margin-bottom: 0.5px;
+  }
 `;
 
 export const LoginInput = styled.input`
@@ -155,7 +202,7 @@ export const LoginInput = styled.input`
 `;
 
 export const TodoContainer = styled.div`
-  margin-bottom: 13rem;
+  margin-bottom: 11rem;
 `;
 
 export const CalendarContainer = styled.div`
@@ -167,16 +214,73 @@ export const CalendarContainer = styled.div`
   justify-content: center;
   width: 20px;
   height: 20px;
+  margin-bottom: 7px;
 
 @media (min-width: 668px) {
   width: 30px;
   height: 30px;
 } `
 
-export const NoDeadlineButton = styled.button`
-width: 80px; 
-  /* Define your button styles here */
-  /* Add styles for the green button when there is no deadline */
-  background-color: ${(props) => (props.noDeadline ? 'green' : 'default-color')};
-  /* Add other styles as needed */
+export const NoDateButton = styled.button`
+width: 70px; 
+border-radius: 12px;
+border: none;
+background-color: transparent;
+margin-top: 14px;
+padding-left: 18px;
+
+img {
+width: 25px; 
+height: auto; 
+}
+`
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  appearance: none;
+  -webkit-appearance: none;
+  height: 19px;
+  width: 19px;
+  position: absolute;
+  background-color: #8DB48E;
+  border-radius: 5px;
+  border: 2px solid #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  margin-top: 7px;
+
+  &:after {
+    content: "\\2713"; /* Unicode character for checkmark */
+    font-size: 12px;
+    color: white;
+    display: none;
+  }
+
+  &:hover {
+    background-color: #4D724D;
+  }
+
+  &:checked {
+    background-color: #4D724D;
+
+    &:after {
+      display: block;
+    }
+  }
 `;
+
+export const IconButton = styled.button`
+background-color: transparent;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-size: 1.1rem;
+border: none;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0.5rem;
+color: white;
+cursor: pointer;
+margin-top: 8px;
+`
