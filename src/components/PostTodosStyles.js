@@ -137,7 +137,11 @@ width: 200px;
 
 export const MockupContainer = styled.div`
 display: flex;
+flex-direction: column;
 justify-content: center;
+align-items: center;
+text-align: center;
+gap: 12px;
 `;
 
 export const PacmanContainer = styled.div`
@@ -185,6 +189,6 @@ align-items: center;
 gap: 10px;
 background-color: ffffff;
 border-radius: 12px;
-padding-top: 10px;
+padding-top: 5px;
 border: none;
 `;

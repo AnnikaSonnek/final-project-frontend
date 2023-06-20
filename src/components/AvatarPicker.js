@@ -35,10 +35,12 @@ export const AvatarPicker = () => {
 
   const dispatch = useDispatch();
 
+  // Toggles the accordion
   const toggleAccordion = () => {
     setAccordionOpen(!accordionOpen);
   };
 
+  // This function is triggered when the user chooses a new avatar.
   const onSelectAvatarSubmit = (event) => {
     event.preventDefault();
 

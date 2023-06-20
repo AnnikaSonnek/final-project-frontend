@@ -12,6 +12,7 @@ export const PersonalPage = () => {
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
 
+  // A useEffect-hook that checks if the accessToken is valid
   useEffect(() => {
     if (!accessToken) {
       navigate('/')

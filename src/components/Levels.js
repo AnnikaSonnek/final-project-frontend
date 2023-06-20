@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-plusplus */
+/* eslint-disable max-len */
+// //////////////////////////////////////////////////////////////////////// //
+// /////////////////////////////// IMPORTS //////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DescriptionWrapper, LevelsWrapper, Paragraph, ImgContainer, PrizeImg, ImgBackgroundContainer } from './LevelsStyles';
@@ -11,6 +15,10 @@ import blueberries from '../img/blueberry-white.png'
 import watermelon from '../img/watermelon-white.png'
 import pineapple from '../img/pineapple-black.png'
 
+// //////////////////////////////////////////////////////////////////////// //
+// /////////////////////////////// LEVELS ///////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
 export const Levels = () => {
   const checkedtaskstotal = useSelector((store) => store.user.checkedTasks);
   const username = useSelector((store) => store.user.username)
@@ -18,6 +26,7 @@ export const Levels = () => {
   const [currentFruit, setCurrentFruit] = useState('apple');
   const [currentDescription, setCurrentDescription] = useState('');
 
+  // Dataset for the current level
   const dataset = [
     {
       completedTasks: 0,
@@ -63,6 +72,7 @@ export const Levels = () => {
     }
   ];
 
+  // useEffect-hook that loops throught the dataset above and checks what level the user has based on the amount of completed tasks. Sets current level, fruit and description
   useEffect(() => {
     for (let i = dataset.length - 1; i >= 0; i--) {
       if (checkedtaskstotal >= dataset[i].completedTasks) {
@@ -73,6 +83,10 @@ export const Levels = () => {
       }
     }
   }, [checkedtaskstotal]);
+
+  // //////////////////////////////////////////////////////////////////////// //
+  // ///////////////////////////// RETURN JSX /////////////////////////////// //
+  // //////////////////////////////////////////////////////////////////////// //
 
   return (
     <LevelsWrapper>
