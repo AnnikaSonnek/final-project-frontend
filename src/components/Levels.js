@@ -1,5 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-plusplus */
+
+// //////////////////////////////////////////////////////////////////////// //
+// /////////////////////////////// IMPORTS //////////////////////////////// //
+// //////////////////////////////////////////////////////////////////////// //
+
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DescriptionWrapper, LevelsWrapper, Paragraph, ImgContainer, PrizeImg, ImgBackgroundContainer } from './LevelsStyles';
