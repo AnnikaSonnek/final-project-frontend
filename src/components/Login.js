@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
@@ -63,7 +64,6 @@ export const Login = () => {
       .then((data) => {
         setIsLoading(false);
         if (data.success) {
-          console.log(data.response)
           // Update user state with access token, username, and user ID
           dispatch(user.actions.setAccessToken(data.response.accessToken));
           dispatch(user.actions.setUsername(data.response.username));
@@ -73,7 +73,6 @@ export const Login = () => {
           dispatch(user.actions.setError(null));
           navigate('/todopage'); // Redirect to home page
         } else {
-          console.log(data.response)
           alert(data.response)
           // Handle login error
           dispatch(user.actions.setAccessToken(null));
@@ -105,7 +104,6 @@ export const Login = () => {
         setIsLoading(false);
 
         if (data.success) {
-          console.log(data.response)
           // Update user state with access token, username, and user ID
           dispatch(user.actions.setAccessToken(data.response.accessToken));
           dispatch(user.actions.setUsername(data.response.username));
@@ -114,7 +112,6 @@ export const Login = () => {
           dispatch(user.actions.setError(null));
           navigate('/todopage'); // Redirect to home page
         } else {
-          console.log(data.response)
           // Handle registration error
           dispatch(user.actions.setAccessToken(null));
           dispatch(user.actions.setUsername(null));

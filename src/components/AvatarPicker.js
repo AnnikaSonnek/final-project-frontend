@@ -55,19 +55,14 @@ export const AvatarPicker = () => {
         Authorization: accessToken
       }
     };
-    console.log(userID);
-    console.log(selectedAvatar);
 
     fetch(API_URL(`users/${userID}/avatar`), options)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.response);
         if (data.success) {
-          console.log(data.response.avatar);
           dispatch(user.actions.setAvatar(data.response.avatar));
           dispatch(user.actions.setError(null));
         } else {
-          console.log(data.response);
           dispatch(user.actions.setError(data.response));
         }
       });

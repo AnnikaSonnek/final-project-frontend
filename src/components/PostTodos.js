@@ -5,7 +5,6 @@
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-// Lets go!
 
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,7 +46,6 @@ const CustomInput = forwardRef(({ onClick }, ref) => (
 // //////////////////////////////////////////////////////////////////////// //
 // //////////////////////////// POST TODOS //////////////////////////////// //
 // //////////////////////////////////////////////////////////////////////// //
-// Here we go!
 
 export const PostTodos = () => {
   const dispatch = useDispatch(); // Here we use the dispatch function to dispatch actions.
@@ -89,7 +87,6 @@ export const PostTodos = () => {
   // ////////////////FORM SUBMIT//////////////////
   const onFormSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    console.log('New Todo:', newTodo);
 
     const options = {
       method: 'POST',
@@ -103,7 +100,6 @@ export const PostTodos = () => {
       .then((response) => response.json()) // Convert the response to JSON
       .then((responsedata) => {
         if (responsedata.success) {
-          console.log(responsedata);
           dispatch(user.actions.setError(null));
         } else {
           dispatch(user.actions.setError(responsedata.response)); // Dispatch an action to set the error message in the store
@@ -127,7 +123,6 @@ export const PostTodos = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log('name, value', name, value);
     setNewTodo({ ...newTodo, [name]: value });
     setInputValue(event.target.value);
   };
@@ -173,9 +168,7 @@ export const PostTodos = () => {
   }, [inputValue]);
 
   const handleAiSuggestion = () => {
-    console.log(suggestions);
-    const suggestion = suggestions.slice(1).join(' '); // detta är för att få bort todo: från texten och att få det till String ist för Array
-    console.log('ready to put into input?', suggestion);
+    const suggestion = suggestions.slice(1).join(' ');
     setNewTodo({ ...newTodo, description: suggestion });
     setSuggestions([]);
   };
@@ -294,10 +287,8 @@ export const PostTodos = () => {
                   selected={deadlineDate}
                   customInput={<CustomInput />}
                   onChange={(date) => {
-                    console.log('Date selected:', date);
                     setDeadlineDate(date);
                     setNewTodo({ ...newTodo, deadline: date ? date.toISOString() : null }); // Update the deadline property with the selected date
-                    console.log(deadlineDate);
                   }} />
               </CalendarContainer>
               <NoDateButton

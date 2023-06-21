@@ -157,12 +157,9 @@ export const SeeTodos = () => {
       .then((data) => {
         if (data.success) {
           dispatch(todos.actions.setError(null));
-          console.log(data.response);
 
           // Increment or decrement checked tasks based on the completion status
           const increment = completed ? -1 : 1;
-          console.log(increment);
-          console.log(userId);
 
           fetch(API_URL(`users/${userId}/checkedtasks`), {
             method: 'PATCH',
@@ -177,7 +174,6 @@ export const SeeTodos = () => {
             .then((response) => response.json())
             .then((userData) => {
               // Handle the response data for the user update if needed
-              console.log(userData);
               dispatch(user.actions.setCheckedTasks(userData.response.checkedTasks));
             })
             .catch((error) => {
@@ -199,7 +195,6 @@ export const SeeTodos = () => {
     e.preventDefault();
     const todoId = selectedTodo;
     // Handle the submission of updatedTodo object
-    console.log('updated todo:', updatedTodo);
 
     const options = {
       method: 'PATCH',
@@ -213,9 +208,7 @@ export const SeeTodos = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(JSON.stringify(updatedTodo));
           dispatch(todos.actions.setError(null));
-          console.log(data.response);
         } else {
           dispatch(todos.actions.setError(data.response));
         }
@@ -239,7 +232,6 @@ export const SeeTodos = () => {
     const selected = todoList.find((todo) => todo._id === todoId);
 
     if (selected) {
-      console.log('selected todo:', selectedTodo);
       // This is to make sure that the deadlinedate is saved in the correct date-format
       const deadline = item.deadline ? new Date(item.deadline) : null;
       setSelectedCategory(item.category);
@@ -483,14 +475,12 @@ export const SeeTodos = () => {
                             }
                           }}
                           onChange={(date) => {
-                            console.log('Date selected:', date);
                             setSelectedDeadline(date);
 
                             setUpdatedTodo({
                               ...updatedTodo,
                               deadline: date
                             });
-                            console.log('Selected deadline:', selectedDeadline);
                           }} />
                       </CalendarContainer>
                       <FormFooter>
