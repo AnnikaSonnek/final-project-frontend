@@ -28,10 +28,8 @@ export const Login = () => {
   const [registerUsername, setRegisterUsername] = useState('');
   const [mode] = useState('login');
   const [isLoading, setIsLoading] = useState(false); // Add a loading state
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // //////////////////////////////////////////////////////////////////////// //
-  // ///////////////////////////// RETURN JSX /////////////////////////////// //
-  // //////////////////////////////////////////////////////////////////////// //
   // Redux hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -76,6 +74,7 @@ export const Login = () => {
           navigate('/todopage'); // Redirect to home page
         } else {
           console.log(data.response)
+          alert(data.response)
           // Handle login error
           dispatch(user.actions.setAccessToken(null));
           dispatch(user.actions.setUsername(null));
@@ -121,6 +120,11 @@ export const Login = () => {
           dispatch(user.actions.setUsername(null));
           dispatch(user.actions.setUserId(null));
           dispatch(user.actions.setError(data.response));
+          if (data.response === 'Username already exists! Try another one!') {
+            setErrorMessage(data.response);
+            alert(errorMessage)
+            // Shows error for the user if he/she tried to register with an already existing username
+          }
         }
       });
   };
@@ -133,6 +137,8 @@ export const Login = () => {
     <div className="wrap">
       {isLoading && <Loader />}
       <MockupContainer>
+        <h2>TodoQuest</h2>
+        <p>This todo-app was created by Andreas Axelsson and Annika Sonnek during the Technigo Web Developer bootcamp 2023. The app has featurs such as gamification and AI to help the user to complete their tasks. Create a user and try it out!</p>
         <Mockup alt="mockup" src={mockup} />
       </MockupContainer>
       <input type="checkbox" id="form_switch" style={{ display: 'none' }} />

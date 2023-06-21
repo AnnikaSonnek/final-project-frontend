@@ -60,7 +60,6 @@ export const PostTodos = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
-  const [selectedDeadline, setSelectedDeadline] = useState(null);
 
   // NEW TODO-OBJECT USE STATE
   const [newTodo, setNewTodo] = useState({
@@ -108,6 +107,9 @@ export const PostTodos = () => {
           dispatch(user.actions.setError(null));
         } else {
           dispatch(user.actions.setError(responsedata.response)); // Dispatch an action to set the error message in the store
+          if (newTodo.description === '' || newTodo.category === '') { // If the user does not choose a category
+            alert('You must enter a description and choose a category.');
+          }
         }
       })
       .finally(() => {
@@ -301,10 +303,10 @@ export const PostTodos = () => {
               <NoDateButton
                 type="button"
                 onClick={() => {
-                  setSelectedDeadline(null)
+                  setDeadlineDate(null)
                   setNewTodo({ ...newTodo, deadline: null })
                 }}
-                style={selectedDeadline === null ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : {}}>
+                style={deadlineDate === null ? { backgroundColor: '#4D724D', transform: 'translateY(2px)' } : { border: 'solid 2px #4D724D' }}>
                 No deadline
               </NoDateButton>
             </DateButtonsContainer>

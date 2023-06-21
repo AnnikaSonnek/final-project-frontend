@@ -34,9 +34,13 @@ export const ProgressBar = () => {
   const completedTodos = todolist.filter((todo) => todo.completed);
   const uncompletedTodos = todolist.filter((todo) => !todo.completed);
 
+  // Calculate the total number of tasks in the todolist
   const totalTasks = todolist.length;
 
+  // Calculate the percentage of completed tasks, show 0 of the completed tasks is Nan.
   const completedPercentage = totalTasks !== 0 ? (completedTodos.length / totalTasks) * 100 : 0;
+
+  // Calculate the percentage of uncompleted tasks
   const uncompletedPercentage = (uncompletedTodos.length / totalTasks) * 100;
 
   const completedPercentageString = completedPercentage.toFixed(0);
@@ -46,12 +50,13 @@ export const ProgressBar = () => {
   const familyTodos = todolist.filter((todo) => todo.category === 'Family');
   const hobbiesTodos = todolist.filter((todo) => todo.category === 'Hobbies');
 
-  // Get the task counts for each category
+  // Get the length from each of the category arrays that we created above
   const jobTodosCount = jobTodos.length;
   const schoolTodosCount = schoolTodos.length;
   const familyTodosCount = familyTodos.length;
   const hobbiesTodosCount = hobbiesTodos.length;
 
+  // Function that checks if a given date falls within the current week
   const isWithinCurrentWeek = (date) => {
     const today = new Date();
     const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 1));
@@ -59,30 +64,32 @@ export const ProgressBar = () => {
     return date >= startOfWeek && date <= endOfWeek;
   };
 
+  // Filter tasks that have a deadline within the current week
   const tasksWithDeadlineThisWeek = todolist.filter((task) => {
     const deadline = new Date(task.deadline);
     return isWithinCurrentWeek(deadline);
   });
 
+  // Count the number of tasks with a deadline within the current week
   const tasksCountThisWeek = tasksWithDeadlineThisWeek.length;
 
   // //////////////DATA AND OPTIONS FOR DOUGHNUT CHART//////////////////////////
   const data = {
-    // labels: ['Job', 'School', 'Family', 'Hobbies'],
+    // labels: ['Job', 'School', 'Family', 'Hobbies'], //removed the labels included in the chart
     datasets: [
       {
-        data: [jobTodosCount, schoolTodosCount, familyTodosCount, hobbiesTodosCount],
-        backgroundColor: ['#CD8484', '#76A1D3', '#DFD78E', '#8DB48E'],
-        hoverBackgroundColor: ['#CD8484', '#76A1D3', '#DFD78E', '#8DB48E']
+        data: [jobTodosCount, schoolTodosCount, familyTodosCount, hobbiesTodosCount], // use the number of tasks in each category
+        backgroundColor: ['#CD8484', '#76A1D3', '#DFD78E', '#CDA384'],
+        hoverBackgroundColor: ['#CD8484', '#76A1D3', '#DFD78E', '#CDA384']
       }
     ]
   };
 
   const progressdata = {
-    // labels: ['Completed', 'Uncompleted'],
+    // labels: ['Completed', 'Uncompleted'], //removed the labels included in the chart
     datasets: [
       {
-        data: [completedPercentage, uncompletedPercentage],
+        data: [completedPercentage, uncompletedPercentage], // compares the completed and uncompleted percentage
         backgroundColor: ['#CD8484', '#F5F5F5'],
         hoverBackgroundColor: ['#CD8484', '#F5F5F5']
       }
@@ -90,7 +97,7 @@ export const ProgressBar = () => {
   };
 
   const options = {
-    cutout: '80%' // Adjust the cutout percentage as needed
+    cutout: '80%' // makes the chart a little thinner
   };
 
   // //////////////////////////////////////////////////////////////////////// //
@@ -113,13 +120,13 @@ export const ProgressBar = () => {
                   <Span style={{ color: 'black', backgroundColor: '#CD8484' }}>Job</Span>
                 </p>
                 <p>
-                  <Span style={{ color: 'white', backgroundColor: '#76A1D3' }}>School</Span>
+                  <Span style={{ color: 'black', backgroundColor: '#CDA384' }}>Hobbies</Span>
                 </p>
                 <p>
                   <Span style={{ color: 'black', backgroundColor: '#DFD78E' }}>Family</Span>
                 </p>
                 <p>
-                  <Span style={{ color: 'black', backgroundColor: '#8DB48E' }}>Hobbies</Span>
+                  <Span style={{ color: 'white', backgroundColor: '#76A1D3' }}>School</Span>
                 </p>
               </LabelContainer>
             </ChartContainer>

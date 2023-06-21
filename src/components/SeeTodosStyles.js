@@ -333,6 +333,7 @@ export const CalendarContainer = styled.div`
   height: 20px;
   gap: 15px;
   margin-bottom: 5px;
+  margin-top: 7px;
 
 @media (min-width: 668px) {
   width: 30px;

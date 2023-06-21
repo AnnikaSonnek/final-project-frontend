@@ -105,7 +105,7 @@ export const SeeTodos = () => {
           // If the fetch is successful the error is set to null and the items (which is the list of todos) is set to the response from the database, displaying all todos.
           dispatch(todos.actions.setError(null));
           dispatch(todos.actions.setItems(data.response));
-          setTodoLength(data.response.length);
+          setTodoLength(data.response.length); // We get the length of how many todos there is, (used for styling)
         } else {
           // If the fetch is unsuccessful the error is set to the response that is returned from the server and the items(todoslist) is set to be an empty array.
           dispatch(todos.actions.setError(data.response));
@@ -144,7 +144,7 @@ export const SeeTodos = () => {
     const options = {
       method: 'PATCH',
       body: JSON.stringify({
-        completed: !completed // Changes the status of completed
+        completed: !completed // Changes the status of completed, no matter if it's false or true
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -224,7 +224,6 @@ export const SeeTodos = () => {
         setSelectedTodo(null);
         console.log('checked tasks in store', checkedtasks);
       });
-    // ...
   };
 
   // //////////////////////////////////////////////////////////////////////// //
@@ -232,15 +231,16 @@ export const SeeTodos = () => {
   // //////////////////////////////////////////////////////////////////////// //
 
   // ////////////////// FIND TODO TO EDIT //////////////// //
-
   const editTodo = (todoId, item) => {
-    // Find the selected todo by its ID
+    // We set the selectedTodo with the todo-id in order to flip the card correctly.
     setSelectedTodo(todoId);
 
+    // Find the selected todo by its ID
     const selected = todoList.find((todo) => todo._id === todoId);
 
     if (selected) {
       console.log('selected todo:', selectedTodo);
+      // This is to make sure that the deadlinedate is saved in the correct date-format
       const deadline = item.deadline ? new Date(item.deadline) : null;
       setSelectedCategory(item.category);
       setSelectedPriority(item.priority);
@@ -258,7 +258,7 @@ export const SeeTodos = () => {
     });
   };
 
-  // ////////////////// CATEGORY //////////////// //
+  // ////////////////// HANDLE CATEGORY //////////////// //
   const handleCategoryChange = (category) => {
     setUpdatedTodo({ ...updatedTodo, category });
     setSelectedCategory(category);
@@ -271,6 +271,7 @@ export const SeeTodos = () => {
   };
 
   const FormatDate = (date) => {
+    // Format the deadline date so that the day of the week, date and month is displayed
     const options = {
       weekday: 'long',
       day: 'numeric',
@@ -281,11 +282,11 @@ export const SeeTodos = () => {
     return date.toLocaleString('sv-SE', options);
   };
 
-  // const numberOfCardsToShow = 2; // Set the number of cards to show
-  // const showGap = numberOfCardsToShow === 2;
+  // The showGap prop is truthy if todoLength is longer than 1.
   const showGap = todoLength > 1;
 
   const getPrioBackgroundColor = (priority) => {
+    // Changes the color of the priority-labels in the todo-cards
     if (priority === 1) {
       return '#9771B6';
     } else if (priority === 2) {
@@ -296,6 +297,7 @@ export const SeeTodos = () => {
   };
 
   const getCategoryBackgroundColor = (category) => {
+    // Changes the color of the category-labels in the todo-cards
     if (category === 'Job') {
       return '#CD8484';
     } else if (category === 'School') {

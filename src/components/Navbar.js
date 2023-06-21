@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable max-len */
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// IMPORTS //////////////////////////////// //
@@ -25,12 +26,13 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const totalTasks = todolist.length;
-  const completedTodos = todolist.filter((todo) => todo.completed);
-  const completedPercentage = totalTasks !== 0 ? (completedTodos.length / totalTasks) * 100 : 0;
-  const completedPercentageString = completedPercentage.toFixed(0);
+  const totalTasks = todolist.length; // Length of the todoList
+  const completedTodos = todolist.filter((todo) => todo.completed); // Filters how many is completed
+  const completedPercentage = totalTasks !== 0 ? (completedTodos.length / totalTasks) * 100 : 0; // create percentage of completed todos
+  const completedPercentageString = completedPercentage.toFixed(0); // removes decimals from percentage
 
   const onLogoutButtonClick = () => {
+    // Removes all info about the user incl. accessToken when the user logs out
     dispatch(user.actions.setAccessToken(null));
     dispatch(user.actions.setUsername(null));
     dispatch(user.actions.setUserId(null));

@@ -95,7 +95,7 @@
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
   font-weight: 600;
-  color: #212427;
+  color: #4D724D;
   text-decoration: none;
 }
 
@@ -103,10 +103,12 @@
   /* Add any hover or focus styles you want for the links */
   /* For example: */
   background-color: #6f9d6f;
+  color: #212427;
 }
 
 .Btn.active {
   background-color: #6f9d6f;
+  color: #212427;
 }
 
 @media (max-width: 668px) {
@@ -143,7 +145,7 @@
     padding: 0.5em 0;
     width: 100%;
     color: white;
-    background-color: rgba(50, 50, 50, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
   }
   .menu > li:not(:last-child) {
     border-bottom: 1px solid #444;
