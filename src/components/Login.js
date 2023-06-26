@@ -12,9 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import { user } from 'reducers/user';
 import { API_URL } from '../utils/urls';
 import { Mockup, MockupContainer } from './PostTodosStyles.js';
-import { Loader } from './Loader'
+import { Loader } from './Loader';
 import mockup from '../img/mockup.png';
-import './Login.css'
+import './Login.css';
 
 // //////////////////////////////////////////////////////////////////////// //
 // /////////////////////////////// LOGIN ////////////////////////////////// //
@@ -69,11 +69,11 @@ export const Login = () => {
           dispatch(user.actions.setUsername(data.response.username));
           dispatch(user.actions.setUserId(data.response.id));
           dispatch(user.actions.setAvatar(data.response.avatar));
-          dispatch(user.actions.setCheckedTasks(data.response.checkedTasks))
+          dispatch(user.actions.setCheckedTasks(data.response.checkedTasks));
           dispatch(user.actions.setError(null));
           navigate('/todopage'); // Redirect to home page
         } else {
-          alert(data.response)
+          alert(data.response);
           // Handle login error
           dispatch(user.actions.setAccessToken(null));
           dispatch(user.actions.setUsername(null));
@@ -94,7 +94,11 @@ export const Login = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ mail: registerMail, username: registerUsername, password: registerPassword })
+      body: JSON.stringify({
+        mail: registerMail,
+        username: registerUsername,
+        password: registerPassword
+      })
     };
 
     // Send registration request to the server
@@ -119,7 +123,7 @@ export const Login = () => {
           dispatch(user.actions.setError(data.response));
           if (data.response === 'Username already exists! Try another one!') {
             setErrorMessage(data.response);
-            alert(errorMessage)
+            alert(errorMessage);
             // Shows error for the user if he/she tried to register with an already existing username
           }
         }
@@ -132,10 +136,18 @@ export const Login = () => {
 
   return (
     <div className="wrap">
-      {isLoading && <Loader />}
+      {isLoading && (
+        <div className="loader">
+          <Loader />
+        </div>
+      )}
       <MockupContainer>
         <h2>TodoQuest</h2>
-        <p>This todo-app was created by Andreas Axelsson and Annika Sonnek during the Technigo Web Developer bootcamp 2023. The app has featurs such as gamification and AI to help the user to complete their tasks. Create a user and try it out!</p>
+        <p>
+          This todo-app was created by Andreas Axelsson and Annika Sonnek during the Technigo Web
+          Developer bootcamp 2023. The app has featurs such as gamification and AI to help the user
+          to complete their tasks. Create a user and try it out!
+        </p>
         <Mockup alt="mockup" src={mockup} />
       </MockupContainer>
       <input type="checkbox" id="form_switch" style={{ display: 'none' }} />
@@ -170,13 +182,18 @@ export const Login = () => {
                   required />
               </div>
               <div className="form-group">
-                <button
-                  className="form-button"
-                  type="submit">Login
+                <button className="form-button" type="submit">
+                  Login
                 </button>
               </div>
               <div className="form-footer">
-                <p>Don&apos;t have an account? <label className="label-highlight" htmlFor="form_switch"> Sign Up </label></p>
+                <p>
+                  Don&apos;t have an account?{' '}
+                  <label className="label-highlight" htmlFor="form_switch">
+                    {' '}
+                    Sign Up{' '}
+                  </label>
+                </p>
               </div>
             </form>
           </div>
@@ -204,7 +221,7 @@ export const Login = () => {
                   name="username"
                   placeholder="Username"
                   autoComplete="off"
-                  value={registerUsername}//
+                  value={registerUsername} //
                   onChange={(event) => setRegisterUsername(event.target.value)}
                   required />
               </div>
@@ -220,18 +237,23 @@ export const Login = () => {
                   required />
               </div>
               <div className="form-group">
-                <button
-                  className="form-button form-button-register"
-                  type="submit">Sign up
+                <button className="form-button form-button-register" type="submit">
+                  Sign up
                 </button>
               </div>
               <div className="form-footer">
-                <p>Already have an account? <label className="label-highlight" htmlFor="form_switch"> Login</label></p>
+                <p>
+                  Already have an account?{' '}
+                  <label className="label-highlight" htmlFor="form_switch">
+                    {' '}
+                    Login
+                  </label>
+                </p>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 };
