@@ -141,7 +141,7 @@ export const PostTodos = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
         body: JSON.stringify({
-          model: 'text-babbage-001',
+          model: 'gpt-3.5-turbo-instruct',
           prompt: `To-do: ${inputValue}`,
           echo: true,
           max_tokens: 2,
