@@ -14,3 +14,22 @@ border: none;
 padding: 10px 20px;
 background-color: grey;
 `;
+
+export const ReturnButton = styled.button`
+  background: #8DB48E;
+  border: none;
+  border-radius: 12px;
+  color: #212427;
+  font-weight: 600;
+  padding: 10px;
+  width: 150px;
+  text-transform: uppercase;
+  font-family: "Quicksand", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    
+&:hover{
+  background: #4D724D;
+}
+`;
+
