@@ -137,18 +137,19 @@ export const PostTodos = () => {
 
   const fetchSuggestions = async () => {
     try {
-      const response = await fetch('https://api.openai.com/v1/completions', {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo-instruct',
+          model: 'text-davinci-002',
           prompt: `To-do: ${inputValue}`,
-          echo: true,
+          temperature: 0.3,
           max_tokens: 2,
-          temperature: 0.3
+          n: 1,
+          stop: '\n'
         })
       });
-
+  
       const data = await response.json();
       const newsuggestions = data.choices[0].text.trim().split(' ');
       setSuggestions(newsuggestions);
