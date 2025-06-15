@@ -145,7 +145,7 @@ export const Login = () => {
         <h2>TodoQuest</h2>
         <p>
           This todo-app was created by Andreas Axelsson and Annika Sonnek during the Technigo Web
-          Developer bootcamp 2023. The app has featurs such as gamification and AI to help the user
+          Developer bootcamp 2023. The app has features such as gamification and AI to help the user
           to complete their tasks. Create a user and try it out!
         </p>
         <Mockup alt="mockup" src={mockup} />

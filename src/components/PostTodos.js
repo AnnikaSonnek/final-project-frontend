@@ -149,7 +149,6 @@ export const PostTodos = () => {
           stop: '\n'
         })
       });
-  
       const data = await response.json();
       const newsuggestions = data.choices[0].text.trim().split(' ');
       setSuggestions(newsuggestions);
